@@ -1,3 +1,7 @@
+import 'package:dio/dio.dart';
+import 'package:weather_app/core/errors/exceptions.dart';
+import 'package:weather_app/core/errors/failures.dart';
+import 'package:weather_app/core/params/params.dart';
 import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/data/data_sources/remote/weather_service.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
@@ -9,7 +13,16 @@ class WeatherRepositoryImpl implements WeatherRepository {
   WeatherRepositoryImpl({required this.weatherService});
 
   @override
-  Future<DataState<WeatherForecastEntity>> getWeatherData() {
-    return weatherService.getWeatherData();
+  Future<DataState<WeatherForecastEntity>> getWeatherData({
+    required GetWeatherParams params,
+  }) async {
+    try {
+      final data = await weatherService.getWeatherData(params: params);
+      return DataSuccess(data);
+    } on NoAPIResponseException {
+      return DataFailed(NoAPIResponseFailure());
+    } on DioException catch (e) {
+      return DataFailed(ServerFailure(error: e));
+    }
   }
 }

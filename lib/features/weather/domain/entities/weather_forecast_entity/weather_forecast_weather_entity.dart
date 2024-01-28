@@ -11,7 +11,7 @@ class WeatherForecastWeatherEntity extends Equatable {
   /// Weather condition within the group (full list of weather conditions[https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2]). Get the output in your language [https://openweathermap.org/api/one-call-3#multi]
   final String description;
 
-  ///  Weather icon id. How to get icons [https://openweathermap.org/weather-conditions#How-to-get-icon-URL]
+  /// Weather icon id. How to get icons [https://openweathermap.org/weather-conditions#How-to-get-icon-URL]
   final String icon;
 
   const WeatherForecastWeatherEntity({

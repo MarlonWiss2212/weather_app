@@ -1,12 +1,24 @@
 import 'package:equatable/equatable.dart';
 
+/// Units – default: kelvin, metric: Celsius, imperial: Fahrenheit. How to change units used [https://openweathermap.org/api/one-call-3#data]
 class WeatherForecastTempEntity extends Equatable {
+  /// Morning temperature.
   final double day;
-  final double min;
-  final double max;
+
+  /// Day temperature.
   final double night;
+
+  /// Evening temperature.
   final double eve;
+
+  /// Night temperature.
   final double morn;
+
+  /// Min daily temperature.
+  final double min;
+
+  /// Max daily temperature.
+  final double max;
 
   const WeatherForecastTempEntity({
     required this.day,

@@ -1,0 +1,1 @@
+class NoAPIResponseException implements Exception {}

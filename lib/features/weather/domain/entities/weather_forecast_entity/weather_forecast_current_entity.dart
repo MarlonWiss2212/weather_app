@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_rain_entity.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_weather_entity.dart';
 
+/// Current weather data API response
 class WeatherForecastCurrentEntity extends Equatable {
   /// Current time, Unix, UTC
   final int dt;
