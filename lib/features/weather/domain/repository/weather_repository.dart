@@ -4,6 +4,9 @@ import 'package:weather_app/features/weather/domain/entities/weather_forecast_en
 
 /// Represents the Repository responsible for retrieving weather data.
 abstract class WeatherRepository {
+  /// By passing [params] it will return
+  /// detailed weather information of the provided location
+  /// or failure
   Future<DataState<WeatherForecastEntity>> getWeatherData({
     required GetWeatherParams params,
   });
