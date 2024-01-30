@@ -41,10 +41,14 @@ class LocationRepositoryImpl implements LocationRepository {
   }
 
   @override
-  Future<DataState<bool>> isLocationServiceEnabled() async {
+  Future<DataState<void>> isLocationServiceEnabled() async {
     try {
-      final location = await locationService.isLocationServiceEnabled();
-      return DataState.success(location);
+      final locationServiceEnabled =
+          await locationService.isLocationServiceEnabled();
+      if (locationServiceEnabled == false) {
+        return DataState.failure(LocationServiceNotEnabledFailure());
+      }
+      return DataState.success(null);
     } catch (e) {
       return DataState.failure(UnkownFailure());
     }

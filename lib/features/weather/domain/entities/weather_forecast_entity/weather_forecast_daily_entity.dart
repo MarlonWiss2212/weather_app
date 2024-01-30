@@ -60,7 +60,7 @@ class WeatherForecastDailyEntity extends Equatable {
   final double windSpeed;
 
   /// Wind direction, degrees (meteorological)
-  final double windDeg;
+  final int windDeg;
 
   /// (where available) Wind gust. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour. How to change units used [https://openweathermap.org/api/one-call-3#data]
   final double? windGust;

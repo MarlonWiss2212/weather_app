@@ -16,13 +16,18 @@ class WeatherForecastAlertModel extends WeatherForecastAlertEntity {
   /// Throws an [ConvertingException] if the convertion did not work
   factory WeatherForecastAlertModel.fromJson(Map<String, dynamic> json) {
     try {
+      final List<String> tags = [];
+      for (final tag in json["tags"]) {
+        tags.add(tag);
+      }
+
       return WeatherForecastAlertModel(
-        senderName: json["lat"],
+        senderName: json["sender_name"],
         event: json["event"],
         start: json["start"],
         end: json["end"],
         description: json["description"],
-        tags: json["tags"],
+        tags: tags,
       );
     } on ConvertingException {
       rethrow;

@@ -15,10 +15,10 @@ class WeatherForecastFeelsLikeModel extends WeatherForecastFeelsLikeEntity {
   factory WeatherForecastFeelsLikeModel.fromJson(Map<String, dynamic> json) {
     try {
       return WeatherForecastFeelsLikeModel(
-        day: json["day"],
-        night: json["night"],
-        eve: json["eve"],
-        morn: json["morn"],
+        day: double.parse(json["day"].toString()),
+        night: double.parse(json["night"].toString()),
+        eve: double.parse(json["eve"].toString()),
+        morn: double.parse(json["morn"].toString()),
       );
     } on ConvertingException {
       rethrow;

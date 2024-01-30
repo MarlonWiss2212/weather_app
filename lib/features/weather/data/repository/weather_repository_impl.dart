@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
 import 'package:weather_app/core/errors/failures.dart';
-import 'package:weather_app/core/params/get_weather_params.dart';
+import 'package:weather_app/core/params/get_weather_with_location_params.dart';
 import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/data/data_sources/remote/weather_service.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
@@ -14,7 +14,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
   @override
   Future<DataState<WeatherForecastEntity>> getWeatherData({
-    required GetWeatherParams params,
+    required GetWeatherWithLocationParams params,
   }) async {
     try {
       final data = await weatherService.getWeatherData(params: params);

@@ -11,7 +11,9 @@ class WeatherForecastRainModel extends WeatherForecastRainEntity {
   /// Throws an [ConvertingException] if the convertion did not work
   factory WeatherForecastRainModel.fromJson(Map<String, dynamic> json) {
     try {
-      return WeatherForecastRainModel(oneHour: json["1h"]);
+      return WeatherForecastRainModel(
+        oneHour: double.parse(json["1h"].toString()),
+      );
     } on ConvertingException {
       rethrow;
     } catch (e) {

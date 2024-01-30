@@ -42,16 +42,16 @@ class WeatherForecastCurrentEntity extends Equatable {
   final double windSpeed;
 
   /// Wind direction, degrees (meteorological)
-  final double? windDeg;
+  final int windDeg;
 
   /// (where available) Wind gust. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour. How to change units used [https://openweathermap.org/api/one-call-3#data]
-  final double windGust;
+  final double? windGust;
 
   /// Rain
-  final WeatherForecastRainEntity rain;
+  final WeatherForecastRainEntity? rain;
 
   /// Snow
-  final WeatherForecastSnowEntity snow;
+  final WeatherForecastSnowEntity? snow;
 
   /// Weather
   final List<WeatherForecastWeatherEntity> weather;
@@ -69,10 +69,10 @@ class WeatherForecastCurrentEntity extends Equatable {
     required this.clouds,
     required this.visibility,
     required this.windSpeed,
-    this.windDeg,
-    required this.windGust,
-    required this.rain,
-    required this.snow,
+    required this.windDeg,
+    this.windGust,
+    this.rain,
+    this.snow,
     required this.weather,
   });
 

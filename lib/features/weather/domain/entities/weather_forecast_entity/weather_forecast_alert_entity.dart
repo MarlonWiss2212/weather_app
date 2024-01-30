@@ -18,7 +18,7 @@ class WeatherForecastAlertEntity extends Equatable {
   final String description;
 
   /// Type of severe weather
-  final List<dynamic> tags;
+  final List<String> tags;
 
   const WeatherForecastAlertEntity({
     required this.senderName,

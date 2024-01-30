@@ -16,10 +16,13 @@ class DataState<T> {
     required D Function(T data) onSuccess,
     required D Function(Failure failure) onError,
   }) {
-    if (data != null) {
+    if (data != null || data.runtimeType == Null) {
       return onSuccess(data as T);
-    } else {
-      return onError(failure as Failure);
     }
+    if (failure != null) {
+      return onError(failure!);
+    }
+
+    throw GeneralFailure();
   }
 }

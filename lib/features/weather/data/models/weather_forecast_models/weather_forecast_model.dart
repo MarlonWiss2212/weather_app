@@ -30,7 +30,7 @@ class WeatherForecastModel extends WeatherForecastEntity {
       }
 
       final List<WeatherForecastMinutlyModel> minutly = [];
-      for (final minute in json["minutly"]) {
+      for (final minute in json["minutely"]) {
         minutly.add(WeatherForecastMinutlyModel.fromJson(minute));
       }
 
@@ -48,7 +48,7 @@ class WeatherForecastModel extends WeatherForecastEntity {
         lat: json["lat"],
         lon: json["lon"],
         timezone: json["timezone"],
-        timezoneOffset: json["timezoneOffset"],
+        timezoneOffset: json["timezone_offset"],
         current: WeatherForecastCurrentModel.fromJson(json["current"]),
         minutly: minutly,
         hourly: hourly,

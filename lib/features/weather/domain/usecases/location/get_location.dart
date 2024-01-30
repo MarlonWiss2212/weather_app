@@ -16,7 +16,7 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
     final serviceEnabledOrFailure =
         await locationRepository.isLocationServiceEnabled();
 
-    return serviceEnabledOrFailure.handle(
+    return await serviceEnabledOrFailure.handle(
       onError: (failure) => DataState.failure(failure),
       onSuccess: (_) async {
         final nullOrFailure = await _checkPermission();

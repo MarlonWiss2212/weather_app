@@ -22,14 +22,18 @@ class GetWeatherByLocationUseCase
     required GetWeatherParams params,
   }) async {
     final locationOrFailure = await getLocationUseCase.call();
-    return locationOrFailure.handle(
-      onSuccess: (location) => weatherRepository.getWeatherData(
-        params: GetWeatherWithLocationParams.fromGetWeatherParams(
-          lat: locationOrFailure.data!.latitude,
-          lon: locationOrFailure.data!.longitude,
-          params: params,
-        ),
-      ),
+    return await locationOrFailure.handle(
+      onSuccess: (location) async {
+        final data = await weatherRepository.getWeatherData(
+          params: GetWeatherWithLocationParams.fromGetWeatherParams(
+            lat: locationOrFailure.data!.latitude,
+            lon: locationOrFailure.data!.longitude,
+            params: params,
+          ),
+        );
+        print(data);
+        return data;
+      },
       onError: (failure) => DataState.failure(failure),
     );
   }

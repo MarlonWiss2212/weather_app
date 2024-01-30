@@ -17,12 +17,12 @@ class WeatherForecastTempModel extends WeatherForecastTempEntity {
   factory WeatherForecastTempModel.fromJson(Map<String, dynamic> json) {
     try {
       return WeatherForecastTempModel(
-        day: json["day"],
-        night: json["night"],
-        eve: json["eve"],
-        max: json["max"],
-        min: json["min"],
-        morn: json["morn"],
+        day: double.parse(json["day"].toString()),
+        night: double.parse(json["night"].toString()),
+        eve: double.parse(json["eve"].toString()),
+        max: double.parse(json["max"].toString()),
+        min: double.parse(json["min"].toString()),
+        morn: double.parse(json["morn"].toString()),
       );
     } on ConvertingException {
       rethrow;

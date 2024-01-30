@@ -45,21 +45,25 @@ class WeatherForecastDailyModel extends WeatherForecastDailyEntity {
         sunset: json["sunset"],
         moonrise: json["moonrise"],
         moonset: json["moonset"],
-        moonPhase: json["moon_phase"],
+        moonPhase: double.parse(json["moon_phase"].toString()),
         summary: json["summary"],
         temp: WeatherForecastTempModel.fromJson(json["temp"]),
         feelsLike: WeatherForecastFeelsLikeModel.fromJson(json["feels_like"]),
         pressure: json["pressure"],
         humidity: json["humidity"],
-        dewPoint: json["dew_point"],
-        uvi: json["uvi"],
-        pop: json["pop"],
+        dewPoint: double.parse(json["dew_point"].toString()),
+        uvi: double.parse(json["uvi"].toString()),
+        pop: double.parse(json["pop"].toString()),
         clouds: json["clouds"],
-        windSpeed: json["wind_speed"],
+        windSpeed: double.parse(json["wind_speed"].toString()),
         windDeg: json["wind_deg"],
-        windGust: json["wind_gust"],
-        rain: json["rain"],
-        snow: json["snow"],
+        windGust: json["rain"] != null
+            ? double.parse(json["wind_gust"].toString())
+            : null,
+        rain:
+            json["rain"] != null ? double.parse(json["rain"].toString()) : null,
+        snow:
+            json["snow"] != null ? double.parse(json["snow"].toString()) : null,
         weather: weather,
       );
     } on ConvertingException {

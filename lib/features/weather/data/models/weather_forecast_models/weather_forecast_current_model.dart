@@ -18,8 +18,8 @@ class WeatherForecastCurrentModel extends WeatherForecastCurrentEntity {
     required super.clouds,
     required super.visibility,
     required super.windSpeed,
-    super.windDeg,
-    required super.windGust,
+    required super.windDeg,
+    super.windGust,
     required super.rain,
     required super.snow,
     required super.weather,
@@ -39,19 +39,25 @@ class WeatherForecastCurrentModel extends WeatherForecastCurrentEntity {
         dt: json["dt"],
         sunrise: json["sunrise"],
         sunset: json["sunset"],
-        temp: json["temp"],
-        feelsLike: json["feels_like"],
+        temp: double.parse(json["temp"].toString()),
+        feelsLike: double.parse(json["feels_like"].toString()),
         pressure: json["pressure"],
         humidity: json["humidity"],
-        dewPoint: json["dew_point"],
-        uvi: json["uvi"],
+        dewPoint: double.parse(json["dew_point"].toString()),
+        uvi: double.parse(json["uvi"].toString()),
         clouds: json["clouds"],
         visibility: json["visibility"],
-        windSpeed: json["wind_speed"],
+        windSpeed: double.parse(json["wind_speed"].toString()),
         windDeg: json["wind_deg"],
-        windGust: json["wind_gust"],
-        rain: WeatherForecastRainModel.fromJson(json["rain"]),
-        snow: WeatherForecastSnowModel.fromJson(json["snow"]),
+        windGust: json["wind_gust"] != null
+            ? double.parse(json["wind_gust"].toString())
+            : null,
+        rain: json["rain"] != null
+            ? WeatherForecastRainModel.fromJson(json["rain"])
+            : null,
+        snow: json["snow"] != null
+            ? WeatherForecastSnowModel.fromJson(json["snow"])
+            : null,
         weather: weather,
       );
     } on ConvertingException {

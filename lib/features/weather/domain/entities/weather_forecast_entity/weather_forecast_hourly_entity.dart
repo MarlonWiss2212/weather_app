@@ -36,7 +36,7 @@ class WeatherForecastHourlyEntity extends Equatable {
   final double windSpeed;
 
   /// Wind direction, degrees (meteorological)
-  final double windDeg;
+  final int windDeg;
 
   /// (where available) Wind gust. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour. How to change units used [https://openweathermap.org/api/one-call-3#data]
   final double? windGust;
@@ -45,10 +45,10 @@ class WeatherForecastHourlyEntity extends Equatable {
   final List<WeatherForecastWeatherEntity> weather;
 
   /// Rain
-  final WeatherForecastRainEntity rain;
+  final WeatherForecastRainEntity? rain;
 
   /// Snow
-  final WeatherForecastSnowEntity snow;
+  final WeatherForecastSnowEntity? snow;
 
   /// Probability of precipitation. The values of the parameter vary between 0 and 1, where 0 is equal to 0%, 1 is equal to 100%
   final double pop;
@@ -63,8 +63,8 @@ class WeatherForecastHourlyEntity extends Equatable {
     required this.uvi,
     required this.clouds,
     required this.visibility,
-    required this.snow,
-    required this.rain,
+    this.snow,
+    this.rain,
     required this.windSpeed,
     required this.windDeg,
     this.windGust,

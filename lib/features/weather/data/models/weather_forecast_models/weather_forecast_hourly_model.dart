@@ -1,4 +1,6 @@
 import 'package:weather_app/core/errors/exceptions.dart';
+import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_rain_model.dart';
+import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_snow_model.dart';
 import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_weather_model.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 
@@ -34,19 +36,23 @@ class WeatherForecastHourlyModel extends WeatherForecastHourlyEntity {
 
       return WeatherForecastHourlyModel(
         dt: json["dt"],
-        temp: json["temp"],
-        feelsLike: json["feels_like"],
+        temp: double.parse(json["temp"].toString()),
+        feelsLike: double.parse(json["feels_like"].toString()),
         pressure: json["pressure"],
         humidity: json["humidity"],
-        dewPoint: json["dew_point"],
-        uvi: json["uvi"],
-        pop: json["pop"],
+        dewPoint: double.parse(json["dew_point"].toString()),
+        uvi: double.parse(json["uvi"].toString()),
+        pop: double.parse(json["pop"].toString()),
         clouds: json["clouds"],
-        windSpeed: json["wind_speed"],
+        windSpeed: double.parse(json["wind_speed"].toString()),
         windDeg: json["wind_deg"],
-        windGust: json["wind_gust"],
-        rain: json["rain"],
-        snow: json["snow"],
+        windGust: double.parse(json["wind_gust"].toString()),
+        rain: json["rain"] != null
+            ? WeatherForecastRainModel.fromJson(json["rain"])
+            : null,
+        snow: json["snow"] != null
+            ? WeatherForecastSnowModel.fromJson(json["snow"])
+            : null,
         weather: weather,
         visibility: json["visibility"],
       );
