@@ -1,19 +1,25 @@
 import 'package:weather_app/core/errors/failures.dart';
 
-abstract class DataState<T> {
+class DataState<T> {
   final T? data;
-  final Failure? error;
+  final Failure? failure;
 
-  const DataState({this.data, this.error});
+  DataState._({
+    this.data,
+    this.failure,
+  });
 
-  bool get isSuccess => data != null;
-  bool get isFailed => error != null;
-}
+  factory DataState.success(T data) => DataState._(data: data);
+  factory DataState.failure(Failure failure) => DataState._(failure: failure);
 
-class DataSuccess<T> extends DataState<T> {
-  const DataSuccess(T data) : super(data: data);
-}
-
-class DataFailed<T> extends DataState<T> {
-  const DataFailed(Failure error) : super(error: error);
+  D handle<D>({
+    required D Function(T data) onSuccess,
+    required D Function(Failure failure) onError,
+  }) {
+    if (data != null) {
+      return onSuccess(data as T);
+    } else {
+      return onError(failure as Failure);
+    }
+  }
 }

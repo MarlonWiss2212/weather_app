@@ -18,11 +18,11 @@ class WeatherRepositoryImpl implements WeatherRepository {
   }) async {
     try {
       final data = await weatherService.getWeatherData(params: params);
-      return DataSuccess(data);
+      return DataState.success(data);
     } on NoAPIResponseException {
-      return DataFailed(NoAPIResponseFailure());
+      return DataState.failure(NoAPIResponseFailure());
     } on DioException catch (e) {
-      return DataFailed(ServerFailure(error: e));
+      return DataState.failure(ServerFailure(error: e));
     }
   }
 }

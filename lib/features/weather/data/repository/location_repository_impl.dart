@@ -17,57 +17,50 @@ class LocationRepositoryImpl implements LocationRepository {
   @override
   Future<DataState<LocationEntity>> getLocation() async {
     try {
-      bool serviceEnabled = false;
-
-      // Test if location services are enabled.
-      serviceEnabled = await locationService.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        return DataFailed(LocationServiceNotEnabledFailure());
-      }
-
-      LocationPermission permission = await locationService.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await locationService.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return DataFailed(LocationPermissionDenied());
-        }
-      }
-      if (permission == LocationPermission.deniedForever) {
-        return DataFailed(LocationPermissionDeniedForever());
-      }
-
       final location = await locationService.getLocation();
-      return DataSuccess(location);
+      return DataState.success(location);
     } on LocationServiceDisabledException {
-      return DataFailed(LocationServiceNotEnabledFailure());
-    } on PermissionDefinitionsNotFoundException {
-      return DataFailed(GeneralFailure());
-    } on PermissionRequestInProgressException {
-      return DataFailed(GeneralFailure());
+      return DataState.failure(LocationServiceNotEnabledFailure());
     } on ConvertingException {
-      return DataFailed(ConvertingFailure());
+      return DataState.failure(ConvertingFailure());
     } on TimeoutException {
-      return DataFailed(LocationTimeoutFailure());
+      return DataState.failure(LocationTimeoutFailure());
     } catch (e) {
-      return DataFailed(UnkownFailure());
+      return DataState.failure(UnkownFailure());
     }
   }
 
   @override
-  Future<DataState<LocationPermission>> checkPermission() {
-    // TODO: implement checkPermission
-    throw UnimplementedError();
+  Future<DataState<LocationPermission>> checkPermission() async {
+    try {
+      final permission = await locationService.checkPermission();
+      return DataState.success(permission);
+    } catch (e) {
+      return DataState.failure(UnkownFailure());
+    }
   }
 
   @override
-  Future<DataState<bool>> isLocationServiceEnabled() {
-    // TODO: implement isLocationServiceEnabled
-    throw UnimplementedError();
+  Future<DataState<bool>> isLocationServiceEnabled() async {
+    try {
+      final location = await locationService.isLocationServiceEnabled();
+      return DataState.success(location);
+    } catch (e) {
+      return DataState.failure(UnkownFailure());
+    }
   }
 
   @override
-  Future<DataState<LocationPermission>> requestPermission() {
-    // TODO: implement requestPermission
-    throw UnimplementedError();
+  Future<DataState<LocationPermission>> requestPermission() async {
+    try {
+      final permission = await locationService.requestPermission();
+      return DataState.success(permission);
+    } on PermissionDefinitionsNotFoundException {
+      return DataState.failure(GeneralFailure());
+    } on PermissionRequestInProgressException {
+      return DataState.failure(GeneralFailure());
+    } catch (e) {
+      return DataState.failure(UnkownFailure());
+    }
   }
 }

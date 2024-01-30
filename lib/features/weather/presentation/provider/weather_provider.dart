@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/params/get_weather_params.dart';
-import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
 import 'package:weather_app/features/weather/domain/usecases/weather/get_weather_by_location.dart';
 
@@ -38,12 +37,10 @@ class WeatherProvider extends ChangeNotifier {
       params: const GetWeatherParams(appid: "appid"),
     );
 
-    if (weatherOrFailure is DataSuccess && weatherOrFailure.data != null) {
-      _weather = weather;
-    } else if (weatherOrFailure is DataFailed &&
-        weatherOrFailure.error != null) {
-      _failure = weatherOrFailure.error;
-    }
+    weatherOrFailure.handle(
+      onSuccess: (weather) => _weather = weather,
+      onError: (failure) => _failure = failure,
+    );
 
     _loading = false;
     notifyListeners();

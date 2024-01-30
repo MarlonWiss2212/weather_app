@@ -42,6 +42,14 @@ class LocationPermissionDeniedForever extends Failure {
         );
 }
 
+class LocationPermissionUnableToDetermine extends Failure {
+  LocationPermissionUnableToDetermine()
+      : super(
+          errorMessage:
+              "The location permission is unable to determine. Please open the app settings to enable them.",
+        );
+}
+
 class LocationServiceNotEnabledFailure extends Failure {
   LocationServiceNotEnabledFailure()
       : super(

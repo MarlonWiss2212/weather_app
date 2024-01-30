@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/data/data_sources/local/settings_service.dart';
@@ -16,13 +15,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
     try {
       final openAppSettings = await settingsService.openLocationSettings();
       if (openAppSettings == false) {
-        return DataFailed(OpeningLocationSettingsFailure());
+        return DataState.failure(OpeningLocationSettingsFailure());
       }
-
-      // ignore: void_checks
-      return const DataSuccess(Void);
+      return DataState.success(null);
     } catch (e) {
-      return DataFailed(UnkownFailure());
+      return DataState.failure(UnkownFailure());
     }
   }
 
@@ -31,13 +28,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
     try {
       final openAppSettings = await settingsService.openAppSettings();
       if (openAppSettings == false) {
-        return DataFailed(OpeningAppSettingsFailure());
+        return DataState.failure(OpeningAppSettingsFailure());
       }
-
-      // ignore: void_checks
-      return const DataSuccess(Void);
+      return DataState.success(null);
     } catch (e) {
-      return DataFailed(UnkownFailure());
+      return DataState.failure(UnkownFailure());
     }
   }
 }

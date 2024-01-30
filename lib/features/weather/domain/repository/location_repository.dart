@@ -4,22 +4,15 @@ import 'package:weather_app/features/weather/domain/entities/location_entity.dar
 
 /// Represents the Repository responsible for retrieving location data.
 abstract class LocationRepository {
-  /// Returns the current position.
-  ///
-  /// Throws a [ConvertingException] if the convertion did not work
-  /// Throws a [TimeoutException] when no location is received within the supplied [timeLimit] duration.
-  /// Throws a [LocationServiceDisabledException] when the user allowed access, but the location services of the device are disabled.
+  /// Returns the current [LocationEntity] or a failure.
   Future<DataState<LocationEntity>> getLocation();
 
-  /// Returns a [Future] indicating if the user allows the App to access the device's location.
+  /// Returns a [Future] indicating if the user allows the App to access the device's location or a failure.
   Future<DataState<LocationPermission>> checkPermission();
 
-  /// Returns a [Future] containing a [bool] value indicating whether location services are enabled on the device.
-  Future<DataState<bool>> isLocationServiceEnabled();
+  /// Returns a [Future] either with [void] or a failure when the locationService is not enabled.
+  Future<DataState<void>> isLocationServiceEnabled();
 
-  // /Request permission to access the location of the device.
-  /// Returns a [Future] which when completes indicates if the user granted permission to access the device's location.
-  /// Throws a [PermissionDefinitionsNotFoundException] when the required platform specific configuration is missing (e.g. in the AndroidManifest.xml on Android or the Info.plist on iOS).
-  /// A [PermissionRequestInProgressException] is thrown if permissions are requested while an earlier request has not yet been completed.
+  /// Request permission to access the location of the device or a failure.
   Future<DataState<LocationPermission>> requestPermission();
 }

@@ -1,4 +1,3 @@
-import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/params/get_weather_params.dart';
 import 'package:weather_app/core/params/get_weather_with_location_params.dart';
 import 'package:weather_app/core/resources/data_state.dart';
@@ -23,20 +22,15 @@ class GetWeatherByLocationUseCase
     required GetWeatherParams params,
   }) async {
     final locationOrFailure = await getLocationUseCase.call();
-
-    if (locationOrFailure is DataFailed && locationOrFailure.error != null) {
-      return DataFailed(locationOrFailure.error!);
-    }
-    if (locationOrFailure.data == null) {
-      return DataFailed(GeneralFailure());
-    }
-
-    return weatherRepository.getWeatherData(
-      params: GetWeatherWithLocationParams.fromGetWeatherParams(
-        lat: locationOrFailure.data!.latitude,
-        lon: locationOrFailure.data!.longitude,
-        params: params,
+    return locationOrFailure.handle(
+      onSuccess: (location) => weatherRepository.getWeatherData(
+        params: GetWeatherWithLocationParams.fromGetWeatherParams(
+          lat: locationOrFailure.data!.latitude,
+          lon: locationOrFailure.data!.longitude,
+          params: params,
+        ),
       ),
+      onError: (failure) => DataState.failure(failure),
     );
   }
 }
