@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_rain_entity.dart';
+import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_snow_entity.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_weather_entity.dart';
 
 /// Current weather data API response
@@ -50,7 +51,7 @@ class WeatherForecastCurrentEntity extends Equatable {
   final WeatherForecastRainEntity rain;
 
   /// Snow
-  final WeatherForecastRainEntity snow;
+  final WeatherForecastSnowEntity snow;
 
   /// Weather
   final List<WeatherForecastWeatherEntity> weather;

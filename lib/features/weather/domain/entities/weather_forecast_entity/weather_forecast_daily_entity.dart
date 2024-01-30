@@ -24,7 +24,7 @@ class WeatherForecastDailyEntity extends Equatable {
   final double moonPhase;
 
   /// Human-readable description of the weather conditions for the day
-  final String sumary;
+  final String summary;
 
   /// Units – default: kelvin, metric: Celsius, imperial: Fahrenheit. How to change units used [https://openweathermap.org/api/one-call-3#data]
   final WeatherForecastTempEntity temp;
@@ -75,7 +75,7 @@ class WeatherForecastDailyEntity extends Equatable {
     required this.moonrise,
     required this.moonset,
     required this.moonPhase,
-    required this.sumary,
+    required this.summary,
     required this.temp,
     required this.feelsLike,
     required this.pressure,
@@ -101,7 +101,7 @@ class WeatherForecastDailyEntity extends Equatable {
       moonrise,
       moonset,
       moonPhase,
-      sumary,
+      summary,
       temp,
       feelsLike,
       pressure,

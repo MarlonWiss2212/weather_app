@@ -1,4 +1,9 @@
 import 'package:weather_app/core/errors/exceptions.dart';
+import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_alert_model.dart';
+import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_current_model.dart';
+import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_daily_model.dart';
+import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_hourly_model.dart';
+import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_minutly_model.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
 
 class WeatherForecastModel extends WeatherForecastEntity {
@@ -19,17 +24,39 @@ class WeatherForecastModel extends WeatherForecastEntity {
   /// Throws an [ConvertingException] if the convertion did not work
   factory WeatherForecastModel.fromJSON(Map<String, dynamic> json) {
     try {
+      final List<WeatherForecastAlertModel> alerts = [];
+      for (final alert in json["alerts"]) {
+        alerts.add(WeatherForecastAlertModel.fromJson(alert));
+      }
+
+      final List<WeatherForecastMinutlyModel> minutly = [];
+      for (final minute in json["minutly"]) {
+        minutly.add(WeatherForecastMinutlyModel.fromJson(minute));
+      }
+
+      final List<WeatherForecastHourlyModel> hourly = [];
+      for (final hour in json["hourly"]) {
+        hourly.add(WeatherForecastHourlyModel.fromJson(hour));
+      }
+
+      final List<WeatherForecastDailyModel> daily = [];
+      for (final day in json["daily"]) {
+        daily.add(WeatherForecastDailyModel.fromJson(day));
+      }
+
       return WeatherForecastModel(
         lat: json["lat"],
         lon: json["lon"],
         timezone: json["timezone"],
         timezoneOffset: json["timezoneOffset"],
-        current: null,
-        minutly: null,
-        hourly: null,
-        daily: null,
-        alerts: null,
+        current: WeatherForecastCurrentModel.fromJson(json["current"]),
+        minutly: minutly,
+        hourly: hourly,
+        daily: daily,
+        alerts: alerts,
       );
+    } on ConvertingException {
+      rethrow;
     } catch (e) {
       throw ConvertingException();
     }

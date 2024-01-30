@@ -1,3 +1,4 @@
+import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_alert_entity.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_current_entity.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
@@ -30,7 +31,7 @@ class WeatherForecastEntity {
   final List<WeatherForecastDailyEntity> daily;
 
   /// National weather alerts data from major national weather warning systems
-  final dynamic alerts;
+  final List<WeatherForecastAlertEntity> alerts;
 
   WeatherForecastEntity({
     required this.lat,

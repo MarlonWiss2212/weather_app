@@ -35,6 +35,8 @@ class LocationModel extends LocationEntity {
         speed: position.speed,
         speedAccuracy: position.speedAccuracy,
       );
+    } on ConvertingException {
+      rethrow;
     } catch (e) {
       throw ConvertingException();
     }

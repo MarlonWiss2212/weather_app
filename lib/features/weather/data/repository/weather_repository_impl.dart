@@ -21,8 +21,12 @@ class WeatherRepositoryImpl implements WeatherRepository {
       return DataState.success(data);
     } on NoAPIResponseException {
       return DataState.failure(NoAPIResponseFailure());
+    } on ConvertingException {
+      return DataState.failure(ConvertingFailure());
     } on DioException catch (e) {
       return DataState.failure(ServerFailure(error: e));
+    } catch (e) {
+      return DataState.failure(UnkownFailure());
     }
   }
 }

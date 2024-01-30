@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 /// National weather alerts data from major national weather warning systems
-class WeatherForecastAlertsEntity extends Equatable {
+class WeatherForecastAlertEntity extends Equatable {
   /// Name of the alert source. Please read here the full list of alerts sources [https://openweathermap.org/api/one-call-3#listsource]
   final String senderName;
 
@@ -20,7 +20,7 @@ class WeatherForecastAlertsEntity extends Equatable {
   /// Type of severe weather
   final List<dynamic> tags;
 
-  const WeatherForecastAlertsEntity({
+  const WeatherForecastAlertEntity({
     required this.senderName,
     required this.event,
     required this.start,
