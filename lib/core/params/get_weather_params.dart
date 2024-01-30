@@ -1,12 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class GetWeatherParams extends Equatable {
-  /// Latitude, decimal (-90; 90). If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API [https://openweathermap.org/api/geocoding-api]
-  final double lat;
-
-  /// Longitude, decimal (-180; 180). If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API [https://openweathermap.org/api/geocoding-api]
-  final double lon;
-
   /// Your unique API key (you can always find it on your account page under the "API key" tab [https://home.openweathermap.org/api_keys])
   final String appid;
 
@@ -26,8 +20,6 @@ class GetWeatherParams extends Equatable {
   final String? lang;
 
   const GetWeatherParams({
-    required this.lat,
-    required this.lon,
     required this.appid,
     this.exclude,
     this.units,
@@ -35,12 +27,10 @@ class GetWeatherParams extends Equatable {
   });
 
   @override
-  List<Object?> get props => [lat, lon, appid, exclude, units, lang];
+  List<Object?> get props => [appid, exclude, units, lang];
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> map = <String, dynamic>{
-      'lat': lat,
-      'lon': lon,
       'appid': appid,
     };
     if (exclude != null) {

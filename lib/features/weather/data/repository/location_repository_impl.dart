@@ -15,7 +15,7 @@ class LocationRepositoryImpl implements LocationRepository {
   });
 
   @override
-  Future<DataState<LocationEntity>> getCurrentLocation() async {
+  Future<DataState<LocationEntity>> getLocation() async {
     try {
       bool serviceEnabled = false;
 
@@ -51,5 +51,23 @@ class LocationRepositoryImpl implements LocationRepository {
     } catch (e) {
       return DataFailed(UnkownFailure());
     }
+  }
+
+  @override
+  Future<DataState<LocationPermission>> checkPermission() {
+    // TODO: implement checkPermission
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState<bool>> isLocationServiceEnabled() {
+    // TODO: implement isLocationServiceEnabled
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState<LocationPermission>> requestPermission() {
+    // TODO: implement requestPermission
+    throw UnimplementedError();
   }
 }

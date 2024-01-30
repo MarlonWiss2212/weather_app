@@ -11,6 +11,7 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
 
   @override
   Future<DataState<LocationEntity>> call({void params}) {
-    return locationRepository.getCurrentLocation();
+    // TODO: implement repo functions
+    return locationRepository.getLocation();
   }
 }

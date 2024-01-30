@@ -5,6 +5,9 @@ abstract class DataState<T> {
   final Failure? error;
 
   const DataState({this.data, this.error});
+
+  bool get isSuccess => data != null;
+  bool get isFailed => error != null;
 }
 
 class DataSuccess<T> extends DataState<T> {

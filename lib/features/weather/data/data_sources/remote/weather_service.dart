@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:weather_app/core/constants/constants.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
-import 'package:weather_app/core/params/params.dart';
+import 'package:weather_app/core/params/get_weather_params.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
 
 abstract class WeatherService {

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/errors/failures.dart';
-import 'package:weather_app/core/params/params.dart';
+import 'package:weather_app/core/params/get_weather_params.dart';
 import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
-import 'package:weather_app/features/weather/domain/repository/weather_repository.dart';
-import 'package:weather_app/features/weather/domain/usecases/weather/get_weather.dart';
+import 'package:weather_app/features/weather/domain/usecases/weather/get_weather_by_location.dart';
 
+/// Provides state and functions for the weather data
 class WeatherProvider extends ChangeNotifier {
-  final WeatherRepository weatherRepository;
+  final GetWeatherByLocationUseCase getWeatherByLocationUseCase;
+
   WeatherForecastEntity? _weather;
   Failure? _failure;
   bool _loading = false;
 
   WeatherProvider({
-    required this.weatherRepository,
+    required this.getWeatherByLocationUseCase,
   });
 
   Failure? get failure {
@@ -29,13 +30,12 @@ class WeatherProvider extends ChangeNotifier {
   }
 
   /// Represents the function responsible for retrieving weather data.
-  Future<void> getWeather({required GetWeatherParams params}) async {
+  Future<void> getWeather() async {
     _loading = true;
     notifyListeners();
 
-    final weatherOrFailure =
-        await GetWeatherUseCase(weatherRepository: weatherRepository).call(
-      params: params,
+    final weatherOrFailure = await getWeatherByLocationUseCase.call(
+      params: const GetWeatherParams(appid: "appid"),
     );
 
     if (weatherOrFailure is DataSuccess && weatherOrFailure.data != null) {
@@ -44,6 +44,7 @@ class WeatherProvider extends ChangeNotifier {
         weatherOrFailure.error != null) {
       _failure = weatherOrFailure.error;
     }
+
     _loading = false;
     notifyListeners();
   }
