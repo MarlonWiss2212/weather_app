@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:weather_app/features/location/data/models/location_model.dart';
+import 'package:weather_app/features/weather/data/models/location_model.dart';
 
 abstract class LocationService {
   /// Returns the current position.

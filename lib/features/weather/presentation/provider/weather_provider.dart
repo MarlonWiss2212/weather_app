@@ -4,7 +4,7 @@ import 'package:weather_app/core/params/params.dart';
 import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
 import 'package:weather_app/features/weather/domain/repository/weather_repository.dart';
-import 'package:weather_app/features/weather/domain/usecases/get_weather.dart';
+import 'package:weather_app/features/weather/domain/usecases/weather/get_weather.dart';
 
 class WeatherProvider extends ChangeNotifier {
   final WeatherRepository weatherRepository;

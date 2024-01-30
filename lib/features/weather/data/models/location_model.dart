@@ -1,6 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
-import 'package:weather_app/features/location/domain/entities/location_entity.dart';
+import 'package:weather_app/features/weather/domain/entities/location_entity.dart';
 
 class LocationModel extends LocationEntity {
   const LocationModel({
