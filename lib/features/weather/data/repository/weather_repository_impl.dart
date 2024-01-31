@@ -20,13 +20,13 @@ class WeatherRepositoryImpl implements WeatherRepository {
       final data = await weatherService.getWeatherData(params: params);
       return DataState.success(data);
     } on NoAPIResponseException {
-      return DataState.failure(NoAPIResponseFailure());
+      return DataState.failure(const NoAPIResponseFailure());
     } on ConvertingException {
-      return DataState.failure(ConvertingFailure());
+      return DataState.failure(const ConvertingFailure());
     } on DioException catch (e) {
       return DataState.failure(ServerFailure(error: e));
     } catch (e) {
-      return DataState.failure(UnkownFailure());
+      return DataState.failure(const UnkownFailure());
     }
   }
 }

@@ -19,14 +19,12 @@ class LocationRepositoryImpl implements LocationRepository {
     try {
       final location = await locationService.getLocation();
       return DataState.success(location);
-    } on LocationServiceDisabledException {
-      return DataState.failure(LocationServiceNotEnabledFailure());
     } on ConvertingException {
-      return DataState.failure(ConvertingFailure());
+      return DataState.failure(const ConvertingFailure());
     } on TimeoutException {
-      return DataState.failure(LocationTimeoutFailure());
+      return DataState.failure(const LocationTimeoutFailure());
     } catch (e) {
-      return DataState.failure(UnkownFailure());
+      return DataState.failure(const UnkownFailure());
     }
   }
 
@@ -36,7 +34,7 @@ class LocationRepositoryImpl implements LocationRepository {
       final permission = await locationService.checkPermission();
       return DataState.success(permission);
     } catch (e) {
-      return DataState.failure(UnkownFailure());
+      return DataState.failure(const UnkownFailure());
     }
   }
 
@@ -46,11 +44,11 @@ class LocationRepositoryImpl implements LocationRepository {
       final locationServiceEnabled =
           await locationService.isLocationServiceEnabled();
       if (locationServiceEnabled == false) {
-        return DataState.failure(LocationServiceNotEnabledFailure());
+        return DataState.failure(const LocationServiceNotEnabledFailure());
       }
       return DataState.success(null);
     } catch (e) {
-      return DataState.failure(UnkownFailure());
+      return DataState.failure(const UnkownFailure());
     }
   }
 
@@ -60,11 +58,11 @@ class LocationRepositoryImpl implements LocationRepository {
       final permission = await locationService.requestPermission();
       return DataState.success(permission);
     } on PermissionDefinitionsNotFoundException {
-      return DataState.failure(GeneralFailure());
+      return DataState.failure(const GeneralFailure());
     } on PermissionRequestInProgressException {
-      return DataState.failure(GeneralFailure());
+      return DataState.failure(const GeneralFailure());
     } catch (e) {
-      return DataState.failure(UnkownFailure());
+      return DataState.failure(const UnkownFailure());
     }
   }
 }

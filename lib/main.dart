@@ -8,10 +8,13 @@ import 'package:weather_app/features/weather/data/repository/location_repository
 import 'package:weather_app/features/weather/data/repository/weather_repository_impl.dart';
 import 'package:weather_app/features/weather/domain/usecases/location/get_location.dart';
 import 'package:weather_app/features/weather/domain/usecases/weather/get_weather_by_location.dart';
+import 'package:weather_app/injection_container.dart';
 
 void main() async {
-  // load env
-  await dotenv.load(fileName: ".local.env");
+  await Future.wait([
+    initializeDependencies(),
+    dotenv.load(fileName: ".local.env"),
+  ]);
   runApp(const MyApp());
 }
 
@@ -48,16 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: FutureBuilder(
         future: GetWeatherByLocationUseCase(
-          weatherRepository: WeatherRepositoryImpl(
-            weatherService: WeatherServiceImpl(
-              dio: Dio(),
-            ),
-          ),
-          getLocationUseCase: GetLocationUseCase(
-            locationRepository: LocationRepositoryImpl(
-              locationService: LocationServiceImpl(),
-            ),
-          ),
+          weatherRepository: sl(),
+          getLocationUseCase: sl(),
         ).call(
           params: GetWeatherParams(
             appid: dotenv.get("OPEN_WEATHER_APP_ID"),

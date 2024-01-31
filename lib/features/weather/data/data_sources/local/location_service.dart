@@ -6,7 +6,6 @@ abstract class LocationService {
   ///
   /// Throws a [ConvertingException] if the convertion did not work
   /// Throws a [TimeoutException] when no location is received within the supplied [timeLimit] duration.
-  /// Throws a [LocationServiceDisabledException] when the user allowed access, but the location services of the device are disabled.
   Future<LocationModel> getLocation();
 
   /// Returns a [Future] indicating if the user allows the App to access the device's location.

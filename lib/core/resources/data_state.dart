@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:weather_app/core/errors/failures.dart';
 
-class DataState<T> {
+class DataState<T> extends Equatable {
   final T? data;
   final Failure? failure;
 
-  DataState._({
+  const DataState._({
     this.data,
     this.failure,
   });
@@ -25,4 +26,7 @@ class DataState<T> {
 
     throw GeneralFailure();
   }
+
+  @override
+  List<Object?> get props => [failure, data];
 }

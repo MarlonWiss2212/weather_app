@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:weather_app/core/constants/constants.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
 import 'package:weather_app/core/params/get_weather_with_location_params.dart';
 import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_model.dart';
@@ -21,7 +20,7 @@ class WeatherServiceImpl implements WeatherService {
     required GetWeatherWithLocationParams params,
   }) async {
     final response = await dio.get<Map<String, dynamic>>(
-      "$apiBaseUrl/data/3.0/onecall",
+      "/data/3.0/onecall",
       queryParameters: params.toMap(),
       options: Options(method: "GET"),
     );

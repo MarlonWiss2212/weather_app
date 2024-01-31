@@ -15,11 +15,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
     try {
       final openAppSettings = await settingsService.openLocationSettings();
       if (openAppSettings == false) {
-        return DataState.failure(OpeningLocationSettingsFailure());
+        return DataState.failure(const OpeningLocationSettingsFailure());
       }
       return DataState.success(null);
     } catch (e) {
-      return DataState.failure(UnkownFailure());
+      return DataState.failure(const UnkownFailure());
     }
   }
 
@@ -28,11 +28,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
     try {
       final openAppSettings = await settingsService.openAppSettings();
       if (openAppSettings == false) {
-        return DataState.failure(OpeningAppSettingsFailure());
+        return DataState.failure(const OpeningAppSettingsFailure());
       }
       return DataState.success(null);
     } catch (e) {
-      return DataState.failure(UnkownFailure());
+      return DataState.failure(const UnkownFailure());
     }
   }
 }

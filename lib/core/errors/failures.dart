@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class Failure {
+abstract class Failure extends Equatable {
   final int? statusCode;
   final String errorMessage;
 
-  Failure({required this.errorMessage, this.statusCode});
+  const Failure({required this.errorMessage, this.statusCode});
 }
 
 // Server failures
@@ -15,88 +16,115 @@ class ServerFailure extends Failure {
           errorMessage: error.message ?? "",
           statusCode: error.response?.statusCode,
         );
+
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class NoAPIResponseFailure extends Failure {
-  NoAPIResponseFailure()
+  const NoAPIResponseFailure()
       : super(
           errorMessage: "The API didn't return any data",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 // location failures
 
 class LocationPermissionDenied extends Failure {
-  LocationPermissionDenied()
+  const LocationPermissionDenied()
       : super(
           errorMessage:
               "The location permission is denied. Please open the app settings to enable them.",
         );
+
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationPermissionDeniedForever extends Failure {
-  LocationPermissionDeniedForever()
+  const LocationPermissionDeniedForever()
       : super(
           errorMessage:
               "The location permission is denied forever. Please open the app settings to enable them.",
         );
+
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationPermissionUnableToDetermine extends Failure {
-  LocationPermissionUnableToDetermine()
+  const LocationPermissionUnableToDetermine()
       : super(
           errorMessage:
               "The location permission is unable to determine. Please open the app settings to enable them.",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationServiceNotEnabledFailure extends Failure {
-  LocationServiceNotEnabledFailure()
+  const LocationServiceNotEnabledFailure()
       : super(
           errorMessage:
               "The location service is disabled please enable it in your device settings first.",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationTimeoutFailure extends Failure {
-  LocationTimeoutFailure()
+  const LocationTimeoutFailure()
       : super(
           errorMessage: "Your device did not return any location data",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 // Setting failures
 
 class OpeningAppSettingsFailure extends Failure {
-  OpeningAppSettingsFailure()
+  const OpeningAppSettingsFailure()
       : super(
           errorMessage: "Failure opening the app settings.",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class OpeningLocationSettingsFailure extends Failure {
-  OpeningLocationSettingsFailure()
+  const OpeningLocationSettingsFailure()
       : super(
           errorMessage: "Failure opening the location settings.",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class ConvertingFailure extends Failure {
-  ConvertingFailure()
+  const ConvertingFailure()
       : super(
           errorMessage:
               "The App has an error converting data we will try to fix it soon",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class GeneralFailure extends Failure {
-  GeneralFailure()
+  const GeneralFailure()
       : super(
           errorMessage:
               "The App has a general failure we will try to fix it soon",
         );
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
 
 class UnkownFailure extends Failure {
-  UnkownFailure() : super(errorMessage: "Unkown failure");
+  const UnkownFailure() : super(errorMessage: "Unkown failure");
+  @override
+  List<Object?> get props => [errorMessage, statusCode];
 }
