@@ -4,7 +4,7 @@ import 'package:weather_app/core/errors/exceptions.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/data/data_sources/local/location_service.dart';
-import 'package:weather_app/features/weather/domain/entities/location_entity.dart';
+import 'package:weather_app/features/weather/data/models/location_model.dart';
 import 'package:weather_app/features/weather/domain/repository/location_repository.dart';
 
 class LocationRepositoryImpl implements LocationRepository {
@@ -15,7 +15,7 @@ class LocationRepositoryImpl implements LocationRepository {
   });
 
   @override
-  Future<DataState<LocationEntity>> getLocation() async {
+  Future<DataState<LocationModel>> getLocation() async {
     try {
       final location = await locationService.getLocation();
       return DataState.success(location);

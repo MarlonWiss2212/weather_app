@@ -2,10 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
 import 'package:weather_app/core/params/get_weather_with_location_params.dart';
 import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_model.dart';
-import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
 
 abstract class WeatherService {
-  Future<WeatherForecastEntity> getWeatherData({
+  Future<WeatherForecastModel> getWeatherData({
     required GetWeatherWithLocationParams params,
   });
 }
@@ -16,7 +15,7 @@ class WeatherServiceImpl implements WeatherService {
   WeatherServiceImpl({required this.dio});
 
   @override
-  Future<WeatherForecastEntity> getWeatherData({
+  Future<WeatherForecastModel> getWeatherData({
     required GetWeatherWithLocationParams params,
   }) async {
     final response = await dio.get<Map<String, dynamic>>(
