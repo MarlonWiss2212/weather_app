@@ -31,7 +31,6 @@ class GetWeatherByLocationUseCase
             params: params,
           ),
         );
-        print(data);
         return data;
       },
       onError: (failure) => DataState.failure(failure),

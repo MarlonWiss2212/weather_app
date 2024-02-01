@@ -20,6 +20,24 @@ final sl = GetIt.instance;
 
 /// initializes dependecy injection
 Future<void> initializeDependencies() async {
+  //data sources
+  sl.registerSingleton<LocationService>(LocationServiceImpl());
+  sl.registerSingleton<SettingsService>(SettingsServiceImpl());
+  sl.registerSingleton<WeatherService>(WeatherServiceImpl(
+    dio: Dio(BaseOptions(baseUrl: apiBaseUrl)),
+  ));
+
+  //repositories
+  sl.registerSingleton<WeatherRepository>(
+    WeatherRepositoryImpl(weatherService: sl()),
+  );
+  sl.registerSingleton<LocationRepository>(
+    LocationRepositoryImpl(locationService: sl()),
+  );
+  sl.registerSingleton<SettingsRepository>(
+    SettingsRepositoryImpl(settingsService: sl()),
+  );
+
   // usecases
   sl.registerSingleton<GetLocationUseCase>(
     GetLocationUseCase(locationRepository: sl()),
@@ -36,22 +54,4 @@ Future<void> initializeDependencies() async {
       getLocationUseCase: sl(),
     ),
   );
-
-  //repositories
-  sl.registerSingleton<WeatherRepository>(
-    WeatherRepositoryImpl(weatherService: sl()),
-  );
-  sl.registerSingleton<LocationRepository>(
-    LocationRepositoryImpl(locationService: sl()),
-  );
-  sl.registerSingleton<SettingsRepository>(
-    SettingsRepositoryImpl(settingsService: sl()),
-  );
-
-  //data sources
-  sl.registerSingleton<LocationService>(LocationServiceImpl());
-  sl.registerSingleton<SettingsService>(SettingsServiceImpl());
-  sl.registerSingleton<WeatherService>(WeatherServiceImpl(
-    dio: Dio(BaseOptions(baseUrl: apiBaseUrl)),
-  ));
 }

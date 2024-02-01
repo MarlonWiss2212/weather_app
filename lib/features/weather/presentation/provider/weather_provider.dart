@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/params/get_weather_params.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
@@ -6,15 +7,18 @@ import 'package:weather_app/features/weather/domain/usecases/weather/get_weather
 
 /// Provides state and functions for the weather data
 class WeatherProvider extends ChangeNotifier {
-  final GetWeatherByLocationUseCase getWeatherByLocationUseCase;
+  final GetWeatherByLocationUseCase _getWeatherByLocationUseCase;
 
+  /// holds the weather data
   WeatherForecastEntity? _weather;
+
+  /// saves the last failure
   Failure? _failure;
+
+  /// boolean if it loads
   bool _loading = false;
 
-  WeatherProvider({
-    required this.getWeatherByLocationUseCase,
-  });
+  WeatherProvider(this._getWeatherByLocationUseCase);
 
   Failure? get failure {
     return _failure;
@@ -33,8 +37,11 @@ class WeatherProvider extends ChangeNotifier {
     _loading = true;
     notifyListeners();
 
-    final weatherOrFailure = await getWeatherByLocationUseCase.call(
-      params: const GetWeatherParams(appid: "appid"),
+    final weatherOrFailure = await _getWeatherByLocationUseCase.call(
+      params: GetWeatherParams(
+        appid: dotenv.get("OPEN_WEATHER_APP_ID"),
+        units: "metric",
+      ),
     );
 
     weatherOrFailure.handle(

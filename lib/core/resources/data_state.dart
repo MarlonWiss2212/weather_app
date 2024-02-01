@@ -17,14 +17,13 @@ class DataState<T> extends Equatable {
     required D Function(T data) onSuccess,
     required D Function(Failure failure) onError,
   }) {
-    if (data != null || data.runtimeType == Null) {
-      return onSuccess(data as T);
-    }
     if (failure != null) {
       return onError(failure!);
     }
-
-    throw GeneralFailure();
+    if (data != null || data.runtimeType == Null) {
+      return onSuccess(data as T);
+    }
+    throw const GeneralFailure();
   }
 
   @override

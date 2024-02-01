@@ -25,23 +25,31 @@ class WeatherForecastModel extends WeatherForecastEntity {
   factory WeatherForecastModel.fromJSON(Map<String, dynamic> json) {
     try {
       final List<WeatherForecastAlertModel> alerts = [];
-      for (final alert in json["alerts"]) {
-        alerts.add(WeatherForecastAlertModel.fromJson(alert));
+      if (json["alerts"] != null) {
+        for (final alert in json["alerts"]) {
+          alerts.add(WeatherForecastAlertModel.fromJson(alert));
+        }
       }
 
       final List<WeatherForecastMinutlyModel> minutly = [];
-      for (final minute in json["minutely"]) {
-        minutly.add(WeatherForecastMinutlyModel.fromJson(minute));
+      if (json["minutely"] != null) {
+        for (final minute in json["minutely"]) {
+          minutly.add(WeatherForecastMinutlyModel.fromJson(minute));
+        }
       }
 
       final List<WeatherForecastHourlyModel> hourly = [];
-      for (final hour in json["hourly"]) {
-        hourly.add(WeatherForecastHourlyModel.fromJson(hour));
+      if (json["hourly"] != null) {
+        for (final hour in json["hourly"]) {
+          hourly.add(WeatherForecastHourlyModel.fromJson(hour));
+        }
       }
 
       final List<WeatherForecastDailyModel> daily = [];
-      for (final day in json["daily"]) {
-        daily.add(WeatherForecastDailyModel.fromJson(day));
+      if (json["daily"] != null) {
+        for (final day in json["daily"]) {
+          daily.add(WeatherForecastDailyModel.fromJson(day));
+        }
       }
 
       return WeatherForecastModel(
