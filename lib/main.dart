@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/pages/weather_page.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/injection_container.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   await Future.wait([
     initializeDependencies(),
     dotenv.load(fileName: ".local.env"),
+    initializeDateFormatting()
   ]);
   runApp(const MyApp());
 }
@@ -19,9 +21,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.light,
       title: 'GoWeather',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 0, 140, 255),
+          background: const Color.fromARGB(255, 46, 161, 255),
+          primary: Colors.white,
+          secondary: const Color.fromARGB(255, 209, 209, 209),
+          tertiary: const Color.fromARGB(255, 177, 177, 177),
+        ),
         useMaterial3: true,
       ),
       home: SafeArea(

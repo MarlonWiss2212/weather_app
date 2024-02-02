@@ -6,7 +6,7 @@ class WeatherForecastMinutlyEntity extends Equatable {
   final int dt;
 
   /// Precipitation, mm/h. Please note that only mm/h as units of measurement are available for this parameter
-  final int precipitation;
+  final double precipitation;
 
   const WeatherForecastMinutlyEntity({
     required this.dt,

@@ -14,7 +14,7 @@ class WeatherForecastMinutlyModel extends WeatherForecastMinutlyEntity {
     try {
       return WeatherForecastMinutlyModel(
         dt: json["dt"],
-        precipitation: json["precipitation"],
+        precipitation: double.parse(json["precipitation"].toString()),
       );
     } on ConvertingException {
       rethrow;
