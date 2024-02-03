@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_app_bar/weather_app_bar.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily_data.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
