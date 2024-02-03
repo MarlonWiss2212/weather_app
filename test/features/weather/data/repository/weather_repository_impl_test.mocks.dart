@@ -3,13 +3,18 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i6;
 
 import 'package:dio/dio.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:weather_app/core/params/get_weather_with_location_params.dart'
-    as _i6;
+    as _i7;
+import 'package:weather_app/core/params/reverse_geocoding_params.dart' as _i9;
+import 'package:weather_app/features/weather/data/data_sources/remote/geocoding_service.dart'
+    as _i8;
 import 'package:weather_app/features/weather/data/data_sources/remote/weather_service.dart'
+    as _i5;
+import 'package:weather_app/features/weather/data/models/geocoding_models/reverse_geocoding_model.dart'
     as _i4;
 import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_model.dart'
     as _i3;
@@ -48,11 +53,22 @@ class _FakeWeatherForecastModel_1 extends _i1.SmartFake
         );
 }
 
+class _FakeReverseGeocodingModel_2 extends _i1.SmartFake
+    implements _i4.ReverseGeocodingModel {
+  _FakeReverseGeocodingModel_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [WeatherServiceImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockWeatherServiceImpl extends _i1.Mock
-    implements _i4.WeatherServiceImpl {
+    implements _i5.WeatherServiceImpl {
   MockWeatherServiceImpl() {
     _i1.throwOnMissingStub(this);
   }
@@ -67,15 +83,15 @@ class MockWeatherServiceImpl extends _i1.Mock
       ) as _i2.Dio);
 
   @override
-  _i5.Future<_i3.WeatherForecastModel> getWeatherData(
-          {required _i6.GetWeatherWithLocationParams? params}) =>
+  _i6.Future<_i3.WeatherForecastModel> getWeatherData(
+          {required _i7.GetWeatherWithLocationParams? params}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getWeatherData,
           [],
           {#params: params},
         ),
-        returnValue: _i5.Future<_i3.WeatherForecastModel>.value(
+        returnValue: _i6.Future<_i3.WeatherForecastModel>.value(
             _FakeWeatherForecastModel_1(
           this,
           Invocation.method(
@@ -84,5 +100,44 @@ class MockWeatherServiceImpl extends _i1.Mock
             {#params: params},
           ),
         )),
-      ) as _i5.Future<_i3.WeatherForecastModel>);
+      ) as _i6.Future<_i3.WeatherForecastModel>);
+}
+
+/// A class which mocks [GeocodingServiceImpl].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGeocodingServiceImpl extends _i1.Mock
+    implements _i8.GeocodingServiceImpl {
+  MockGeocodingServiceImpl() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.Dio get dio => (super.noSuchMethod(
+        Invocation.getter(#dio),
+        returnValue: _FakeDio_0(
+          this,
+          Invocation.getter(#dio),
+        ),
+      ) as _i2.Dio);
+
+  @override
+  _i6.Future<_i4.ReverseGeocodingModel> reverseGeocoding(
+          {required _i9.ReverseGeocodingParams? params}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #reverseGeocoding,
+          [],
+          {#params: params},
+        ),
+        returnValue: _i6.Future<_i4.ReverseGeocodingModel>.value(
+            _FakeReverseGeocodingModel_2(
+          this,
+          Invocation.method(
+            #reverseGeocoding,
+            [],
+            {#params: params},
+          ),
+        )),
+      ) as _i6.Future<_i4.ReverseGeocodingModel>);
 }
