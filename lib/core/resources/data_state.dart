@@ -10,17 +10,29 @@ class DataState<T> extends Equatable {
     this.failure,
   });
 
-  factory DataState.success(T data) => DataState._(data: data);
-  factory DataState.failure(Failure failure) => DataState._(failure: failure);
+  factory DataState.success(T data, {Failure? failure}) => DataState._(
+        data: data,
+        failure: failure,
+      );
+  factory DataState.failure(Failure failure, {T? data}) => DataState._(
+        failure: failure,
+        data: data,
+      );
 
-  D handle<D>({
+  /// handle a function if one variable exists
+  ///
+  /// when both variables exist it will return the value of the success function
+  /// when none exist it will throw a [GeneralFailure]
+  D either<D>({
     required D Function(T data) onSuccess,
     required D Function(Failure failure) onError,
   }) {
-    if (failure != null) {
+    if (failure != null && (data != null || data.runtimeType == Null)) {
+      onError(failure!);
+      return onSuccess(data as T);
+    } else if (failure != null) {
       return onError(failure!);
-    }
-    if (data != null || data.runtimeType == Null) {
+    } else if (data != null || data.runtimeType == Null) {
       return onSuccess(data as T);
     }
     throw const GeneralFailure();

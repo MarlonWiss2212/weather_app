@@ -1,0 +1,30 @@
+import 'package:weather_app/core/errors/exceptions.dart';
+import 'package:weather_app/features/weather/domain/entities/geocoding/reverse_geocoding_entity.dart';
+
+class ReverseGeocodingModel extends ReverseGeocodingEntity {
+  const ReverseGeocodingModel({
+    required super.name,
+    required super.localNames,
+    required super.lat,
+    required super.lon,
+    required super.country,
+    required super.state,
+  });
+
+  factory ReverseGeocodingModel.fromJson(Map<String, dynamic> json) {
+    try {
+      return ReverseGeocodingModel(
+        name: json["name"],
+        localNames: json["local_names"],
+        lat: double.parse(json["lat"].toString()),
+        lon: double.parse(json["lon"].toString()),
+        country: json["country"],
+        state: json["state"],
+      );
+    } on ConvertingException {
+      rethrow;
+    } catch (e) {
+      throw ConvertingException();
+    }
+  }
+}

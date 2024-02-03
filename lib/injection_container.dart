@@ -3,6 +3,7 @@ import "package:get_it/get_it.dart";
 import "package:weather_app/core/constants/constants.dart";
 import "package:weather_app/features/weather/data/data_sources/local/location_service.dart";
 import "package:weather_app/features/weather/data/data_sources/local/settings_service.dart";
+import "package:weather_app/features/weather/data/data_sources/remote/geocoding_service.dart";
 import "package:weather_app/features/weather/data/data_sources/remote/weather_service.dart";
 import "package:weather_app/features/weather/data/repository/location_repository_impl.dart";
 import "package:weather_app/features/weather/data/repository/settings_repository_impl.dart";
@@ -20,16 +21,23 @@ final sl = GetIt.instance;
 
 /// initializes dependecy injection
 Future<void> initializeDependencies() async {
+  final Dio dio = Dio(BaseOptions(baseUrl: apiBaseUrl));
   //data sources
   sl.registerSingleton<LocationService>(LocationServiceImpl());
   sl.registerSingleton<SettingsService>(SettingsServiceImpl());
   sl.registerSingleton<WeatherService>(WeatherServiceImpl(
-    dio: Dio(BaseOptions(baseUrl: apiBaseUrl)),
+    dio: dio,
+  ));
+  sl.registerSingleton<GeocodingService>(GeocodingServiceImpl(
+    dio: dio,
   ));
 
   //repositories
   sl.registerSingleton<WeatherRepository>(
-    WeatherRepositoryImpl(weatherService: sl()),
+    WeatherRepositoryImpl(
+      weatherService: sl(),
+      geocodingService: sl(),
+    ),
   );
   sl.registerSingleton<LocationRepository>(
     LocationRepositoryImpl(locationService: sl()),
