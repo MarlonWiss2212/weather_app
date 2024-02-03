@@ -20,8 +20,8 @@ class GeocodingServiceImpl extends GeocodingService {
   Future<ReverseGeocodingModel> reverseGeocoding({
     required ReverseGeocodingParams params,
   }) async {
-    final response = await dio.get<Map<String, dynamic>>(
-      "geo/1.0/reverse",
+    final response = await dio.get<dynamic>(
+      "/geo/1.0/reverse",
       queryParameters: {
         ...params.toMap(),
         "limit": 1,

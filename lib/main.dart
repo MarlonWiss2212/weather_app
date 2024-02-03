@@ -25,9 +25,10 @@ class MyApp extends StatelessWidget {
       title: 'GoWeather',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 0, 140, 255),
+          seedColor: Colors.white,
           background: const Color.fromARGB(255, 46, 161, 255),
           primary: Colors.white,
+          brightness: Brightness.dark,
           secondary: const Color.fromARGB(255, 209, 209, 209),
           tertiary: const Color.fromARGB(255, 177, 177, 177),
         ),

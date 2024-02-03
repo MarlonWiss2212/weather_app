@@ -8,7 +8,6 @@ class WeatherAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
-      floating: true,
       delegate: WeatherAppBarDelegate(),
     );
   }

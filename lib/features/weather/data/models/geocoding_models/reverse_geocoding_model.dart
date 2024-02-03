@@ -13,9 +13,14 @@ class ReverseGeocodingModel extends ReverseGeocodingEntity {
 
   factory ReverseGeocodingModel.fromJson(Map<String, dynamic> json) {
     try {
+      final Map<String, dynamic>? oldMap = json["local_names"];
+      final Map<String, String> localNames = Map<String, String>.from(
+        oldMap?.cast<String, String>() ?? {},
+      );
+
       return ReverseGeocodingModel(
         name: json["name"],
-        localNames: json["local_names"],
+        localNames: localNames,
         lat: double.parse(json["lat"].toString()),
         lon: double.parse(json["lon"].toString()),
         country: json["country"],

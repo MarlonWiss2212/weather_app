@@ -8,11 +8,11 @@ class WeatherDailyData extends StatelessWidget {
     // final provider = context.watch<WeatherProvider>();
 
     return Container(
-      height: 100,
+      height: 200,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withOpacity(.2),
-        borderRadius: BorderRadius.circular(8),
+        color: Colors.black.withOpacity(.15),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: const Text("Daily"),
     );
