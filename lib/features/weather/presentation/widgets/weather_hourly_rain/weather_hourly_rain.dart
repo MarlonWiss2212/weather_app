@@ -1,20 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly_change_diagram_button.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_rain/weather_hourly_rain_chart.dart';
 
-class WeatherHourly extends StatefulWidget {
-  const WeatherHourly({super.key});
-
-  @override
-  State<WeatherHourly> createState() => _WeatherHourlyState();
-}
-
-class _WeatherHourlyState extends State<WeatherHourly> {
-  bool rainDiagram = true;
+class WeatherHourlyRain extends StatelessWidget {
+  const WeatherHourlyRain({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +21,42 @@ class _WeatherHourlyState extends State<WeatherHourly> {
     );
     final showSkeleton = loading && hourly == null;
 
+    final List<WeatherForecastHourlyEntity> data = hourly ?? [];
+
+    if (hourly == null) {
+      for (int i = 0; i < 10; i++) {
+        data.add(WeatherForecastHourlyEntity(
+          dt: 1644060000 + (i * 3600),
+          temp: 25.5 + (Random().nextDouble() * 5),
+          feelsLike: 26.2 + i,
+          pressure: 1012,
+          humidity: 75,
+          dewPoint: 20.8,
+          uvi: 5.8,
+          clouds: 30,
+          visibility: 10000,
+          windSpeed: 4.5,
+          windDeg: 180,
+          weather: const [],
+          pop: 10.0 + i,
+        ));
+      }
+    }
+
     return Container(
-      height: 250,
-      padding: const EdgeInsets.all(8),
+      height: 200,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.15),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Skeletonizer(
         enabled: showSkeleton,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Flexible(
+        child: WeatherHourlyRainChart(hourly: data),
+      ),
+    );
+  }
+}
+/**Flexible(
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -102,16 +118,4 @@ class _WeatherHourlyState extends State<WeatherHourly> {
                       : 10,
                   separatorBuilder: (_, __) => const SizedBox(width: 20),
                 ),
-              ),
-              const Divider(),
-              WeatherHourlyChangeDiagramButton(
-                onChanged: (newValue) => setState(() => rainDiagram),
-                value: rainDiagram,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+              ), */

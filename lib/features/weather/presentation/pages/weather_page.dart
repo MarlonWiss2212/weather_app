@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_app_bar/weather_app_bar.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily_data.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_rain/weather_hourly_rain.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -34,7 +34,7 @@ class _WeatherPageState extends State<WeatherPage> {
               const SliverPadding(
                 padding: EdgeInsets.symmetric(vertical: 10.0),
                 sliver: SliverToBoxAdapter(
-                  child: WeatherHourly(),
+                  child: WeatherHourlyRain(),
                 ),
               ),
               SliverGrid.count(
