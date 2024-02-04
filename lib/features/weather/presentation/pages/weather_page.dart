@@ -16,6 +16,7 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: RefreshIndicator(

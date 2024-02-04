@@ -18,7 +18,7 @@ class WeatherAppBarDelegate extends SliverPersistentHeaderDelegate {
 
     return SizedBox.expand(
       child: Container(
-        color: Theme.of(context).colorScheme.background,
+        color: Colors.grey,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

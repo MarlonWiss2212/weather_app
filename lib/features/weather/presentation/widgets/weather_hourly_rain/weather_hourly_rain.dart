@@ -44,7 +44,7 @@ class WeatherHourlyRain extends StatelessWidget {
     }
 
     return Container(
-      height: 200,
+      height: 150,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.15),
         borderRadius: BorderRadius.circular(12),
