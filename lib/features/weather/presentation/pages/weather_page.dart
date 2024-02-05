@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_app_bar/weather_app_bar.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_daily_data.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_rain/weather_hourly_rain.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_daily.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/weather_hourly_chart.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -29,40 +30,25 @@ class _WeatherPageState extends State<WeatherPage> {
               listen: false,
             ).getWeather();
           },
-          child: CustomScrollView(
+          child: const CustomScrollView(
             slivers: [
-              const WeatherAppBar(),
-              const SliverPadding(
+              WeatherAppBar(),
+              SliverPadding(
                 padding: EdgeInsets.symmetric(vertical: 10.0),
                 sliver: SliverToBoxAdapter(
-                  child: WeatherHourlyRain(),
+                  child: WeatherHourly(),
                 ),
               ),
-              SliverGrid.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                childAspectRatio: 1,
-                children: const [
-                  WeatherDailyData(),
-                  WeatherDailyData(),
-                ],
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(top: 10.0),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherDailyData(),
-                ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(top: 10.0),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherDailyData(),
-                ),
-              ),
-              const SliverPadding(
+              SliverPadding(
                 padding: EdgeInsets.symmetric(vertical: 10.0),
                 sliver: SliverToBoxAdapter(
-                  child: WeatherDailyData(),
+                  child: WeatherHourlyChart(),
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                sliver: SliverToBoxAdapter(
+                  child: WeatherDaily(),
                 ),
               ),
             ],
