@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -27,8 +29,34 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
     );
     final showSkeleton = loading && hourly == null;
 
+    final List<WeatherForecastHourlyEntity> data = hourly != null
+        ? hourly.length > 24
+            ? hourly.getRange(0, 24).toList()
+            : hourly
+        : [];
+
+    if (hourly == null || hourly.isEmpty) {
+      for (int i = 0; i < 10; i++) {
+        data.add(WeatherForecastHourlyEntity(
+          dt: 1644060000 + (i * 3600),
+          temp: 25.5 + (Random().nextDouble() * 5),
+          feelsLike: 26.2 + i,
+          pressure: 1012,
+          humidity: 75,
+          dewPoint: 20.8,
+          uvi: 5.8,
+          clouds: 30,
+          visibility: 10000,
+          windSpeed: 4.5,
+          windDeg: 180,
+          weather: const [],
+          pop: 10.0 + i,
+        ));
+      }
+    }
+
     return Container(
-      height: 150,
+      height: 180,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.15),
         borderRadius: BorderRadius.circular(12),
@@ -37,26 +65,22 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
         enabled: showSkeleton,
         child: Column(
           children: [
-            SizedBox(
+            Container(
+              padding: const EdgeInsets.only(top: 6, right: 6, left: 6),
               width: double.infinity,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(
                   ChartType.values.length,
-                  (index) => _chartTypeButton(
-                    ChartType.values[index],
-                  ),
+                  (index) => _chartTypeButton(ChartType.values[index]),
                 ),
               ),
             ),
+            const SizedBox(height: 6),
             Expanded(
               child: WeatherHourlyChartDiagram(
-                hourly: hourly != null
-                    ? hourly.length > 24
-                        ? hourly.getRange(0, 24).toList()
-                        : hourly
-                    : [],
+                hourly: data,
                 type: type,
               ),
             ),
@@ -71,20 +95,20 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           onTap: () => setState(() => this.type = type),
           child: Container(
             decoration: BoxDecoration(
               color: this.type == type
                   ? const Color.fromARGB(100, 0, 0, 0)
                   : Colors.transparent,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(6),
             ),
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(6),
             child: Center(
               child: Text(
                 type.title,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
           ),

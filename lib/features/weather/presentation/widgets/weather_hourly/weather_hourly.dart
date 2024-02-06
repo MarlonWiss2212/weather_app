@@ -20,7 +20,7 @@ class WeatherHourly extends StatelessWidget {
     final showSkeleton = loading && hourly == null;
 
     return Container(
-      height: 150,
+      height: 180,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.15),
@@ -29,40 +29,46 @@ class WeatherHourly extends StatelessWidget {
       child: Skeletonizer(
         enabled: showSkeleton,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(6),
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             itemBuilder: (context, index) => Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // date
-                  Text(
-                    hourly != null
-                        ? DateFormat.Hm("de").format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                              hourly[index].dt * 1000,
-                            ),
-                          )
-                        : "no hour",
-                    style: Theme.of(context).textTheme.labelLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-                  //rain widget
-                  if (hourly?[index] != null || showSkeleton) ...[
-                    _rainRow(context, hourly?[index]),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // date
+                Text(
+                  hourly != null
+                      ? DateFormat.Hm("de").format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                            hourly[index].dt * 1000,
+                          ),
+                        )
+                      : "no hour",
+                  style: Theme.of(context).textTheme.labelLarge,
+                  textAlign: TextAlign.center,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //rain widget
+                    if (hourly?[index] != null || showSkeleton) ...[
+                      _rainRow(context, hourly?[index]),
+                      const SizedBox(height: 5),
+                      _cloudsRow(context, hourly?[index]),
+                    ],
                     const SizedBox(height: 10),
-                    _cloudsRow(context, hourly?[index]),
+                    // temp
+                    Text(
+                      "${hourly?[index].temp.round()}°C",
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
                   ],
-                  const SizedBox(height: 10),
-                  // temp
-                  Text(
-                    "${hourly?[index].temp.round()}°C",
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ]),
+                ),
+              ],
+            ),
             itemCount: hourly != null
                 ? hourly.length > 24
                     ? 24
@@ -81,12 +87,12 @@ class WeatherHourly extends StatelessWidget {
         Icon(
           Icons.cloud,
           fill: ((hour?.clouds.toDouble() ?? 0) / 100),
-          size: 14,
+          size: 8,
         ),
         const SizedBox(width: 5),
         Text(
           "${hour?.clouds.toString() ?? "0"}%",
-          style: Theme.of(context).textTheme.labelMedium,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );
@@ -98,12 +104,12 @@ class WeatherHourly extends StatelessWidget {
         Icon(
           Icons.water_drop,
           fill: hour?.pop ?? 0,
-          size: 14,
+          size: 8,
         ),
         const SizedBox(width: 5),
         Text(
           "${((hour?.pop ?? 0) * 100).round().toString()}%",
-          style: Theme.of(context).textTheme.labelMedium,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

@@ -19,9 +19,8 @@ class _WeatherPageState extends State<WeatherPage> {
     return Scaffold(
       backgroundColor: Colors.grey,
       body: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: RefreshIndicator(
-          triggerMode: RefreshIndicatorTriggerMode.anywhere,
           color: Theme.of(context).colorScheme.primary,
           backgroundColor: Colors.black,
           onRefresh: () async {
@@ -34,19 +33,19 @@ class _WeatherPageState extends State<WeatherPage> {
             slivers: [
               WeatherAppBar(),
               SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+                padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherHourly(),
                 ),
               ),
               SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+                padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherHourlyChart(),
                 ),
               ),
               SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+                padding: EdgeInsets.symmetric(vertical: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherDaily(),
                 ),

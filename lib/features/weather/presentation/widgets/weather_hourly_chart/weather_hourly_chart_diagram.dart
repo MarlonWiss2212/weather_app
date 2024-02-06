@@ -16,16 +16,17 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final parsedData = double.parse((hourly[0].dt * 1000).toString());
+    final double parsedData = hourly[0].dt * 1000;
     double maxX = parsedData;
     double maxY = hourly[0].temp;
     double minX = parsedData;
     double minY = hourly[0].temp;
     List<FlSpot> spots = [];
 
+    // set min, max and spot values
     for (final hour in hourly) {
       // X is equal to date
-      final innerParsed = double.parse((hour.dt * 1000).toString());
+      final double innerParsed = hour.dt * 1000;
       if (maxX < innerParsed) {
         maxX = innerParsed;
       }
@@ -82,9 +83,11 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
         colors: switch (type) {
           ChartType.temp => [
               ColorUtils.colorByTemperatureLight(
-                  maxY < 14 ? maxY - 3 : maxY + 3),
+                maxY < 14 ? maxY - 3 : maxY + 3,
+              ),
               ColorUtils.colorByTemperatureLight(
-                  minY < 14 ? minY - 3 : minY + 3),
+                minY < 14 ? minY - 3 : minY + 3,
+              ),
             ],
           ChartType.clouds => [
               const Color.fromARGB(255, 163, 163, 163),
@@ -154,15 +157,8 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                       tooltip.add(
                         LineTooltipItem(
                           "${spot.y.round().toString()} $sign",
-                          const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 4,
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                )
-                              ]),
+                          Theme.of(context).textTheme.labelLarge ??
+                              const TextStyle(),
                         ),
                       );
                     }
@@ -183,14 +179,15 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 topTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    interval: 1,
                     reservedSize: 70,
+                    interval: 3600000,
                     getTitlesWidget: (value, meta) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Text(DateFormat.Hm("de").format(
-                          DateTime.fromMillisecondsSinceEpoch(value.round()),
-                        )),
+                      final formattedDate = DateFormat.Hm("de").format(
+                        DateTime.fromMillisecondsSinceEpoch(value.toInt()),
+                      );
+                      return Text(
+                        formattedDate,
+                        style: Theme.of(context).textTheme.labelLarge,
                       );
                     },
                   ),
