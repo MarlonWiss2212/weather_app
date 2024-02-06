@@ -66,7 +66,7 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 6, right: 6, left: 6),
+              padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
               width: double.infinity,
               child: Row(
                 mainAxisSize: MainAxisSize.max,

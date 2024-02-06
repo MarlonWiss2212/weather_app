@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_icon.dart';
 
 class WeatherHourly extends StatelessWidget {
   const WeatherHourly({super.key});
@@ -21,61 +22,60 @@ class WeatherHourly extends StatelessWidget {
 
     return Container(
       height: 180,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.15),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Skeletonizer(
         enabled: showSkeleton,
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemBuilder: (context, index) => Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // date
-                Text(
-                  hourly != null
-                      ? DateFormat.Hm("de").format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                            hourly[index].dt * 1000,
-                          ),
-                        )
-                      : "no hour",
-                  style: Theme.of(context).textTheme.labelLarge,
-                  textAlign: TextAlign.center,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //rain widget
-                    if (hourly?[index] != null || showSkeleton) ...[
-                      _rainRow(context, hourly?[index]),
-                      const SizedBox(height: 5),
-                      _cloudsRow(context, hourly?[index]),
-                    ],
-                    const SizedBox(height: 10),
-                    // temp
-                    Text(
-                      "${hourly?[index].temp.round()}°C",
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemBuilder: (context, index) => Column(
+            key: Key(index.toString()),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // date
+              Text(
+                hourly != null
+                    ? DateFormat.Hm("de").format(
+                        DateTime.fromMillisecondsSinceEpoch(
+                          hourly[index].dt * 1000,
+                        ),
+                      )
+                    : "no hour",
+                style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.center,
+              ),
+              const WeatherIcon(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  //rain widget
+                  if (hourly?[index] != null || showSkeleton) ...[
+                    _rainRow(context, hourly?[index]),
+                    const SizedBox(height: 5),
+                    _cloudsRow(context, hourly?[index]),
                   ],
-                ),
-              ],
-            ),
-            itemCount: hourly != null
-                ? hourly.length > 24
-                    ? 24
-                    : hourly.length
-                : 24,
-            separatorBuilder: (_, __) => const SizedBox(width: 20),
+                  const SizedBox(height: 10),
+                  // temp
+                  Text(
+                    "${hourly?[index].temp.round()}°C",
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                ],
+              ),
+            ],
           ),
+          itemCount: hourly != null
+              ? hourly.length > 24
+                  ? 24
+                  : hourly.length
+              : 24,
+          separatorBuilder: (_, __) => const SizedBox(width: 20),
         ),
       ),
     );
