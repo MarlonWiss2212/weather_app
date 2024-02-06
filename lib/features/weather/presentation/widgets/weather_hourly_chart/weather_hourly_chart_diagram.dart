@@ -26,11 +26,11 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
     for (final hour in hourly) {
       // X is equal to date
       final innerParsed = double.parse((hour.dt * 1000).toString());
-      if (minX < innerParsed) {
-        minX = innerParsed;
-      }
-      if (maxX > innerParsed) {
+      if (maxX < innerParsed) {
         maxX = innerParsed;
+      }
+      if (minX > innerParsed) {
+        minX = innerParsed;
       }
 
       switch (type) {
@@ -69,13 +69,12 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
           break;
       }
     }
-    minY = minY - 3;
 
     final lineBarData = LineChartBarData(
       spots: spots,
       isCurved: true,
       dotData: const FlDotData(show: false),
-      barWidth: 6,
+      barWidth: 5,
       curveSmoothness: .5,
       gradient: LinearGradient(
         begin: Alignment.topCenter,
@@ -134,7 +133,7 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SizedBox(
-          width: 3000,
+          width: 1800,
           child: LineChart(
             LineChartData(
               backgroundColor: Colors.transparent,
@@ -184,6 +183,7 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 topTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
+                    interval: 1,
                     reservedSize: 70,
                     getTitlesWidget: (value, meta) {
                       return Padding(

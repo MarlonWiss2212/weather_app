@@ -27,8 +27,6 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
     );
     final showSkeleton = loading && hourly == null;
 
-    final List<WeatherForecastHourlyEntity> data = hourly ?? [];
-
     return Container(
       height: 150,
       decoration: BoxDecoration(
@@ -54,7 +52,11 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
             ),
             Expanded(
               child: WeatherHourlyChartDiagram(
-                hourly: data,
+                hourly: hourly != null
+                    ? hourly.length > 24
+                        ? hourly.getRange(0, 24).toList()
+                        : hourly
+                    : [],
                 type: type,
               ),
             ),
