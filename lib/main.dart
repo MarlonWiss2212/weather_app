@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/pages/weather_page.dart';
@@ -34,10 +35,16 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: SafeArea(
-        child: ChangeNotifierProvider<WeatherProvider>(
-          create: (_) => WeatherProvider(sl())..getWeather(),
-          child: const WeatherPage(),
+      home: AnnotatedRegion(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: Color.fromARGB(255, 46, 161, 255),
+          systemNavigationBarColor: Color.fromARGB(255, 46, 161, 255),
+        ),
+        child: SafeArea(
+          child: ChangeNotifierProvider<WeatherProvider>(
+            create: (_) => WeatherProvider(sl())..getWeather(),
+            child: const WeatherPage(),
+          ),
         ),
       ),
     );

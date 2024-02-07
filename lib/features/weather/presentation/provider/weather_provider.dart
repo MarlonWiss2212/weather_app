@@ -52,12 +52,15 @@ class WeatherProvider extends ChangeNotifier {
       ),
     );
 
-    weatherOrFailure.either(
+    weatherOrFailure.either<void>(
       onSuccess: (data) {
         _weather = data.$1;
         _geodata = data.$2;
       },
-      onError: (failure) => _failure = failure,
+      onError: (failure) {
+        print(failure.errorMessage + failure.statusCode.toString());
+        _failure = failure;
+      },
     );
 
     _loading = false;
