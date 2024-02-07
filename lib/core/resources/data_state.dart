@@ -1,16 +1,43 @@
-import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
+import 'package:weather_app/core/errors/failures.dart';
 
-abstract class DataState<T> {
+class DataState<T> extends Equatable {
   final T? data;
-  final DioException? error;
+  final Failure? failure;
 
-  const DataState({this.data, this.error});
-}
+  const DataState._({
+    this.data,
+    this.failure,
+  });
 
-class DataSuccess<T> extends DataState<T> {
-  const DataSuccess(T data) : super(data: data);
-}
+  factory DataState.success(T data, {Failure? failure}) => DataState._(
+        data: data,
+        failure: failure,
+      );
+  factory DataState.failure(Failure failure, {T? data}) => DataState._(
+        failure: failure,
+        data: data,
+      );
 
-class DataFailed<T> extends DataState<T> {
-  const DataFailed(DioException error) : super(error: error);
+  /// handle a function if one variable exists
+  ///
+  /// when both variables exist it will return the value of the success function
+  /// when none exist it will throw a [GeneralFailure]
+  D either<D>({
+    required D Function(T data) onSuccess,
+    required D Function(Failure failure) onError,
+  }) {
+    if (failure != null && (data != null || data.runtimeType == Null)) {
+      onError(failure!);
+      return onSuccess(data as T);
+    } else if (failure != null) {
+      return onError(failure!);
+    } else if (data != null || data.runtimeType == Null) {
+      return onSuccess(data as T);
+    }
+    throw const GeneralFailure();
+  }
+
+  @override
+  List<Object?> get props => [failure, data];
 }
