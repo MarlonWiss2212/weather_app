@@ -27,18 +27,19 @@ class WeatherDaily extends StatelessWidget {
       ),
       child: Skeletonizer(
         enabled: showSkeleton,
-        child: Column(
-          children: List.generate(
-            daily != null
-                ? daily.length > 8
-                    ? 8
-                    : daily.length
-                : 8,
-            (index) => WeatherDailyContainer(
-              day: daily?[index],
-              key: ObjectKey(daily?[index]),
-            ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) => WeatherDailyContainer(
+            day: daily?[index],
+            key: Key(index.toString()),
           ),
+          itemCount: daily != null
+              ? daily.length > 8
+                  ? 8
+                  : daily.length
+              : 8,
         ),
       ),
     );

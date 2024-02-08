@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.white,
-          background: const Color.fromARGB(255, 46, 161, 255),
+          background: const Color.fromARGB(255, 12, 158, 226),
           primary: Colors.white,
           brightness: Brightness.dark,
           secondary: const Color.fromARGB(255, 209, 209, 209),
@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
       ),
       home: AnnotatedRegion(
         value: const SystemUiOverlayStyle(
-          statusBarColor: Color.fromARGB(255, 46, 161, 255),
-          systemNavigationBarColor: Color.fromARGB(255, 46, 161, 255),
+          statusBarColor: Color.fromARGB(255, 12, 158, 226),
+          systemNavigationBarColor: Color.fromARGB(255, 12, 158, 226),
         ),
         child: SafeArea(
           child: ChangeNotifierProvider<WeatherProvider>(

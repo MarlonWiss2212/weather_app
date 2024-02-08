@@ -20,7 +20,10 @@ class WeatherServiceImpl implements WeatherService {
   }) async {
     final response = await dio.get<Map<String, dynamic>>(
       "/data/3.0/onecall",
-      queryParameters: params.toMap(),
+      queryParameters: {
+        ...params.toMap(),
+        "exclude": "minutely",
+      },
       options: Options(method: "GET"),
     );
 

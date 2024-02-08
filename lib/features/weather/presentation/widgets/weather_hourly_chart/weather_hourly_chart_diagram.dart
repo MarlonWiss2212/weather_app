@@ -56,7 +56,6 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
           }
           spots.add(FlSpot(innerParsed, hour.clouds.toDouble()));
           break;
-
         case ChartType.rain:
           // Y is equal to lowest and max temp
           final rainOneHour = hour.rain?.oneHour ?? 0.0;
@@ -67,6 +66,17 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
             minY = rainOneHour;
           }
           spots.add(FlSpot(innerParsed, rainOneHour));
+          break;
+        case ChartType.snow:
+          // Y is equal to lowest and max temp
+          final snowOneHour = hour.snow?.oneHour ?? 0.0;
+          if (maxY < snowOneHour) {
+            maxY = snowOneHour;
+          }
+          if (minY > snowOneHour) {
+            minY = snowOneHour;
+          }
+          spots.add(FlSpot(innerParsed, snowOneHour));
           break;
       }
     }
@@ -97,6 +107,10 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
               const Color.fromARGB(255, 0, 81, 202),
               const Color.fromARGB(255, 0, 81, 202),
             ],
+          ChartType.snow => [
+              const Color.fromARGB(255, 112, 212, 230),
+              const Color.fromARGB(255, 112, 212, 230),
+            ],
         },
       ),
       belowBarData: BarAreaData(
@@ -116,6 +130,10 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
             ChartType.rain => [
                 const Color.fromARGB(255, 0, 102, 255),
                 const Color.fromARGB(255, 0, 102, 255),
+              ],
+            ChartType.snow => [
+                const Color.fromARGB(255, 153, 240, 255),
+                const Color.fromARGB(255, 153, 240, 255),
               ],
           },
         ),
@@ -152,11 +170,16 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                       String sign = switch (type) {
                         ChartType.temp => "°C",
                         ChartType.clouds => "%",
-                        ChartType.rain => "mm/h"
+                        ChartType.rain || ChartType.snow => "mm/h",
+                      };
+                      String number = switch (type) {
+                        ChartType.temp => spot.y.round().toString(),
+                        ChartType.clouds => spot.y.round().toString(),
+                        ChartType.rain || ChartType.snow => spot.y.toString(),
                       };
                       tooltip.add(
                         LineTooltipItem(
-                          "${spot.y.round().toString()} $sign",
+                          "$number $sign",
                           Theme.of(context).textTheme.labelLarge ??
                               const TextStyle(),
                         ),
