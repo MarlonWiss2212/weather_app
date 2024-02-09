@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_alerts/weather_alerts.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_app_bar/weather_app_bar.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily/weather_daily.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly.dart';
@@ -31,6 +32,12 @@ class _WeatherPageState extends State<WeatherPage> {
           child: const CustomScrollView(
             slivers: [
               WeatherAppBar(),
+              SliverPadding(
+                padding: EdgeInsets.only(top: 8),
+                sliver: SliverToBoxAdapter(
+                  child: WeatherAlerts(),
+                ),
+              ),
               SliverPadding(
                 padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(

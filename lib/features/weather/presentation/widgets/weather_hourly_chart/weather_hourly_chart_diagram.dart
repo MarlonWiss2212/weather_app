@@ -81,6 +81,10 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
       }
     }
 
+    if (maxY == minY) {
+      maxY += 1;
+    }
+
     final lineBarData = LineChartBarData(
       spots: spots,
       isCurved: true,

@@ -108,7 +108,7 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
             child: Center(
               child: Text(
                 type.title,
-                style: Theme.of(context).textTheme.labelLarge,
+                style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
           ),
