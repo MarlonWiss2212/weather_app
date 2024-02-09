@@ -68,12 +68,13 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
             Container(
               padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
               width: double.infinity,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                  ChartType.values.length,
-                  (index) => _chartTypeButton(ChartType.values[index]),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    ChartType.values.length,
+                    (index) => _chartTypeButton(ChartType.values[index]),
+                  ),
                 ),
               ),
             ),
@@ -91,25 +92,24 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
   }
 
   Widget _chartTypeButton(ChartType type) {
-    return Expanded(
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(6),
-          onTap: () => setState(() => this.type = type),
-          child: Container(
-            decoration: BoxDecoration(
-              color: this.type == type
-                  ? const Color.fromARGB(100, 0, 0, 0)
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            padding: const EdgeInsets.all(6),
-            child: Center(
-              child: Text(
-                type.title,
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(6),
+        onTap: () => setState(() => this.type = type),
+        child: Container(
+          constraints: const BoxConstraints(minWidth: 70),
+          decoration: BoxDecoration(
+            color: this.type == type
+                ? const Color.fromARGB(100, 0, 0, 0)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          padding: const EdgeInsets.all(6),
+          child: Center(
+            child: Text(
+              type.title,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
         ),

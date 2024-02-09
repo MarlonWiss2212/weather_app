@@ -78,6 +78,16 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
           }
           spots.add(FlSpot(innerParsed, snowOneHour));
           break;
+        case ChartType.wind:
+          // Y is equal to lowest and max temp
+          if (maxY < hour.windSpeed) {
+            maxY = hour.windSpeed;
+          }
+          if (minY > hour.windSpeed) {
+            minY = hour.windSpeed;
+          }
+          spots.add(FlSpot(innerParsed, hour.windSpeed));
+          break;
       }
     }
 
@@ -103,7 +113,7 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 minY < 14 ? minY - 3 : minY + 3,
               ),
             ],
-          ChartType.clouds => [
+          ChartType.clouds || ChartType.wind => [
               const Color.fromARGB(255, 163, 163, 163),
               const Color.fromARGB(255, 163, 163, 163),
             ],
@@ -127,7 +137,7 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 ColorUtils.colorByTemperatureLight(maxY),
                 ColorUtils.colorByTemperatureLight(minY),
               ],
-            ChartType.clouds => [
+            ChartType.clouds || ChartType.wind => [
                 const Color.fromARGB(255, 179, 179, 179),
                 const Color.fromARGB(255, 179, 179, 179),
               ],
@@ -175,11 +185,13 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                         ChartType.temp => "°C",
                         ChartType.clouds => "%",
                         ChartType.rain || ChartType.snow => "mm/h",
+                        ChartType.wind => "m/s",
                       };
                       String number = switch (type) {
                         ChartType.temp => spot.y.round().toString(),
                         ChartType.clouds => spot.y.round().toString(),
                         ChartType.rain || ChartType.snow => spot.y.toString(),
+                        ChartType.wind => spot.y.toString(),
                       };
                       tooltip.add(
                         LineTooltipItem(
