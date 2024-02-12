@@ -5,9 +5,10 @@ import 'package:weather_app/core/util/color_utils.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/chart_type.dart';
 
-class WeatherHourlyChartDiagram extends StatelessWidget {
+class WeatherHourlyChartDiagram extends StatefulWidget {
   final List<WeatherForecastHourlyEntity> hourly;
   final ChartType type;
+
   const WeatherHourlyChartDiagram({
     super.key,
     required this.hourly,
@@ -15,87 +16,101 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final double parsedData = hourly[0].dt * 1000;
-    double maxX = parsedData;
-    double maxY = hourly[0].temp;
-    double minX = parsedData;
-    double minY = hourly[0].temp;
+  State<WeatherHourlyChartDiagram> createState() =>
+      _WeatherHourlyChartDiagramState();
+}
+
+class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
+  late double _maxUnixDate;
+  late double _maxY;
+  late double _minUnixDate;
+  late double _minY;
+
+  void _setVariablesToStandardValues() {
+    final double unixDate = widget.hourly[0].dt * 1000;
+    _maxY = unixDate;
+    _maxUnixDate = widget.hourly[0].temp == _maxY
+        ? widget.hourly[0].temp + 1
+        : widget.hourly[0].temp;
+    _minUnixDate = unixDate;
+    _minY = widget.hourly[0].temp;
+  }
+
+  List<FlSpot> _generateSpotsList() {
     List<FlSpot> spots = [];
 
-    // set min, max and spot values
-    for (final hour in hourly) {
+    for (final hour in widget.hourly) {
       // X is equal to date
-      final double innerParsed = hour.dt * 1000;
-      if (maxX < innerParsed) {
-        maxX = innerParsed;
+      final double unixDate = hour.dt * 1000;
+      if (_maxUnixDate < unixDate) {
+        _maxUnixDate = unixDate;
       }
-      if (minX > innerParsed) {
-        minX = innerParsed;
+      if (_minUnixDate > unixDate) {
+        _minUnixDate = unixDate;
       }
 
-      switch (type) {
+      switch (widget.type) {
         case ChartType.temp:
           // Y is equal to lowest and max temp
-          if (maxY < hour.temp) {
-            maxY = hour.temp;
+          if (_maxY < hour.temp) {
+            _maxY = hour.temp;
           }
-          if (minY > hour.temp) {
-            minY = hour.temp;
+          if (_minY > hour.temp) {
+            _minY = hour.temp;
           }
 
-          spots.add(FlSpot(innerParsed, hour.temp));
+          spots.add(FlSpot(unixDate, hour.temp));
           break;
         case ChartType.clouds:
           // Y is equal to lowest and max temp
-          if (maxY < hour.clouds) {
-            maxY = hour.clouds.toDouble();
+          if (_maxY < hour.clouds) {
+            _maxY = hour.clouds.toDouble();
           }
-          if (minY > hour.clouds) {
-            minY = hour.clouds.toDouble();
+          if (_minY > hour.clouds) {
+            _minY = hour.clouds.toDouble();
           }
-          spots.add(FlSpot(innerParsed, hour.clouds.toDouble()));
+          spots.add(FlSpot(unixDate, hour.clouds.toDouble()));
           break;
         case ChartType.rain:
           // Y is equal to lowest and max temp
           final rainOneHour = hour.rain?.oneHour ?? 0.0;
-          if (maxY < rainOneHour) {
-            maxY = rainOneHour;
+          if (_maxY < rainOneHour) {
+            _maxY = rainOneHour;
           }
-          if (minY > rainOneHour) {
-            minY = rainOneHour;
+          if (_minY > rainOneHour) {
+            _minY = rainOneHour;
           }
-          spots.add(FlSpot(innerParsed, rainOneHour));
+          spots.add(FlSpot(unixDate, rainOneHour));
           break;
         case ChartType.snow:
           // Y is equal to lowest and max temp
           final snowOneHour = hour.snow?.oneHour ?? 0.0;
-          if (maxY < snowOneHour) {
-            maxY = snowOneHour;
+          if (_maxY < snowOneHour) {
+            _maxY = snowOneHour;
           }
-          if (minY > snowOneHour) {
-            minY = snowOneHour;
+          if (_minY > snowOneHour) {
+            _minY = snowOneHour;
           }
-          spots.add(FlSpot(innerParsed, snowOneHour));
+          spots.add(FlSpot(unixDate, snowOneHour));
           break;
         case ChartType.wind:
           // Y is equal to lowest and max temp
-          if (maxY < hour.windSpeed) {
-            maxY = hour.windSpeed;
+          if (_maxY < hour.windSpeed) {
+            _maxY = hour.windSpeed;
           }
-          if (minY > hour.windSpeed) {
-            minY = hour.windSpeed;
+          if (_minY > hour.windSpeed) {
+            _minY = hour.windSpeed;
           }
-          spots.add(FlSpot(innerParsed, hour.windSpeed));
+          spots.add(FlSpot(unixDate, hour.windSpeed));
           break;
       }
     }
 
-    if (maxY == minY) {
-      maxY += 1;
-    }
+    return spots;
+  }
 
-    final lineBarData = LineChartBarData(
+  LineChartBarData _generateLineChartBarData({required List<FlSpot> spots}) {
+    return LineChartBarData(
       spots: spots,
       isCurved: true,
       dotData: const FlDotData(show: false),
@@ -104,13 +119,13 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: switch (type) {
+        colors: switch (widget.type) {
           ChartType.temp => [
               ColorUtils.colorByTemperatureLight(
-                maxY < 14 ? maxY - 3 : maxY + 3,
+                _maxY < 14 ? _maxY - 3 : _maxY + 3,
               ),
               ColorUtils.colorByTemperatureLight(
-                minY < 14 ? minY - 3 : minY + 3,
+                _minY < 14 ? _minY - 3 : _minY + 3,
               ),
             ],
           ChartType.clouds || ChartType.wind => [
@@ -132,10 +147,10 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: switch (type) {
+          colors: switch (widget.type) {
             ChartType.temp => [
-                ColorUtils.colorByTemperatureLight(maxY),
-                ColorUtils.colorByTemperatureLight(minY),
+                ColorUtils.colorByTemperatureLight(_maxY),
+                ColorUtils.colorByTemperatureLight(_minY),
               ],
             ChartType.clouds || ChartType.wind => [
                 const Color.fromARGB(255, 179, 179, 179),
@@ -153,16 +168,29 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
         ),
       ),
     );
+  }
 
-    List<ShowingTooltipIndicators> showingTooltipIndicators = [];
+  List<ShowingTooltipIndicators> _generateTooltipsList({
+    required LineChartBarData lineChartBarData,
+    required List<FlSpot> spots,
+  }) {
+    final List<ShowingTooltipIndicators> tooltips = [];
+
     for (final spot in spots) {
-      showingTooltipIndicators.add(
+      tooltips.add(
         ShowingTooltipIndicators([
-          LineBarSpot(lineBarData, 0, spot),
+          LineBarSpot(lineChartBarData, 0, spot),
         ]),
       );
     }
 
+    return tooltips;
+  }
+
+  Widget generateChart({
+    required List<ShowingTooltipIndicators> showingTooltipIndicators,
+    required LineChartBarData lineChartBarData,
+  }) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: SingleChildScrollView(
@@ -181,13 +209,13 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                   getTooltipItems: (List<LineBarSpot> spots) {
                     List<LineTooltipItem> tooltip = [];
                     for (final spot in spots) {
-                      String sign = switch (type) {
+                      String sign = switch (widget.type) {
                         ChartType.temp => "°C",
                         ChartType.clouds => "%",
                         ChartType.rain || ChartType.snow => "mm/h",
                         ChartType.wind => "m/s",
                       };
-                      String number = switch (type) {
+                      String number = switch (widget.type) {
                         ChartType.temp => spot.y.round().toString(),
                         ChartType.clouds => spot.y.round().toString(),
                         ChartType.rain || ChartType.snow => spot.y.toString(),
@@ -207,10 +235,10 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 enabled: true,
                 handleBuiltInTouches: false,
               ),
-              maxX: maxX,
-              maxY: maxY,
-              minX: minX,
-              minY: minY,
+              maxX: _maxUnixDate,
+              maxY: _maxY,
+              minX: _minUnixDate,
+              minY: _minY,
               gridData: const FlGridData(show: false),
               borderData: FlBorderData(show: false),
               titlesData: FlTitlesData(
@@ -241,11 +269,33 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                   sideTitles: SideTitles(reservedSize: 0),
                 ),
               ),
-              lineBarsData: [lineBarData],
+              lineBarsData: [lineChartBarData],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _setVariablesToStandardValues();
+
+    final List<FlSpot> spots = _generateSpotsList();
+
+    final LineChartBarData lineChartBarData = _generateLineChartBarData(
+      spots: spots,
+    );
+
+    final List<ShowingTooltipIndicators> showingTooltipIndicators =
+        _generateTooltipsList(
+      lineChartBarData: lineChartBarData,
+      spots: spots,
+    );
+
+    return generateChart(
+      showingTooltipIndicators: showingTooltipIndicators,
+      lineChartBarData: lineChartBarData,
     );
   }
 }
