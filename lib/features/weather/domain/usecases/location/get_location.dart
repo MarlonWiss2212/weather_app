@@ -19,9 +19,9 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
     return await serviceEnabledOrFailure.either(
       onError: (failure) => DataState.failure(failure),
       onSuccess: (_) async {
-        final nullOrFailure = await _checkAndRequestPermission();
+        final hasPermission = await _checkAndRequestPermissionIfNeccessary();
 
-        return nullOrFailure.either(
+        return hasPermission.either(
           onSuccess: (_) async => await locationRepository.getLocation(),
           onError: (failure) => DataState.failure(failure),
         );
@@ -29,15 +29,17 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
     );
   }
 
-  Future<DataState<void>> _checkAndRequestPermission() async {
+  Future<DataState<void>> _checkAndRequestPermissionIfNeccessary() async {
     late LocationPermission permissionStatus;
     Failure? failure;
+
     // check permission
     final permissionOrFailure = await locationRepository.checkPermission();
-    permissionOrFailure.either(
+    permissionOrFailure.either<void>(
       onSuccess: (permission) => permissionStatus = permission,
       onError: (innerFailure) => failure = innerFailure,
     );
+
     if (failure != null) {
       return DataState.failure(failure!);
     }

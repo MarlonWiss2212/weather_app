@@ -26,16 +26,14 @@ class GetWeatherByLocationUseCase
   }) async {
     final locationOrFailure = await getLocationUseCase.call();
     return await locationOrFailure.either(
-      onSuccess: (location) async {
-        final data = await weatherRepository.getWeatherData(
-          params: GetWeatherWithLocationParams.fromGetWeatherParams(
-            lat: locationOrFailure.data!.latitude,
-            lon: locationOrFailure.data!.longitude,
-            params: params,
-          ),
-        );
-        return data;
-      },
+      /// when location is returned then return weather data
+      onSuccess: (location) async => await weatherRepository.getWeatherData(
+        params: GetWeatherWithLocationParams.fromGetWeatherParams(
+          lat: locationOrFailure.data!.latitude,
+          lon: locationOrFailure.data!.longitude,
+          params: params,
+        ),
+      ),
       onError: (failure) => DataState.failure(failure),
     );
   }
