@@ -6,6 +6,10 @@ import 'package:weather_app/features/weather/presentation/widgets/weather_app_ba
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily/weather_daily.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/weather_hourly_chart.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_humidity.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_uv_index.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_visibility.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_wind.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -29,37 +33,56 @@ class _WeatherPageState extends State<WeatherPage> {
               listen: false,
             ).getWeather();
           },
-          child: const CustomScrollView(
+          child: CustomScrollView(
             slivers: [
-              WeatherAppBar(),
-              SliverPadding(
+              const WeatherAppBar(),
+              const SliverPadding(
                 padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherAlerts(),
                 ),
               ),
-              SliverPadding(
+              const SliverPadding(
                 padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherHourly(),
                 ),
               ),
-              SliverPadding(
+              const SliverPadding(
                 padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherHourlyChart(),
                 ),
               ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 8),
+              const SliverPadding(
+                padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherDaily(),
                 ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                sliver: _gridOfBasicData(),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _gridOfBasicData() {
+    return SliverGrid.count(
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      crossAxisCount: 2,
+      childAspectRatio: 2.5,
+      children: const [
+        WeatherUVIndex(),
+        WeatherHumidity(),
+        WeatherVisibility(),
+        WeatherWind(),
+      ],
     );
   }
 }

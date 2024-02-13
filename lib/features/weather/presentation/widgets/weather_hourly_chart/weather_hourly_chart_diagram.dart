@@ -26,14 +26,16 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
   late double _minUnixDate;
   late double _minY;
 
-  void _setVariablesToStandardValues() {
+  void _setStandardValues() {
+    // set variables to standard values
+
+    // set both to infinity so that in the first loop later they will be replaced with real values
+    _minY = double.infinity;
+    _maxY = double.negativeInfinity;
+
     final double unixDate = widget.hourly[0].dt * 1000;
-    _maxY = unixDate;
-    _maxUnixDate = widget.hourly[0].temp == _maxY
-        ? widget.hourly[0].temp + 1
-        : widget.hourly[0].temp;
     _minUnixDate = unixDate;
-    _minY = widget.hourly[0].temp;
+    _maxUnixDate = unixDate;
   }
 
   List<FlSpot> _generateSpotsList() {
@@ -279,14 +281,12 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
 
   @override
   Widget build(BuildContext context) {
-    _setVariablesToStandardValues();
+    _setStandardValues();
 
     final List<FlSpot> spots = _generateSpotsList();
-
     final LineChartBarData lineChartBarData = _generateLineChartBarData(
       spots: spots,
     );
-
     final List<ShowingTooltipIndicators> showingTooltipIndicators =
         _generateTooltipsList(
       lineChartBarData: lineChartBarData,

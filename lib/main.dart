@@ -42,7 +42,9 @@ class MyApp extends StatelessWidget {
         ),
         child: SafeArea(
           child: ChangeNotifierProvider<WeatherProvider>(
-            create: (_) => WeatherProvider(sl())..getWeather(),
+            create: (_) => WeatherProvider(
+              sl(),
+            )..getWeather(),
             child: const WeatherPage(),
           ),
         ),
