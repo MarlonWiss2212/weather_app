@@ -1,4 +1,4 @@
-enum ChartType { temp, rain, clouds, snow, wind }
+enum ChartType { temp, rain, clouds, snow, wind, uvi }
 
 extension ChartTypeExtension on ChartType {
   String get title {
@@ -13,6 +13,8 @@ extension ChartTypeExtension on ChartType {
         return "Schnee";
       case ChartType.wind:
         return "Wind";
+      case ChartType.uvi:
+        return "UV-Index";
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/core/util/color_utils.dart';
+import 'package:weather_app/core/util/uv_utils.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/chart_type.dart';
 
@@ -47,6 +48,10 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
       case ChartType.wind:
         _minY = 0;
         _maxY = 30;
+        break;
+      case ChartType.uvi:
+        _minY = 0;
+        _maxY = 8;
         break;
     }
   }
@@ -118,6 +123,16 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
           }
           spots.add(FlSpot(unixDate, hour.windSpeed));
           break;
+        case ChartType.uvi:
+          // Y is equal to lowest and max temp
+          if (_maxY < hour.uvi) {
+            _maxY = hour.uvi;
+          }
+          if (_minY > hour.uvi) {
+            _minY = hour.uvi;
+          }
+          spots.add(FlSpot(unixDate, hour.uvi));
+          break;
       }
     }
 
@@ -147,6 +162,10 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
               const Color.fromARGB(255, 163, 163, 163),
               const Color.fromARGB(255, 163, 163, 163),
             ],
+          ChartType.uvi => [
+              const Color.fromARGB(255, 243, 0, 0),
+              const Color.fromARGB(0, 243, 0, 0),
+            ],
           ChartType.rain => [
               const Color.fromARGB(255, 0, 81, 202),
               const Color.fromARGB(255, 0, 81, 202),
@@ -174,6 +193,10 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
             ChartType.rain => [
                 const Color.fromARGB(255, 0, 102, 255),
                 const Color.fromARGB(255, 0, 102, 255),
+              ],
+            ChartType.uvi => [
+                const Color.fromARGB(255, 202, 16, 16),
+                const Color.fromARGB(0, 202, 16, 16),
               ],
             ChartType.snow => [
                 const Color.fromARGB(255, 153, 240, 255),
@@ -229,12 +252,14 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
                         ChartType.clouds => "%",
                         ChartType.rain || ChartType.snow => "mm/h",
                         ChartType.wind => "m/s",
+                        ChartType.uvi => "\n${UvUtils.uvIndex(spot.y)}",
                       };
                       String number = switch (widget.type) {
                         ChartType.temp => spot.y.round().toString(),
                         ChartType.clouds => spot.y.round().toString(),
                         ChartType.rain || ChartType.snow => spot.y.toString(),
                         ChartType.wind => spot.y.toString(),
+                        ChartType.uvi => spot.y.toString(),
                       };
                       tooltip.add(
                         LineTooltipItem(
