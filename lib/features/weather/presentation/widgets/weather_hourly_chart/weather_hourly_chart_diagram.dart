@@ -27,15 +27,28 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
   late double _minY;
 
   void _setStandardValues() {
-    // set variables to standard values
-
-    // set both to infinity so that in the first loop later they will be replaced with real values
-    _minY = double.infinity;
-    _maxY = double.negativeInfinity;
-
     final double unixDate = widget.hourly[0].dt * 1000;
     _minUnixDate = unixDate;
     _maxUnixDate = unixDate;
+
+    switch (widget.type) {
+      case ChartType.temp:
+        _minY = double.infinity;
+        _maxY = double.negativeInfinity;
+        break;
+      case ChartType.rain || ChartType.snow:
+        _minY = 0;
+        _maxY = 15;
+        break;
+      case ChartType.clouds:
+        _minY = 0;
+        _maxY = 100;
+        break;
+      case ChartType.wind:
+        _minY = 0;
+        _maxY = 30;
+        break;
+    }
   }
 
   List<FlSpot> _generateSpotsList() {
