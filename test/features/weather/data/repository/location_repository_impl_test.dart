@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:mockito/annotations.dart';
@@ -10,7 +11,6 @@ import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/data/data_sources/local/location_service.dart';
 import 'package:weather_app/features/weather/data/models/location_model.dart';
 import 'package:weather_app/features/weather/data/repository/location_repository_impl.dart';
-import 'package:weather_app/features/weather/domain/entities/location_entity.dart';
 import 'location_repository_impl_test.mocks.dart';
 
 @GenerateMocks([LocationServiceImpl])
@@ -32,7 +32,6 @@ void main() {
         speed: 10,
         speedAccuracy: 10,
       );
-      final LocationEntity locationEntity = locationModel;
       when(mockService.getLocation()).thenAnswer((_) async => locationModel);
 
       // call function to test
@@ -40,7 +39,7 @@ void main() {
         locationService: mockService,
       ).getLocation();
 
-      expect(response, DataState.success(locationEntity));
+      expect(response, DataState.success(locationModel));
     });
 
     test("should catch LocationServiceDisabledException", () async {
@@ -52,8 +51,10 @@ void main() {
         locationService: mockService,
       ).getLocation();
 
-      expect(response,
-          DataState<LocationEntity>.failure(const ConvertingFailure()));
+      expect(
+        response,
+        DataState<LocationModel>.failure(const ConvertingFailure()),
+      );
     });
 
     test("should catch TimeoutException", () async {
@@ -67,7 +68,7 @@ void main() {
 
       expect(
         response,
-        DataState<LocationEntity>.failure(const LocationTimeoutFailure()),
+        DataState<LocationModel>.failure(const LocationTimeoutFailure()),
       );
     });
 
@@ -82,7 +83,7 @@ void main() {
 
       expect(
         response,
-        DataState<LocationEntity>.failure(const UnkownFailure()),
+        DataState<LocationModel>.failure(const UnkownFailure()),
       );
     });
   });
@@ -132,7 +133,7 @@ void main() {
         locationService: mockService,
       ).isLocationServiceEnabled();
 
-      expect(response, DataState<void>.success(null));
+      expect(response, DataState<void>.success(Void));
     });
 
     test(

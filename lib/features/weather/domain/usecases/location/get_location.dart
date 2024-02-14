@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/resources/data_state.dart';
@@ -17,7 +18,6 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
         await locationRepository.isLocationServiceEnabled();
 
     return await serviceEnabledOrFailure.either(
-      onError: (failure) => DataState.failure(failure),
       onSuccess: (_) async {
         final hasPermission = await _checkPermissionWithRequestWhenDenied();
 
@@ -26,6 +26,7 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
           onError: (failure) => DataState.failure(failure),
         );
       },
+      onError: (failure) => DataState.failure(failure),
     );
   }
 
@@ -65,9 +66,10 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
   DataState<void> _checkIfPermissionIsDeniedForever(
     LocationPermission permissionStatus,
   ) {
-    if (permissionStatus == LocationPermission.unableToDetermine) {
+    if (permissionStatus == LocationPermission.unableToDetermine ||
+        permissionStatus == LocationPermission.deniedForever) {
       return DataState.failure(const LocationPermissionDeniedForever());
     }
-    return DataState.success(null);
+    return DataState<void>.success(Void);
   }
 }

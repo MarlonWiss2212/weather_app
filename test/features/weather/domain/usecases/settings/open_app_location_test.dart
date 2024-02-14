@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -12,7 +13,7 @@ void main() {
   final MockSettingsRepositoryImpl mockRepo = MockSettingsRepositoryImpl();
   group("test 'call' function", () {
     test("should return same result as repository ", () async {
-      final expectedResult = DataState<void>.success(null);
+      final expectedResult = DataState<void>.success(Void);
 
       // mocking
       when(mockRepo.openLocationSettings()).thenAnswer(

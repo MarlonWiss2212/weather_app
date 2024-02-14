@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
 import 'package:weather_app/core/errors/failures.dart';
@@ -46,7 +47,7 @@ class LocationRepositoryImpl implements LocationRepository {
       if (locationServiceEnabled == false) {
         return DataState.failure(const LocationServiceNotEnabledFailure());
       }
-      return DataState.success(null);
+      return DataState<void>.success(Void);
     } catch (e) {
       return DataState.failure(const UnkownFailure());
     }

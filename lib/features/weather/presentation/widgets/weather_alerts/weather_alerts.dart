@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_alert_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
@@ -19,7 +20,7 @@ class WeatherAlerts extends StatelessWidget {
     );
     PageController controller = PageController();
     final showEmptyText =
-        (alerts != null && loading == true) || alerts == null || alerts.isEmpty;
+        (alerts != null && loading) || alerts == null || alerts.isEmpty;
 
     return Container(
       height: showEmptyText ? null : 120,
@@ -28,43 +29,46 @@ class WeatherAlerts extends StatelessWidget {
         color: Colors.black.withOpacity(.15),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: showEmptyText
-          ? const Center(child: Text("Keine Warnungen für Heute"))
-          : Stack(
-              children: [
-                PageView.builder(
-                  controller: controller,
-                  itemBuilder: (context, index) => WeatherAlertBox(
-                    alert: alerts[index],
-                  ),
-                  itemCount: alerts.length,
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  height: 20,
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(.15),
-                      borderRadius: BorderRadius.circular(8),
+      child: Skeletonizer(
+        enabled: alerts == null && loading,
+        child: showEmptyText
+            ? const Center(child: Text("Keine Warnungen für Heute"))
+            : Stack(
+                children: [
+                  PageView.builder(
+                    controller: controller,
+                    itemBuilder: (context, index) => WeatherAlertBox(
+                      alert: alerts[index],
                     ),
-                    child: SmoothPageIndicator(
-                      effect: WormEffect(
-                        type: WormType.thin,
-                        dotHeight: 10,
-                        dotWidth: 10,
-                        radius: 10,
-                        activeDotColor: Theme.of(context).colorScheme.primary,
-                        dotColor: Theme.of(context).colorScheme.secondary,
+                    itemCount: alerts.length,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    height: 20,
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(.15),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      controller: controller,
-                      count: alerts.length,
+                      child: SmoothPageIndicator(
+                        effect: WormEffect(
+                          type: WormType.thin,
+                          dotHeight: 10,
+                          dotWidth: 10,
+                          radius: 10,
+                          activeDotColor: Theme.of(context).colorScheme.primary,
+                          dotColor: Theme.of(context).colorScheme.secondary,
+                        ),
+                        controller: controller,
+                        count: alerts.length,
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
+                  )
+                ],
+              ),
+      ),
     );
   }
 }

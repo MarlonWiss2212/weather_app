@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -22,7 +24,7 @@ void main() {
       // call function to test
       final response = await repository.openLocationSettings();
 
-      expect(response, DataState<void>.success(null));
+      expect(response, DataState<void>.success(Void));
     });
 
     test(
@@ -57,7 +59,7 @@ void main() {
       // call function to test
       final response = await repository.openAppSettings();
 
-      expect(response, DataState<void>.success(null));
+      expect(response, DataState<void>.success(Void));
     });
 
     test(
