@@ -51,7 +51,7 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
         break;
       case ChartType.uvi:
         _minY = 0;
-        _maxY = 8;
+        _maxY = 0;
         break;
     }
   }
@@ -163,8 +163,8 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
               const Color.fromARGB(255, 163, 163, 163),
             ],
           ChartType.uvi => [
-              const Color.fromARGB(255, 243, 0, 0),
-              const Color.fromARGB(0, 243, 0, 0),
+              UvUtils.colorByUvIndex(_maxY + 1),
+              UvUtils.colorByUvIndex(_minY + 1),
             ],
           ChartType.rain => [
               const Color.fromARGB(255, 0, 81, 202),
@@ -195,8 +195,8 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
                 const Color.fromARGB(255, 0, 102, 255),
               ],
             ChartType.uvi => [
-                const Color.fromARGB(255, 202, 16, 16),
-                const Color.fromARGB(0, 202, 16, 16),
+                UvUtils.colorByUvIndex(_maxY),
+                UvUtils.colorByUvIndex(_minY),
               ],
             ChartType.snow => [
                 const Color.fromARGB(255, 153, 240, 255),
