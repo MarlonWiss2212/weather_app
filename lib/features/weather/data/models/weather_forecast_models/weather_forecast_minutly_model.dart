@@ -19,7 +19,7 @@ class WeatherForecastMinutlyModel extends WeatherForecastMinutlyEntity {
     } on ConvertingException {
       rethrow;
     } catch (e) {
-      throw ConvertingException();
+      throw ConvertingException(message: e.toString());
     }
   }
 }

@@ -27,7 +27,7 @@ class WeatherForecastTempModel extends WeatherForecastTempEntity {
     } on ConvertingException {
       rethrow;
     } catch (e) {
-      throw ConvertingException();
+      throw ConvertingException(message: e.toString());
     }
   }
 }

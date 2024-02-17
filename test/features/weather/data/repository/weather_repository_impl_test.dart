@@ -313,7 +313,7 @@ void main() {
       );
       when(
         mockWeatherService.getWeatherData(params: params),
-      ).thenThrow(Exception());
+      ).thenThrow(Exception("test failure"));
 
       // call function to test
       final response = await repository.getWeatherData(params: params);

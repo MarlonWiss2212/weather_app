@@ -13,7 +13,7 @@ abstract class Failure extends Equatable {
 class ServerFailure extends Failure {
   ServerFailure({required DioException error})
       : super(
-          errorMessage: error.message ?? "",
+          errorMessage: error.message ?? "Server failure please try again",
           statusCode: error.response?.statusCode,
         );
 
@@ -22,9 +22,10 @@ class ServerFailure extends Failure {
 }
 
 class NoAPIResponseFailure extends Failure {
-  const NoAPIResponseFailure({
-    super.errorMessage = "The API didn't return any data",
-  });
+  const NoAPIResponseFailure()
+      : super(
+          errorMessage: "The API didn't return any data",
+        );
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
@@ -32,47 +33,52 @@ class NoAPIResponseFailure extends Failure {
 // location failures
 
 class LocationPermissionDenied extends Failure {
-  const LocationPermissionDenied({
-    super.errorMessage =
-        "The location permission is denied. Please open the app settings to enable them.",
-  });
+  const LocationPermissionDenied()
+      : super(
+          errorMessage:
+              "The location permission is denied. Please open the app settings to enable them.",
+        );
 
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationPermissionDeniedForever extends Failure {
-  const LocationPermissionDeniedForever({
-    super.errorMessage =
-        "The location permission is denied forever. Please open the app settings to enable them.",
-  });
+  const LocationPermissionDeniedForever()
+      : super(
+          errorMessage:
+              "The location permission is denied forever. Please open the app settings to enable them.",
+        );
 
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationPermissionUnableToDetermine extends Failure {
-  const LocationPermissionUnableToDetermine({
-    super.errorMessage =
-        "The location permission is unable to determine. Please open the app settings to enable them.",
-  });
+  const LocationPermissionUnableToDetermine()
+      : super(
+          errorMessage:
+              "The location permission is unable to determine. Please open the app settings to enable them.",
+        );
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationServiceNotEnabledFailure extends Failure {
-  const LocationServiceNotEnabledFailure({
-    super.errorMessage =
-        "The location service is disabled please enable it in your device settings first.",
-  });
+  const LocationServiceNotEnabledFailure()
+      : super(
+          errorMessage:
+              "The location service is disabled please enable it in your device settings first.",
+        );
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
 class LocationTimeoutFailure extends Failure {
-  const LocationTimeoutFailure({
-    super.errorMessage = "Your device did not return any location data",
-  });
+  const LocationTimeoutFailure()
+      : super(
+          errorMessage: "Your device did not return any location data",
+        );
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
@@ -80,42 +86,61 @@ class LocationTimeoutFailure extends Failure {
 // Setting failures
 
 class OpeningAppSettingsFailure extends Failure {
-  const OpeningAppSettingsFailure({
-    super.errorMessage = "Failure opening the app settings.",
-  });
+  const OpeningAppSettingsFailure()
+      : super(
+          errorMessage: "Failure opening the app settings.",
+        );
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
 class OpeningLocationSettingsFailure extends Failure {
-  const OpeningLocationSettingsFailure({
-    super.errorMessage = "Failure opening the location settings.",
-  });
+  const OpeningLocationSettingsFailure()
+      : super(
+          errorMessage: "Failure opening the location settings.",
+        );
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
+// Failures with messages to set
+
 class ConvertingFailure extends Failure {
   const ConvertingFailure({
-    super.errorMessage =
-        "The App has an error converting data we will try to fix it soon",
-  });
+    String? message,
+    super.statusCode,
+  }) : super(
+          errorMessage: message != null
+              ? "Converting failure: $message"
+              : "The App has an error converting data we will try to fix it soon",
+        );
+
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
 class GeneralFailure extends Failure {
   const GeneralFailure({
-    super.errorMessage =
-        "The app has a general failure we will try to fix it soon",
-  });
+    String? message,
+    super.statusCode,
+  }) : super(
+          errorMessage: message != null
+              ? "General Failure: $message"
+              : "The app has a general failure we will try to fix it soon",
+        );
+
   @override
   List<Object?> get props => [errorMessage, statusCode];
 }
 
 class UnkownFailure extends Failure {
-  const UnkownFailure({super.errorMessage = "Unknown failure"});
+  const UnkownFailure({
+    String? message,
+    super.statusCode,
+  }) : super(
+          errorMessage: "Unknown failure${message != null ? ": $message" : ""}",
+        );
 
   @override
-  List<Object?> get props => [errorMessage, statusCode];
+  List<Object?> get props => [statusCode, errorMessage];
 }

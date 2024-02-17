@@ -32,7 +32,7 @@ class WeatherForecastAlertModel extends WeatherForecastAlertEntity {
     } on ConvertingException {
       rethrow;
     } catch (e) {
-      throw ConvertingException();
+      throw ConvertingException(message: e.toString());
     }
   }
 }

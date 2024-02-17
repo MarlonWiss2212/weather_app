@@ -40,9 +40,9 @@ class WeatherRepositoryImpl implements WeatherRepository {
         const NoAPIResponseFailure(),
         data: weatherData != null ? (weatherData, null) : null,
       );
-    } on ConvertingException {
+    } on ConvertingException catch (e) {
       return DataState.failure(
-        const ConvertingFailure(),
+        ConvertingFailure(message: e.message),
         data: weatherData != null ? (weatherData, null) : null,
       );
     } on DioException catch (e) {

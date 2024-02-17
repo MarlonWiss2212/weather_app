@@ -194,7 +194,7 @@ void main() {
       // mocking
       final MockLocationServiceImpl mockService = MockLocationServiceImpl();
       when(mockService.requestPermission()).thenThrow(
-        const PermissionDefinitionsNotFoundException(""),
+        const PermissionDefinitionsNotFoundException(null),
       );
 
       // call function to test
@@ -214,7 +214,7 @@ void main() {
       // mocking
       final MockLocationServiceImpl mockService = MockLocationServiceImpl();
       when(mockService.requestPermission()).thenThrow(
-        const PermissionRequestInProgressException(""),
+        const PermissionRequestInProgressException(null),
       );
 
       // call function to test

@@ -58,10 +58,10 @@ class LocationRepositoryImpl implements LocationRepository {
     try {
       final permission = await locationService.requestPermission();
       return DataState.success(permission);
-    } on PermissionDefinitionsNotFoundException {
-      return DataState.failure(const GeneralFailure());
-    } on PermissionRequestInProgressException {
-      return DataState.failure(const GeneralFailure());
+    } on PermissionDefinitionsNotFoundException catch (e) {
+      return DataState.failure(GeneralFailure(message: e.message));
+    } on PermissionRequestInProgressException catch (e) {
+      return DataState.failure(GeneralFailure(message: e.message));
     } catch (e) {
       return DataState.failure(const UnkownFailure());
     }

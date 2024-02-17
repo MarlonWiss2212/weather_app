@@ -17,7 +17,7 @@ class WeatherForecastSnowModel extends WeatherForecastSnowEntity {
     } on ConvertingException {
       rethrow;
     } catch (e) {
-      throw ConvertingException();
+      throw ConvertingException(message: e.toString());
     }
   }
 }

@@ -38,7 +38,10 @@ class DataState<T> extends Equatable {
     } else if (data != null || data.runtimeType == Void) {
       return onSuccess(data as T);
     }
-    throw const GeneralFailure();
+    throw const GeneralFailure(
+      message:
+          "Error when trying to run either function. This is an internal app failure please try again",
+    );
   }
 
   @override
