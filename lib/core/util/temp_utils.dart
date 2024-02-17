@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorUtils {
+class TempUtils {
   static Color colorByTemperatureLight(double? temperature) {
     if (temperature == null) {
       return Colors.grey;

@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_app/core/util/color_utils.dart';
+import 'package:weather_app/core/util/temp_utils.dart';
 import 'package:weather_app/core/util/uv_utils.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/chart_type.dart';
@@ -23,7 +23,8 @@ class WeatherHourlyChartDiagram extends StatefulWidget {
 
 class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
   late double _maxUnixDate;
-  late double _maxY;
+  late double _maxYHeight;
+  late double _maxYForColor;
   late double _minUnixDate;
   late double _minY;
 
@@ -35,23 +36,28 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
     switch (widget.type) {
       case ChartType.temp:
         _minY = double.infinity;
-        _maxY = double.negativeInfinity;
+        _maxYForColor = double.negativeInfinity;
+        _maxYHeight = double.negativeInfinity;
         break;
       case ChartType.rain || ChartType.snow:
         _minY = 0;
-        _maxY = 15;
+        _maxYForColor = 15;
+        _maxYHeight = 15;
         break;
       case ChartType.clouds:
         _minY = 0;
-        _maxY = 100;
+        _maxYForColor = 100;
+        _maxYHeight = 100;
         break;
       case ChartType.wind:
         _minY = 0;
-        _maxY = 30;
+        _maxYForColor = 30;
+        _maxYHeight = 30;
         break;
       case ChartType.uvi:
         _minY = 0;
-        _maxY = 0;
+        _maxYForColor = 0;
+        _maxYHeight = 4;
         break;
     }
   }
@@ -72,8 +78,11 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
       switch (widget.type) {
         case ChartType.temp:
           // Y is equal to lowest and max temp
-          if (_maxY < hour.temp) {
-            _maxY = hour.temp;
+          if (_maxYForColor < hour.temp) {
+            _maxYForColor = hour.temp;
+          }
+          if (_maxYHeight < hour.temp) {
+            _maxYHeight = hour.temp;
           }
           if (_minY > hour.temp) {
             _minY = hour.temp;
@@ -83,8 +92,11 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
           break;
         case ChartType.clouds:
           // Y is equal to lowest and max temp
-          if (_maxY < hour.clouds) {
-            _maxY = hour.clouds.toDouble();
+          if (_maxYForColor < hour.clouds) {
+            _maxYForColor = hour.clouds.toDouble();
+          }
+          if (_maxYHeight < hour.clouds) {
+            _maxYHeight = hour.clouds.toDouble();
           }
           if (_minY > hour.clouds) {
             _minY = hour.clouds.toDouble();
@@ -94,8 +106,11 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
         case ChartType.rain:
           // Y is equal to lowest and max temp
           final rainOneHour = hour.rain?.oneHour ?? 0.0;
-          if (_maxY < rainOneHour) {
-            _maxY = rainOneHour;
+          if (_maxYForColor < rainOneHour) {
+            _maxYForColor = rainOneHour;
+          }
+          if (_maxYHeight < rainOneHour) {
+            _maxYHeight = rainOneHour;
           }
           if (_minY > rainOneHour) {
             _minY = rainOneHour;
@@ -105,8 +120,11 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
         case ChartType.snow:
           // Y is equal to lowest and max temp
           final snowOneHour = hour.snow?.oneHour ?? 0.0;
-          if (_maxY < snowOneHour) {
-            _maxY = snowOneHour;
+          if (_maxYForColor < snowOneHour) {
+            _maxYForColor = snowOneHour;
+          }
+          if (_maxYHeight < snowOneHour) {
+            _maxYHeight = snowOneHour;
           }
           if (_minY > snowOneHour) {
             _minY = snowOneHour;
@@ -115,8 +133,11 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
           break;
         case ChartType.wind:
           // Y is equal to lowest and max temp
-          if (_maxY < hour.windSpeed) {
-            _maxY = hour.windSpeed;
+          if (_maxYForColor < hour.windSpeed) {
+            _maxYForColor = hour.windSpeed;
+          }
+          if (_maxYHeight < hour.windSpeed) {
+            _maxYHeight = hour.windSpeed;
           }
           if (_minY > hour.windSpeed) {
             _minY = hour.windSpeed;
@@ -125,8 +146,11 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
           break;
         case ChartType.uvi:
           // Y is equal to lowest and max temp
-          if (_maxY < hour.uvi) {
-            _maxY = hour.uvi;
+          if (_maxYForColor < hour.uvi) {
+            _maxYForColor = hour.uvi;
+          }
+          if (_maxYHeight < hour.windSpeed) {
+            _maxYHeight = hour.windSpeed;
           }
           if (_minY > hour.uvi) {
             _minY = hour.uvi;
@@ -151,10 +175,10 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
         end: Alignment.bottomCenter,
         colors: switch (widget.type) {
           ChartType.temp => [
-              ColorUtils.colorByTemperatureLight(
-                _maxY < 14 ? _maxY - 3 : _maxY + 3,
+              TempUtils.colorByTemperatureLight(
+                _maxYForColor < 14 ? _maxYForColor - 3 : _maxYForColor + 3,
               ),
-              ColorUtils.colorByTemperatureLight(
+              TempUtils.colorByTemperatureLight(
                 _minY < 14 ? _minY - 3 : _minY + 3,
               ),
             ],
@@ -163,7 +187,7 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
               const Color.fromARGB(255, 163, 163, 163),
             ],
           ChartType.uvi => [
-              UvUtils.colorByUvIndex(_maxY + 1),
+              UvUtils.colorByUvIndex(_maxYForColor + 1),
               UvUtils.colorByUvIndex(_minY + 1),
             ],
           ChartType.rain => [
@@ -183,8 +207,8 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
           end: Alignment.bottomCenter,
           colors: switch (widget.type) {
             ChartType.temp => [
-                ColorUtils.colorByTemperatureLight(_maxY),
-                ColorUtils.colorByTemperatureLight(_minY),
+                TempUtils.colorByTemperatureLight(_maxYForColor),
+                TempUtils.colorByTemperatureLight(_minY),
               ],
             ChartType.clouds || ChartType.wind => [
                 const Color.fromARGB(255, 179, 179, 179),
@@ -195,7 +219,7 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
                 const Color.fromARGB(255, 0, 102, 255),
               ],
             ChartType.uvi => [
-                UvUtils.colorByUvIndex(_maxY),
+                UvUtils.colorByUvIndex(_maxYForColor),
                 UvUtils.colorByUvIndex(_minY),
               ],
             ChartType.snow => [
@@ -245,7 +269,7 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
                   tooltipPadding: const EdgeInsets.all(0),
                   tooltipMargin: 7,
                   getTooltipItems: (List<LineBarSpot> spots) {
-                    List<LineTooltipItem> tooltip = [];
+                    List<LineTooltipItem> tooltips = [];
                     for (final spot in spots) {
                       String sign = switch (widget.type) {
                         ChartType.temp => "°C",
@@ -261,7 +285,7 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
                         ChartType.wind => spot.y.toString(),
                         ChartType.uvi => spot.y.toString(),
                       };
-                      tooltip.add(
+                      tooltips.add(
                         LineTooltipItem(
                           "$number $sign",
                           Theme.of(context).textTheme.labelLarge ??
@@ -269,14 +293,14 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
                         ),
                       );
                     }
-                    return tooltip;
+                    return tooltips;
                   },
                 ),
                 enabled: true,
                 handleBuiltInTouches: false,
               ),
               maxX: _maxUnixDate,
-              maxY: _maxY,
+              maxY: _maxYHeight,
               minX: _minUnixDate,
               minY: _minY,
               gridData: const FlGridData(show: false),
@@ -287,7 +311,7 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
                   sideTitles: SideTitles(
                     showTitles: true,
                     reservedSize: 70,
-                    interval: 3600000,
+                    interval: 3600000, // 1 hour == 3600000 milliseconds
                     getTitlesWidget: (value, meta) {
                       final formattedDate = DateFormat.Hm("de").format(
                         DateTime.fromMillisecondsSinceEpoch(value.toInt()),

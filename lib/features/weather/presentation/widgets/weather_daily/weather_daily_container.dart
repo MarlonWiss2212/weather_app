@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/core/util/uv_utils.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
@@ -31,22 +32,30 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _uviWidget(uvindex: widget.day?.uvi ?? 0),
-                      const SizedBox(width: 5),
-                      _snowWidget(snow: widget.day?.snow ?? 0),
-                      const SizedBox(width: 5),
-                      _humidityWidget(humidity: widget.day?.humidity ?? 0),
-                      const SizedBox(width: 5),
-                      _windWidget(
-                        windDeg: widget.day?.windDeg ?? 0,
-                        windSpeed: widget.day?.windSpeed ?? 0,
-                      )
-                    ],
+                    children: AnimateList(
+                      interval: const Duration(milliseconds: 40),
+                      effects: [
+                        const FadeEffect(duration: Duration(milliseconds: 150)),
+                        const ScaleEffect(
+                          duration: Duration(milliseconds: 100),
+                          begin: Offset(.5, .5),
+                          end: Offset(1, 1),
+                        )
+                      ],
+                      children: [
+                        _uviWidget(uvindex: widget.day?.uvi ?? 0),
+                        const SizedBox(width: 5),
+                        _snowWidget(snow: widget.day?.snow ?? 0),
+                        const SizedBox(width: 5),
+                        _humidityWidget(humidity: widget.day?.humidity ?? 0),
+                        const SizedBox(width: 5),
+                        _windWidget(
+                          windDeg: widget.day?.windDeg,
+                          windSpeed: widget.day?.windSpeed ?? 0,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                const Divider(
-                  color: Colors.white,
                 ),
               ],
             )
@@ -55,9 +64,10 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
   }
 
   Widget _windWidget({
-    required int windDeg,
+    int? windDeg,
     required double windSpeed,
   }) {
+    final angle = windDeg != null ? windDeg * (pi / 180) : null;
     return _extendedPartContainer(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,13 +80,15 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
                 size: 14,
               ),
               const SizedBox(width: 2),
-              Transform.rotate(
-                angle: (windDeg - 90) * (pi / 180),
-                child: const Icon(
-                  Icons.keyboard_arrow_left_rounded,
-                  size: 14,
+              if (angle != null) ...{
+                Transform.rotate(
+                  angle: angle,
+                  child: const Icon(
+                    Icons.keyboard_arrow_left_rounded,
+                    size: 14,
+                  ),
                 ),
-              ),
+              },
               const SizedBox(width: 5),
               Text(
                 "Wind",
@@ -102,7 +114,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
           Row(
             children: [
               const Icon(
-                Icons.water_drop,
+                Icons.water_drop_rounded,
                 size: 14,
               ),
               const SizedBox(width: 5),
@@ -201,13 +213,23 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
             children: [
               //Expand icon
               IconButton(
+                isSelected: expanded,
                 padding: const EdgeInsets.all(0),
                 onPressed: () => setState(() => expanded = !expanded),
-                icon: Icon(
-                  expanded
-                      ? Icons.keyboard_arrow_up_rounded
-                      : Icons.keyboard_arrow_down_rounded,
-                ),
+                selectedIcon: const Icon(Icons.keyboard_arrow_up_rounded)
+                    .animate()
+                    .rotate(
+                      begin: .5,
+                      end: 0,
+                      duration: const Duration(milliseconds: 100),
+                    ),
+                icon: const Icon(Icons.keyboard_arrow_down_rounded)
+                    .animate()
+                    .rotate(
+                      begin: -.5,
+                      end: 0,
+                      duration: const Duration(milliseconds: 100),
+                    ),
               ),
               // weekday
               Text(
@@ -238,7 +260,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
                     Row(
                       children: [
                         Icon(
-                          Icons.water_drop,
+                          Icons.water_drop_rounded,
                           fill: widget.day?.pop ?? 0,
                           size: 8,
                         ),

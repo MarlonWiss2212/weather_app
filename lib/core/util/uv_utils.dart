@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 class UvUtils {
-  static String uvIndex(double uvi) {
-    return switch (uvi) {
-      > 11 => "Extrem",
-      > 8 && < 11 => "Sehr hoch",
-      > 6 && < 8 => "Hoch",
-      > 3 && < 6 => "Mäßig",
-      < 3 => "Niedrig",
-      _ => "K.A."
-    };
-  }
+  static String uvIndex(double uvi) => switch (uvi) {
+        > 11 => "Extrem",
+        > 8 && < 11 => "Sehr hoch",
+        > 6 && < 8 => "Hoch",
+        > 3 && < 6 => "Mäßig",
+        < 3 => "Niedrig",
+        _ => "K.A."
+      };
 
   static Color colorByUvIndex(double uvi) => switch (uvi) {
         < 1 => const Color.fromARGB(255, 0, 223, 11),

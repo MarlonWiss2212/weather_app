@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/core/util/uv_utils.dart';
@@ -33,7 +34,7 @@ class WeatherUVIndex extends StatelessWidget {
                 const Icon(
                   Icons.sunny,
                   size: 16,
-                ),
+                ).animate().fadeIn(),
                 const SizedBox(width: 5),
                 Text(
                   "UV Index",

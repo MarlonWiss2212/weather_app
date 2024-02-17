@@ -102,7 +102,7 @@ class WeatherHourly extends StatelessWidget {
     return Row(
       children: [
         Icon(
-          Icons.water_drop,
+          Icons.water_drop_rounded,
           fill: hour?.pop ?? 0,
           size: 8,
         ),

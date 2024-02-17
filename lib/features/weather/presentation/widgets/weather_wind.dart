@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
@@ -37,14 +38,14 @@ class WeatherWind extends StatelessWidget {
                 const Icon(
                   Icons.air,
                   size: 20,
-                ),
+                ).animate().fadeIn(),
                 const SizedBox(width: 2),
                 Transform.rotate(
                   angle: (windDeg ?? 0 - 90) * (pi / 180),
                   child: const Icon(
-                    Icons.keyboard_arrow_left_rounded,
+                    Icons.keyboard_arrow_up_rounded,
                     size: 20,
-                  ),
+                  ).animate().fadeIn(),
                 ),
                 const SizedBox(width: 5),
                 Text(

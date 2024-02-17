@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
@@ -30,9 +31,9 @@ class WeatherHumidity extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  Icons.water_drop,
+                  Icons.water_drop_rounded,
                   size: 20,
-                ),
+                ).animate().fadeIn(),
                 const SizedBox(width: 5),
                 Text(
                   "Feuchtigkeit",

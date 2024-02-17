@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
@@ -32,7 +33,7 @@ class WeatherVisibility extends StatelessWidget {
                 const Icon(
                   Icons.visibility,
                   size: 20,
-                ),
+                ).animate().fadeIn(),
                 const SizedBox(width: 5),
                 Text(
                   "Sichtweite",
