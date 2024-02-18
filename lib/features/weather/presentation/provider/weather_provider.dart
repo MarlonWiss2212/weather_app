@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_app/core/errors/failures.dart';
@@ -49,6 +51,8 @@ class WeatherProvider extends ChangeNotifier {
       params: GetWeatherParams(
         appid: dotenv.get("OPEN_WEATHER_APP_ID"),
         units: "metric",
+        exclude: "minutely",
+        lang: Platform.localeName.split("_")[0],
       ),
     );
 

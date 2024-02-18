@@ -19,8 +19,7 @@ class WeatherAlerts extends StatelessWidget {
       (provider) => provider.loading,
     );
     PageController controller = PageController();
-    final showEmptyText =
-        (alerts != null && loading) || alerts == null || alerts.isEmpty;
+    final showEmptyText = alerts == null || alerts.isEmpty;
 
     return Container(
       height: showEmptyText ? null : 120,

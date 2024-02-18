@@ -67,7 +67,7 @@ class WeatherSunriseSunset extends StatelessWidget {
                 const Icon(
                   CupertinoIcons.sunset_fill,
                   size: 40,
-                ).animate().fadeIn(),
+                ).animate().fade().scale(),
                 if (sunset != null) ...{
                   Text(
                     DateFormat.Hm("de").format(

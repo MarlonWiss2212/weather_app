@@ -251,7 +251,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              Flexible(
                 flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,7 +296,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
                   WeatherIcon(),
                 ],
               ),
-              Expanded(
+              Flexible(
                 flex: 4,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
