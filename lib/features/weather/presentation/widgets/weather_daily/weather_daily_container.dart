@@ -44,8 +44,12 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
                       ],
                       children: [
                         _uviWidget(uvindex: widget.day?.uvi ?? 0),
+                        if (widget.day?.snow != null) ...{
+                          const SizedBox(width: 5),
+                          _snowWidget(snow: widget.day?.snow ?? 0),
+                        },
                         const SizedBox(width: 5),
-                        _snowWidget(snow: widget.day?.snow ?? 0),
+                        _rainWidget(rain: widget.day?.snow ?? 0),
                         const SizedBox(width: 5),
                         _humidityWidget(humidity: widget.day?.humidity ?? 0),
                         const SizedBox(width: 5),
@@ -154,6 +158,34 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
           ),
           Text(
             "${snow.round().toString()} mm",
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _rainWidget({required double rain}) {
+    return _extendedPartContainer(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.water_drop,
+                size: 14,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                "Regen",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+          Text(
+            "${rain.round().toString()} mm",
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ],
