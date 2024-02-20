@@ -7,9 +7,16 @@ import 'package:weather_app/features/weather/domain/entities/weather_forecast_en
 abstract class WeatherRepository {
   /// By passing [params] it will return
   /// detailed weather information of the provided location
-  /// or failure
+  /// or a failure
   Future<DataState<(WeatherForecastEntity, ReverseGeocodingEntity?)>>
       getWeatherData({
     required GetWeatherWithLocationParams params,
   });
+
+  /// By passing [params] it will return
+  /// detailed the detailed weathermap data
+  /// or a failure
+/*  Future<DataState<dynamic>> getWeatherMapData({
+    required dynamic params,
+  });*/
 }

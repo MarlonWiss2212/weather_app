@@ -12,16 +12,9 @@ import 'package:weather_app/features/weather/domain/usecases/weather/get_weather
 class WeatherProvider extends ChangeNotifier {
   final GetWeatherByLocationUseCase _getWeatherByLocationUseCase;
 
-  /// holds the weather data
   WeatherForecastEntity? _weather;
-
-  /// holds location data
   ReverseGeocodingEntity? _geodata;
-
-  /// saves the last failure
   Failure? _failure;
-
-  /// boolean if it loads
   bool _loading = false;
 
   WeatherProvider(this._getWeatherByLocationUseCase);
@@ -62,7 +55,6 @@ class WeatherProvider extends ChangeNotifier {
         _geodata = data.$2;
       },
       onError: (failure) {
-        print(failure.errorMessage + failure.statusCode.toString());
         _failure = failure;
       },
     );

@@ -7,6 +7,7 @@ import 'package:weather_app/features/weather/presentation/widgets/weather_daily/
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/weather_hourly_chart.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_humidity.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map_box.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_sunrise_sunset.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_uv_index.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_visibility.dart';
@@ -66,9 +67,15 @@ class _WeatherPageState extends State<WeatherPage> {
                 sliver: _gridOfBasicData(),
               ),
               const SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 8),
+                padding: EdgeInsets.only(top: 8),
                 sliver: SliverToBoxAdapter(
                   child: WeatherSunriseSunset(),
+                ),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                sliver: SliverToBoxAdapter(
+                  child: WeatherMapBox(),
                 ),
               ),
             ],
