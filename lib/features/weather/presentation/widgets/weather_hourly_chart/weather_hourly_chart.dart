@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/chart_type.dart';
+import 'package:weather_app/core/util/enums/hourly_chart_type_enum.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/weather_hourly_chart_diagram.dart';
 
 class WeatherHourlyChart extends StatefulWidget {
@@ -16,7 +16,7 @@ class WeatherHourlyChart extends StatefulWidget {
 }
 
 class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
-  ChartType type = ChartType.temp;
+  HourlyChartType type = HourlyChartType.temp;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,41 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
     );
     final showSkeleton = loading && hourly == null;
 
+    return Container(
+      height: 180,
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(.15),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Skeletonizer(
+        enabled: showSkeleton,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+              width: double.infinity,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                    children: _generateHourlyChartTypeButtons(hourly ?? [])),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Expanded(
+              child: WeatherHourlyChartDiagram(
+                hourly: _generateMockDataWhenRequiredOrReturnHourly(hourly),
+                type: type,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<WeatherForecastHourlyEntity> _generateMockDataWhenRequiredOrReturnHourly(
+    List<WeatherForecastHourlyEntity>? hourly,
+  ) {
     final List<WeatherForecastHourlyEntity> data = hourly != null
         ? hourly.length > 24
             ? hourly.getRange(0, 24).toList()
@@ -54,44 +89,52 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
         ));
       }
     }
-
-    return Container(
-      height: 180,
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(.15),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Skeletonizer(
-        enabled: showSkeleton,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
-              width: double.infinity,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    ChartType.values.length,
-                    (index) => _chartTypeButton(ChartType.values[index]),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 6),
-            Expanded(
-              child: WeatherHourlyChartDiagram(
-                hourly: data,
-                type: type,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return data;
   }
 
-  Widget _chartTypeButton(ChartType type) {
+  (double, double) _calcMaxRainAndSnowForAllHours(
+    List<WeatherForecastHourlyEntity> hourly,
+  ) {
+    double maxRainHourly = 0;
+    double maxSnowHourly = 0;
+    for (WeatherForecastHourlyEntity hour in hourly) {
+      if (hour.rain?.oneHour != null && hour.rain!.oneHour! > maxRainHourly) {
+        maxRainHourly = hour.rain!.oneHour!;
+      }
+      if (hour.snow?.oneHour != null && hour.snow!.oneHour! > maxSnowHourly) {
+        maxSnowHourly = hour.snow!.oneHour!;
+      }
+    }
+    return (maxRainHourly, maxSnowHourly);
+  }
+
+  List<Widget> _generateHourlyChartTypeButtons(
+    List<WeatherForecastHourlyEntity> hourly,
+  ) {
+    final (maxRainHourly, maxSnowHourly) = _calcMaxRainAndSnowForAllHours(
+      hourly,
+    );
+
+    List<Widget> childrenHourlyChartTypeButtons = [];
+    for (final hourlyChartType in HourlyChartType.values) {
+      // dont show rain diagramm when there is no rain
+      if (hourlyChartType == HourlyChartType.rain && maxRainHourly <= 0) {
+        continue;
+      }
+
+      // dont show snow diagramm when there is no snow
+      if (hourlyChartType == HourlyChartType.snow && maxSnowHourly <= 0) {
+        continue;
+      }
+
+      childrenHourlyChartTypeButtons.add(
+        _hourlyChartTypeButton(hourlyChartType),
+      );
+    }
+    return childrenHourlyChartTypeButtons;
+  }
+
+  Widget _hourlyChartTypeButton(HourlyChartType type) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
