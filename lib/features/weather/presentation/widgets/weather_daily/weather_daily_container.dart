@@ -49,7 +49,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
                           _snowWidget(snow: widget.day?.snow ?? 0),
                         },
                         const SizedBox(width: 5),
-                        _rainWidget(rain: widget.day?.snow ?? 0),
+                        _rainWidget(rain: widget.day?.rain ?? 0),
                         const SizedBox(width: 5),
                         _humidityWidget(humidity: widget.day?.humidity ?? 0),
                         const SizedBox(width: 5),
