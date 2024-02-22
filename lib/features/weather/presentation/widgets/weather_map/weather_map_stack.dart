@@ -10,7 +10,12 @@ import 'package:weather_app/features/weather/presentation/widgets/weather_map/we
 
 class WeatherMapStack extends StatelessWidget {
   final ReverseGeocodingEntity? geodata;
-  const WeatherMapStack({super.key, this.geodata});
+  final bool weatherMapClickable;
+  const WeatherMapStack({
+    super.key,
+    this.geodata,
+    this.weatherMapClickable = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +24,7 @@ class WeatherMapStack extends StatelessWidget {
       children: [
         geodata != null
             ? WeatherMap(
+                clickable: weatherMapClickable,
                 latLng: LatLng(
                   geodata!.lat,
                   geodata!.lon,

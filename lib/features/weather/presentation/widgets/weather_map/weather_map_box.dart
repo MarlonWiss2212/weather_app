@@ -23,7 +23,10 @@ class WeatherMapBox extends StatelessWidget {
         enabled: loading && geodata == null,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: WeatherMapStack(geodata: geodata),
+          child: WeatherMapStack(
+            geodata: geodata,
+            weatherMapClickable: true,
+          ),
         ),
       ),
     );

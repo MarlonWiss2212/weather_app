@@ -21,6 +21,7 @@ class WeatherMapFullscreenBox extends StatelessWidget {
       enabled: loading && geodata == null,
       child: WeatherMapStack(
         geodata: geodata,
+        weatherMapClickable: false,
       ),
     );
   }

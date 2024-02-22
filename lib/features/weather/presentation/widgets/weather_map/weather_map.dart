@@ -8,9 +8,11 @@ import 'package:weather_app/features/weather/presentation/provider/weather_provi
 
 class WeatherMap extends StatelessWidget {
   final LatLng latLng;
+  final bool clickable;
   const WeatherMap({
     super.key,
     required this.latLng,
+    this.clickable = true,
   });
 
   @override
