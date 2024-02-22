@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/core/util/enums/map_type_enum.dart';
+import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 
 class WeatherMapTypeButton extends StatelessWidget {
-  final MapType activeType;
   final MapType type;
   final void Function() onTap;
   const WeatherMapTypeButton({
     super.key,
     required this.onTap,
     required this.type,
-    required this.activeType,
   });
 
   @override
   Widget build(BuildContext context) {
+    final activeType = context.select<WeatherProvider, MapType>(
+      (provider) => provider.activeMapType,
+    );
     return Hero(
       tag: type.title,
       child: Container(

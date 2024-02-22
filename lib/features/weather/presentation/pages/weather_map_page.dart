@@ -8,7 +8,7 @@ class WeatherMapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 12, 158, 226),
+        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
         title: const Text("Wetter Karte"),
       ),
       body: const WeatherMapFullscreenBox(),
