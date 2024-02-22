@@ -10,9 +10,11 @@ import 'package:weather_app/features/weather/presentation/widgets/weather_map/we
 
 class WeatherMapStack extends StatelessWidget {
   final ReverseGeocodingEntity? geodata;
+  final BorderRadius? borderRadius;
   final bool weatherMapClickable;
   const WeatherMapStack({
     super.key,
+    this.borderRadius,
     this.geodata,
     this.weatherMapClickable = true,
   });
@@ -24,7 +26,6 @@ class WeatherMapStack extends StatelessWidget {
       children: [
         geodata != null
             ? WeatherMap(
-                clickable: weatherMapClickable,
                 latLng: LatLng(
                   geodata!.lat,
                   geodata!.lon,
@@ -36,15 +37,19 @@ class WeatherMapStack extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-        InkWell(
-          onTap: () => context.push("/map"),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0, .4],
-                colors: [Colors.black.withOpacity(.4), Colors.transparent],
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: borderRadius,
+            onTap: weatherMapClickable ? () => context.push("/map") : null,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: const [0, .4],
+                  colors: [Colors.black.withOpacity(.4), Colors.transparent],
+                ),
               ),
             ),
           ),

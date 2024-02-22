@@ -16,14 +16,15 @@ class WeatherMapBox extends StatelessWidget {
     final loading = context.select<WeatherProvider, bool>(
       (provider) => provider.loading,
     );
-
+    final borderRadius = BorderRadius.circular(12);
     return AspectRatio(
       aspectRatio: 1 / 1,
       child: Skeletonizer(
         enabled: loading && geodata == null,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: borderRadius,
           child: WeatherMapStack(
+            borderRadius: borderRadius,
             geodata: geodata,
             weatherMapClickable: true,
           ),
