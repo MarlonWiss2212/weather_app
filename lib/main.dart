@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/features/weather/presentation/pages/weather_page.dart';
+import 'package:weather_app/config/routes/router.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/injection_container.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       themeMode: ThemeMode.light,
       title: 'GoWeather',
       theme: ThemeData(
@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: AnnotatedRegion(
+      routerConfig: router,
+      builder: (context, child) => AnnotatedRegion(
         value: const SystemUiOverlayStyle(
           statusBarColor: Color.fromARGB(255, 12, 158, 226),
           systemNavigationBarColor: Color.fromARGB(255, 12, 158, 226),
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
             create: (_) => WeatherProvider(
               sl(),
             )..getWeather(),
-            child: const WeatherPage(),
+            child: child,
           ),
         ),
       ),

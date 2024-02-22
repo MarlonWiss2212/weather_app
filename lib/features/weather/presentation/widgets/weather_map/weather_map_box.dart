@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -8,6 +9,7 @@ import 'package:weather_app/core/util/enums/map_type_enum.dart';
 import 'package:weather_app/features/weather/domain/entities/geocoding/reverse_geocoding_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map_type_button.dart';
 
 class WeatherMapBox extends StatefulWidget {
   const WeatherMapBox({super.key});
@@ -56,13 +58,19 @@ class _WeatherMapBoxState extends State<WeatherMapBox> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: const [0, .4],
-                    colors: [Colors.black.withOpacity(.4), Colors.transparent],
+              InkWell(
+                onTap: () => context.push("/map"),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: const [0, .4],
+                      colors: [
+                        Colors.black.withOpacity(.4),
+                        Colors.transparent
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -78,8 +86,12 @@ class _WeatherMapBoxState extends State<WeatherMapBox> {
                     child: Row(
                       children: List.generate(
                         MapType.values.length,
-                        (index) => _mapTypeButton(
-                          MapType.values[index],
+                        (index) => WeatherMapTypeButton(
+                          type: MapType.values[index],
+                          activeType: type,
+                          onTap: () => setState(
+                            () => type = MapType.values[index],
+                          ),
                         ),
                       ),
                     ),
@@ -87,38 +99,6 @@ class _WeatherMapBoxState extends State<WeatherMapBox> {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _mapTypeButton(MapType type) {
-    return Container(
-      // TODO: better way for margin in future
-      margin: const EdgeInsets.only(right: 8),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(6),
-          onTap: () => setState(() => this.type = type),
-          child: Container(
-            constraints: const BoxConstraints(minWidth: 70),
-            decoration: BoxDecoration(
-              color: this.type == type
-                  ? const Color.fromARGB(100, 0, 0, 0)
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            padding: const EdgeInsets.all(6),
-            child: Center(
-              child: Text(
-                type.title,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
-            ),
           ),
         ),
       ),

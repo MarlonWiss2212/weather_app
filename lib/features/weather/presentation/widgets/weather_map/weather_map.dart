@@ -13,20 +13,23 @@ class WeatherMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterMap(
-      options: MapOptions(
-        interactionOptions: const InteractionOptions(
-          flags: InteractiveFlag.none,
+    return Hero(
+      tag: "map",
+      child: FlutterMap(
+        options: MapOptions(
+          interactionOptions: const InteractionOptions(
+            flags: InteractiveFlag.none,
+          ),
+          initialZoom: 5.5,
+          initialCenter: latLng,
         ),
-        initialZoom: 5.5,
-        initialCenter: latLng,
+        children: [
+          TileLayer(
+            urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+          ),
+          ...tiles,
+        ],
       ),
-      children: [
-        TileLayer(
-          urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        ),
-        ...tiles,
-      ],
     );
   }
 }
