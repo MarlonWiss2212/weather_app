@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/config/routes/router.dart';
+import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/injection_container.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -42,11 +43,19 @@ class MyApp extends StatelessWidget {
           systemNavigationBarColor: Color.fromARGB(255, 12, 158, 226),
         ),
         child: SafeArea(
-          child: ChangeNotifierProvider<WeatherProvider>(
-            create: (_) => WeatherProvider(
-              sl(),
-            )..getWeather(),
-            child: child,
+          child: ChangeNotifierProvider<FailureProvider>(
+            create: (_) => FailureProvider(),
+            child: Builder(builder: (context) {
+              return ChangeNotifierProvider<WeatherProvider>(
+                create: (_) => WeatherProvider(
+                  sl(),
+                  context.select<FailureProvider, FailureProvider>(
+                    (value) => value,
+                  ),
+                )..getWeather(),
+                child: child,
+              );
+            }),
           ),
         ),
       ),

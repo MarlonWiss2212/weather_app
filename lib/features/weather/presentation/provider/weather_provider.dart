@@ -1,29 +1,27 @@
 import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/params/get_weather_params.dart';
 import 'package:weather_app/core/util/enums/map_type_enum.dart';
 import 'package:weather_app/features/weather/domain/entities/geocoding/reverse_geocoding_entity.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_entity.dart';
 import 'package:weather_app/features/weather/domain/usecases/weather/get_weather_by_location.dart';
+import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
 
 /// Provides state and functions for the weather data
 class WeatherProvider extends ChangeNotifier {
   final GetWeatherByLocationUseCase _getWeatherByLocationUseCase;
+  final FailureProvider _failureProvider;
 
   WeatherForecastEntity? _weather;
   ReverseGeocodingEntity? _geodata;
   MapType _activeMapType = MapType.temp;
-  Failure? _failure;
   bool _loading = false;
 
-  WeatherProvider(this._getWeatherByLocationUseCase);
-
-  Failure? get failure {
-    return _failure;
-  }
+  WeatherProvider(
+    this._getWeatherByLocationUseCase,
+    this._failureProvider,
+  );
 
   MapType get activeMapType {
     return _activeMapType;
@@ -66,7 +64,7 @@ class WeatherProvider extends ChangeNotifier {
         _geodata = data.$2;
       },
       onError: (failure) {
-        _failure = failure;
+        _failureProvider.addFailureToList(failure);
       },
     );
 
