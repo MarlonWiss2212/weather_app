@@ -13,7 +13,7 @@ class WeatherDailyPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(0, 0, 0, 0),
         title: const Text(""),
       ),
-      body: const WeatherMapFullscreenBox(),
+      body: const Placeholder(),
     );
   }
 }
