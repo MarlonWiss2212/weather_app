@@ -43,6 +43,10 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
                         )
                       ],
                       children: [
+                        _cloudWidget(
+                          clouds: widget.day?.clouds.toDouble() ?? 0,
+                        ),
+                        const SizedBox(width: 5),
                         _uviWidget(uvindex: widget.day?.uvi ?? 0),
                         if (widget.day?.snow != null) ...{
                           const SizedBox(width: 5),
@@ -221,6 +225,35 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
     );
   }
 
+  Widget _cloudWidget({required double clouds}) {
+    return _extendedPartContainer(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.cloud,
+                fill: clouds / 100,
+                size: 10,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                "Wolken",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+          Text(
+            "${clouds.round().toString()} %",
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _extendedPartContainer({required Widget child}) {
     return Container(
       height: 50,
@@ -285,38 +318,19 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
             children: [
               Flexible(
                 flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Rain
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.water_drop_rounded,
-                          fill: widget.day?.pop ?? 0,
-                          size: 8,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          "${((widget.day?.pop ?? 0) * 100).round().toString()}%",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
+                    Icon(
+                      Icons.water_drop_rounded,
+                      fill: widget.day?.pop ?? 0,
+                      size: 8,
                     ),
-                    // Clouds
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.cloud,
-                          fill: ((widget.day?.clouds.toDouble() ?? 0) / 100),
-                          size: 8,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          "${widget.day?.clouds.toString() ?? "0"}%",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
+                    const SizedBox(width: 5),
+                    Text(
+                      "${((widget.day?.pop ?? 0) * 100).round().toString()}%",
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
