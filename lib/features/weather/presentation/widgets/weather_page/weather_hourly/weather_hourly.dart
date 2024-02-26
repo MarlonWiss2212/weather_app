@@ -21,7 +21,7 @@ class WeatherHourly extends StatelessWidget {
     final showSkeleton = loading && hourly == null;
 
     return Container(
-      height: 180,
+      height: 130,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.15),
@@ -51,16 +51,17 @@ class WeatherHourly extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
-              const WeatherIcon(),
+              const WeatherIcon(
+                size: 35,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //rain widget
-                  if (hourly?[index] != null || showSkeleton) ...[
-                    _rainRow(context, hourly?[index]),
-                    const SizedBox(height: 5),
-                    _cloudsRow(context, hourly?[index]),
+                  if ((hourly?[index] != null && hourly![index].pop > 0) ||
+                      showSkeleton) ...[
+                    _rainRow(context, hourly?[index].pop ?? 0),
                   ],
                   const SizedBox(height: 10),
                   // temp
@@ -83,35 +84,18 @@ class WeatherHourly extends StatelessWidget {
     );
   }
 
-  Widget _cloudsRow(BuildContext context, WeatherForecastHourlyEntity? hour) {
-    return Row(
-      children: [
-        Icon(
-          Icons.cloud,
-          fill: ((hour?.clouds.toDouble() ?? 0) / 100),
-          size: 8,
-        ),
-        const SizedBox(width: 5),
-        Text(
-          "${hour?.clouds.toString() ?? "0"}%",
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-      ],
-    );
-  }
-
-  Widget _rainRow(BuildContext context, WeatherForecastHourlyEntity? hour) {
+  Widget _rainRow(BuildContext context, double pop) {
     return Row(
       children: [
         Icon(
           Icons.water_drop_rounded,
-          fill: hour?.pop ?? 0,
+          fill: pop,
           size: 8,
         ),
         const SizedBox(width: 5),
         Text(
-          "${((hour?.pop ?? 0) * 100).round().toString()}%",
-          style: Theme.of(context).textTheme.bodySmall,
+          "${(pop * 100).round().toString()}%",
+          style: Theme.of(context).textTheme.labelSmall,
         ),
       ],
     );

@@ -47,7 +47,7 @@ class _WeatherHourlyChartDiagramState extends State<WeatherHourlyChartDiagram> {
         break;
       case HourlyChartType.wind:
         _minY = 0;
-        _maxY = 30;
+        _maxY = 15;
         break;
       case HourlyChartType.uvi:
         _minY = 0;
