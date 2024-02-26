@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final failureProvider = FailureProvider();
     return MaterialApp.router(
       themeMode: ThemeMode.light,
       title: 'GoWeather',
@@ -44,18 +45,14 @@ class MyApp extends StatelessWidget {
         ),
         child: SafeArea(
           child: ChangeNotifierProvider<FailureProvider>(
-            create: (_) => FailureProvider(),
-            child: Builder(builder: (context) {
-              return ChangeNotifierProvider<WeatherProvider>(
-                create: (_) => WeatherProvider(
-                  sl(),
-                  context.select<FailureProvider, FailureProvider>(
-                    (value) => value,
-                  ),
-                )..getWeather(),
-                child: child,
-              );
-            }),
+            create: (_) => failureProvider,
+            child: ChangeNotifierProvider<WeatherProvider>(
+              create: (_) => WeatherProvider(
+                sl(),
+                failureProvider,
+              )..getWeather(),
+              child: child,
+            ),
           ),
         ),
       ),

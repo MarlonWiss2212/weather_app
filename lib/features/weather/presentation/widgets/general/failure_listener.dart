@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
@@ -10,12 +11,16 @@ class FailureListener extends StatelessWidget {
     required this.child,
   });
 
-  void listenToFailureState(BuildContext context) {
-    final failures = Provider.of<FailureProvider>(
-      context,
-      listen: true,
-    ).failures;
-    addSnackbarWhenRequired(context, failures);
+  @override
+  Widget build(BuildContext context) {
+    final failures = context.select<FailureProvider, List<Failure>>(
+      (value) => value.failures,
+    );
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      addSnackbarWhenRequired(context, failures);
+    });
+
+    return child;
   }
 
   void addSnackbarWhenRequired(BuildContext context, List<Failure> failures) {
@@ -23,6 +28,8 @@ class FailureListener extends StatelessWidget {
       for (final failure in failures) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: Colors.red,
+            margin: const EdgeInsets.all(15),
             content: failure.statusCode != null
                 ? Column(
                     children: [
@@ -38,10 +45,4 @@ class FailureListener extends StatelessWidget {
   }
 
   Widget errorMessage(Failure failure) => Text(failure.errorMessage);
-
-  @override
-  Widget build(BuildContext context) {
-    listenToFailureState(context);
-    return child;
-  }
 }

@@ -33,7 +33,9 @@ class WeatherHourly extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemBuilder: (context, index) => Column(
-            key: Key(index.toString()),
+            key: hourly != null
+                ? ObjectKey(hourly[index])
+                : Key(index.toString()),
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/failure_listener.dart';
 
 class WeatherDailyPage extends StatelessWidget {
   final WeatherForecastDailyEntity? day;
@@ -13,7 +14,7 @@ class WeatherDailyPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(0, 0, 0, 0),
         title: const Text(""),
       ),
-      body: const Placeholder(),
+      body: const FailureListener(child: Placeholder()),
     );
   }
 }

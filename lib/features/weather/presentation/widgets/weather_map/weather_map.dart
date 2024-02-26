@@ -18,26 +18,23 @@ class WeatherMap extends StatelessWidget {
     final activeType = context.select<WeatherProvider, MapType>(
       (provider) => provider.activeMapType,
     );
-    return Hero(
-      tag: "map",
-      child: FlutterMap(
-        options: MapOptions(
-          interactionOptions: const InteractionOptions(
-            flags: InteractiveFlag.none,
-          ),
-          initialZoom: 5.5,
-          initialCenter: latLng,
+    return FlutterMap(
+      options: MapOptions(
+        interactionOptions: const InteractionOptions(
+          flags: InteractiveFlag.none,
         ),
-        children: [
-          TileLayer(
-            urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-          ),
-          TileLayer(
-            urlTemplate:
-                "https://tile.openweathermap.org/map/${activeType.weatherMapKey}/{z}/{x}/{y}.png?appid=${dotenv.get("OPEN_WEATHER_APP_ID")}",
-          ),
-        ],
+        initialZoom: 5.5,
+        initialCenter: latLng,
       ),
+      children: [
+        TileLayer(
+          urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        ),
+        TileLayer(
+          urlTemplate:
+              "https://tile.openweathermap.org/map/${activeType.weatherMapKey}/{z}/{x}/{y}.png?appid=${dotenv.get("OPEN_WEATHER_APP_ID")}",
+        ),
+      ],
     );
   }
 }

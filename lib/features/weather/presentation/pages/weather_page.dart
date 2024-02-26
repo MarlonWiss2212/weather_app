@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/failure_listener.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map_box.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_alerts/weather_alerts.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_app_bar/weather_app_bar.dart';
@@ -29,61 +30,63 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: RefreshIndicator(
-          color: Theme.of(context).colorScheme.primary,
-          backgroundColor: Colors.black,
-          onRefresh: () async {
-            return await Provider.of<WeatherProvider>(
-              context,
-              listen: false,
-            ).getWeather();
-          },
-          child: CustomScrollView(
-            slivers: [
-              const WeatherAppBar(),
-              const SliverPadding(
-                padding: EdgeInsets.only(top: 8),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherAlerts(),
+      body: FailureListener(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: RefreshIndicator(
+            color: Theme.of(context).colorScheme.primary,
+            backgroundColor: Colors.black,
+            onRefresh: () async {
+              return await Provider.of<WeatherProvider>(
+                context,
+                listen: false,
+              ).getWeather();
+            },
+            child: CustomScrollView(
+              slivers: [
+                const WeatherAppBar(),
+                const SliverPadding(
+                  padding: EdgeInsets.only(top: 8),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherAlerts(),
+                  ),
                 ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(top: 8),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherHourly(),
+                const SliverPadding(
+                  padding: EdgeInsets.only(top: 8),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherHourly(),
+                  ),
                 ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(top: 8),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherHourlyChart(),
+                const SliverPadding(
+                  padding: EdgeInsets.only(top: 8),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherHourlyChart(),
+                  ),
                 ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(top: 8),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherDaily(),
+                const SliverPadding(
+                  padding: EdgeInsets.only(top: 8),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherDaily(),
+                  ),
                 ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(top: 8),
-                sliver: _gridOfBasicData(),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(top: 8),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherSunriseSunset(),
+                SliverPadding(
+                  padding: const EdgeInsets.only(top: 8),
+                  sliver: _gridOfBasicData(),
                 ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherMapBox(),
+                const SliverPadding(
+                  padding: EdgeInsets.only(top: 8),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherSunriseSunset(),
+                  ),
                 ),
-              ),
-            ],
+                const SliverPadding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherMapBox(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

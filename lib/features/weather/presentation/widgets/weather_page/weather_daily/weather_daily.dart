@@ -33,7 +33,8 @@ class WeatherDaily extends StatelessWidget {
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) => WeatherDailyContainer(
             day: daily?[index],
-            key: Key(index.toString()),
+            key:
+                daily != null ? ObjectKey(daily[index]) : Key(index.toString()),
           ),
           itemCount: daily != null
               ? daily.length > 8
