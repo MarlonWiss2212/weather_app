@@ -6,7 +6,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/core/util/enums/hourly_chart_type_enum.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/weather_hourly_chart_diagram.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/weather_hourly_chart_diagram.dart';
 
 class WeatherHourlyChart extends StatefulWidget {
   const WeatherHourlyChart({super.key});

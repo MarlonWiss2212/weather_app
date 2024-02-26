@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_daily/weather_daily_container.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_daily/weather_daily_container.dart';
 
 class WeatherDaily extends StatelessWidget {
   const WeatherDaily({super.key});

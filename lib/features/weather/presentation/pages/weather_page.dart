@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_alerts/weather_alerts.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_app_bar/weather_app_bar.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_daily/weather_daily.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly/weather_hourly.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_hourly_chart/weather_hourly_chart.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_humidity.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map_box.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_sunrise_sunset.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_uv_index.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_visibility.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_wind.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_alerts/weather_alerts.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_app_bar/weather_app_bar.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_daily/weather_daily.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly/weather_hourly.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/weather_hourly_chart.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_humidity.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_sunrise_sunset.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_uv_index.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_visibility.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_wind.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});

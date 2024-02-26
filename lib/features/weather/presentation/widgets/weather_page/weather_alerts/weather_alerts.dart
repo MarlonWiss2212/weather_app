@@ -4,7 +4,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_alert_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_alerts/weather_alert_box.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_alerts/weather_alert_box.dart';
 
 class WeatherAlerts extends StatelessWidget {
   const WeatherAlerts({super.key});

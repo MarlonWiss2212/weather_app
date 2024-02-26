@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_app_bar/weather_app_bar_delegate.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_app_bar/weather_app_bar_delegate.dart';
 
 class WeatherAppBar extends StatelessWidget {
   const WeatherAppBar({super.key});
