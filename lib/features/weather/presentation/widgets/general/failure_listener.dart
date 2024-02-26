@@ -13,9 +13,7 @@ class FailureListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final failures = context.select<FailureProvider, List<Failure>>(
-      (value) => value.failures,
-    );
+    final failures = Provider.of<FailureProvider>(context).failures;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       addSnackbarWhenRequired(context, failures);
     });
@@ -28,21 +26,29 @@ class FailureListener extends StatelessWidget {
       for (final failure in failures) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.all(10),
+            elevation: 10,
             backgroundColor: Colors.red,
-            margin: const EdgeInsets.all(15),
             content: failure.statusCode != null
                 ? Column(
                     children: [
-                      Text(failure.statusCode!.toString()),
-                      errorMessage(failure),
+                      Text(
+                        failure.statusCode!.toString(),
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      errorMessage(context, failure),
                     ],
                   )
-                : errorMessage(failure),
+                : errorMessage(context, failure),
           ),
         );
       }
     }
   }
 
-  Widget errorMessage(Failure failure) => Text(failure.errorMessage);
+  Widget errorMessage(BuildContext context, Failure failure) => Text(
+        failure.errorMessage,
+        style: Theme.of(context).textTheme.bodyMedium,
+      );
 }

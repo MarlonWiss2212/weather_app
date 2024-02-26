@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/params/get_weather_params.dart';
 import 'package:weather_app/core/util/enums/map_type_enum.dart';
 import 'package:weather_app/features/weather/domain/entities/geocoding/reverse_geocoding_entity.dart';
@@ -68,8 +67,6 @@ class WeatherProvider extends ChangeNotifier {
         _failureProvider.addFailureToList(failure);
       },
     );
-
-    _failureProvider.addFailureToList(NoAPIResponseFailure());
 
     _loading = false;
     notifyListeners();
