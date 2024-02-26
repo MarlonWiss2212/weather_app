@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
 
 class WeatherDailyPage extends StatelessWidget {
-  final WeatherForecastDailyEntity day;
+  final WeatherForecastDailyEntity? day;
 
-  const WeatherDailyPage({super.key, required this.day});
+  const WeatherDailyPage({super.key, this.day});
 
   @override
   Widget build(BuildContext context) {

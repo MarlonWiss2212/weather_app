@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_alerts/weather_alerts.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_app_bar/weather_app_bar.dart';
@@ -21,6 +22,10 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
+  void listenToFailuresAndAddScaffold(BuildContext context) {
+    Provider.of<FailureProvider>(context, listen: true).addListener(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
