@@ -27,7 +27,7 @@ class WeatherDaily extends StatelessWidget {
       ),
       child: Skeletonizer(
         enabled: showSkeleton,
-        child: ListView.builder(
+        child: ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
@@ -36,6 +36,7 @@ class WeatherDaily extends StatelessWidget {
             key:
                 daily != null ? ObjectKey(daily[index]) : Key(index.toString()),
           ),
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
           itemCount: daily != null
               ? daily.length > 8
                   ? 8
