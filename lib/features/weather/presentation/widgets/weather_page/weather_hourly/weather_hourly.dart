@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_icon.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_icon.dart';
 
 class WeatherHourly extends StatelessWidget {
   const WeatherHourly({super.key});

@@ -9,11 +9,11 @@ import 'package:weather_app/features/weather/presentation/widgets/weather_page/w
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_daily/weather_daily.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly/weather_hourly.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/weather_hourly_chart.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_humidity.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_humidity_weather_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_sunrise_sunset.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_uv_index.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_visibility.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_wind.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_uv_index_weather_page.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_visibility_weather_page.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_wind_weather_page.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -100,10 +100,10 @@ class _WeatherPageState extends State<WeatherPage> {
       crossAxisCount: 2,
       childAspectRatio: 2.5,
       children: const [
-        WeatherUVIndex(),
-        WeatherHumidity(),
-        WeatherVisibility(),
-        WeatherWind(),
+        WeatherUVIndexWeatherPage(),
+        WeatherHumidityWeatherPage(),
+        WeatherVisibilityWeatherPage(),
+        WeatherWindWeatherPage(),
       ],
     );
   }

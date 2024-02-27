@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:weather_app/core/util/uv_utils.dart';
-import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
+import 'package:weather_icons/weather_icons.dart';
 
-class WeatherUVIndex extends StatelessWidget {
-  const WeatherUVIndex({super.key});
+class WeatherHumidity extends StatelessWidget {
+  final bool loading;
+  final int? humidity;
+  const WeatherHumidity({
+    super.key,
+    required this.loading,
+    this.humidity,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final uvIndex = context.select<WeatherProvider, double?>(
-      (provider) => provider.weather?.current.uvi,
-    );
-    final loading = context.select<WeatherProvider, bool>(
-      (provider) => provider.loading,
-    );
-
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -24,7 +21,7 @@ class WeatherUVIndex extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Skeletonizer(
-        enabled: uvIndex == null && loading,
+        enabled: humidity == null && loading,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,18 +29,18 @@ class WeatherUVIndex extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  Icons.sunny,
-                  size: 16,
+                  WeatherIcons.humidity,
+                  size: 20,
                 ).animate().fadeIn(),
                 const SizedBox(width: 5),
                 Text(
-                  "UV Index",
+                  "Feuchtigkeit",
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
               ],
             ),
             Text(
-              uvIndex != null ? UvUtils.uvIndex(uvIndex) : "Unbekannt",
+              "${humidity ?? 0} %",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],

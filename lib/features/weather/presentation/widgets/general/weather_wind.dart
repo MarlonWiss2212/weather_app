@@ -2,25 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 
 class WeatherWind extends StatelessWidget {
-  const WeatherWind({super.key});
+  final bool loading;
+  final int? windDeg;
+  final double? windSpeed;
+  const WeatherWind({
+    super.key,
+    required this.loading,
+    this.windDeg,
+    this.windSpeed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final windSpeed = context.select<WeatherProvider, double?>(
-      (provider) => provider.weather?.current.windSpeed,
-    );
-    final windDeg = context.select<WeatherProvider, int?>(
-      (provider) => provider.weather?.current.windDeg,
-    );
-    final loading = context.select<WeatherProvider, bool>(
-      (provider) => provider.loading,
-    );
-
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(

@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/core/util/uv_utils.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_icon.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_icon.dart';
 
 class WeatherDailyContainer extends StatefulWidget {
   final WeatherForecastDailyEntity? day;
