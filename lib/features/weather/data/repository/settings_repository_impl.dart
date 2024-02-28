@@ -21,7 +21,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       }
       return DataState<void>.success(Void);
     } catch (e) {
-      return DataState.failure(const UnkownFailure());
+      return DataState<void>.failure(const UnkownFailure());
     }
   }
 
@@ -34,7 +34,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       }
       return DataState<void>.success(Void);
     } catch (e) {
-      return DataState.failure(const UnkownFailure());
+      return DataState<void>.failure(const UnkownFailure());
     }
   }
 }

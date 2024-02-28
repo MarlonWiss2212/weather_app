@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ffi';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
