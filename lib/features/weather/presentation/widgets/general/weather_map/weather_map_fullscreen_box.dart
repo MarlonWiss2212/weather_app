@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/domain/entities/geocoding/reverse_geocoding_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map_stack.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_map/weather_map_stack.dart';
 
-class WeatherMapBox extends StatelessWidget {
-  const WeatherMapBox({super.key});
+class WeatherMapFullscreenBox extends StatelessWidget {
+  const WeatherMapFullscreenBox({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +16,12 @@ class WeatherMapBox extends StatelessWidget {
     final loading = context.select<WeatherProvider, bool>(
       (provider) => provider.loading,
     );
-    final borderRadius = BorderRadius.circular(12);
-    return AspectRatio(
-      aspectRatio: 1 / 1,
-      child: Skeletonizer(
-        enabled: loading && geodata == null,
-        child: ClipRRect(
-          borderRadius: borderRadius,
-          child: WeatherMapStack(
-            borderRadius: borderRadius,
-            geodata: geodata,
-            weatherMapClickable: true,
-          ),
-        ),
+
+    return Skeletonizer(
+      enabled: loading && geodata == null,
+      child: WeatherMapStack(
+        geodata: geodata,
+        weatherMapClickable: false,
       ),
     );
   }

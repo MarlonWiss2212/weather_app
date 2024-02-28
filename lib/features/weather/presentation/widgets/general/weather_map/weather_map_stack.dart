@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/core/util/enums/map_type_enum.dart';
 import 'package:weather_app/features/weather/domain/entities/geocoding/reverse_geocoding_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map_type_button.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_map/weather_map.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_map/weather_map_type_button.dart';
 
 class WeatherMapStack extends StatelessWidget {
   final ReverseGeocodingEntity? geodata;

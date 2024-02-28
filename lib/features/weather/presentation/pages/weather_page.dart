@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/failure_listener.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_map/weather_map_box.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_map/weather_map_box.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_alerts/weather_alerts.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_app_bar/weather_app_bar.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_daily/weather_daily.dart';
