@@ -8,6 +8,9 @@ class WeatherForecastDailyEntity extends Equatable {
   /// Time of the forecasted data, Unix, UTC
   final int dt;
 
+  /// Weekday of dt as string
+  final String weekday;
+
   /// Sunrise time, Unix, UTC. For polar areas in midnight sun and polar night periods this parameter is not returned in the response
   final int sunrise;
 
@@ -74,6 +77,7 @@ class WeatherForecastDailyEntity extends Equatable {
     required this.sunset,
     required this.moonrise,
     required this.moonset,
+    required this.weekday,
     required this.moonPhase,
     required this.summary,
     required this.temp,
@@ -98,6 +102,7 @@ class WeatherForecastDailyEntity extends Equatable {
       dt,
       sunrise,
       sunset,
+      weekday,
       moonrise,
       moonset,
       moonPhase,

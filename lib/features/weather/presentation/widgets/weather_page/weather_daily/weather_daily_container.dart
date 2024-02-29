@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_app/core/util/uv_utils.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/weather_icon.dart';
@@ -277,13 +276,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
         Flexible(
           flex: 2,
           child: Text(
-            widget.day != null
-                ? DateFormat.EEEE("de").format(
-                    DateTime.fromMillisecondsSinceEpoch(
-                      widget.day!.dt * 1000,
-                    ),
-                  )
-                : "Unkown",
+            widget.day?.weekday ?? "Unkown",
             style: Theme.of(context).textTheme.bodyMedium,
             overflow: TextOverflow.ellipsis,
           ),

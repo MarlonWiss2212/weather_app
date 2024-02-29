@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
 import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_feels_like_model.dart';
 import 'package:weather_app/features/weather/data/models/weather_forecast_models/weather_forecast_temp_model.dart';
@@ -24,6 +25,7 @@ class WeatherForecastDailyModel extends WeatherForecastDailyEntity {
     required super.windSpeed,
     required super.windDeg,
     required super.weather,
+    required super.weekday,
     super.rain,
     super.snow,
     super.windGust,
@@ -41,6 +43,11 @@ class WeatherForecastDailyModel extends WeatherForecastDailyEntity {
 
       return WeatherForecastDailyModel(
         dt: json["dt"],
+        weekday: DateFormat.EEEE("de").format(
+          DateTime.fromMillisecondsSinceEpoch(
+            json["dt"] * 1000,
+          ),
+        ),
         sunrise: json["sunrise"],
         sunset: json["sunset"],
         moonrise: json["moonrise"],
