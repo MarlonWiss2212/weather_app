@@ -36,7 +36,7 @@ class WeatherDaily extends StatelessWidget {
             key:
                 daily != null ? ObjectKey(daily[index]) : Key(index.toString()),
           ),
-          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          separatorBuilder: (_, __) => const SizedBox(height: 12),
           itemCount: daily != null
               ? daily.length > 8
                   ? 8

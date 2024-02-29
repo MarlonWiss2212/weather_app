@@ -51,25 +51,21 @@ class WeatherHourly extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
-              const WeatherIcon(
-                size: 35,
-              ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  //rain widget
+                  const WeatherIcon(
+                    size: 35,
+                  ),
                   if ((hourly?[index] != null && hourly![index].pop > 0) ||
                       showSkeleton) ...[
                     _rainRow(context, hourly?[index].pop ?? 0),
                   ],
-                  const SizedBox(height: 10),
-                  // temp
-                  Text(
-                    "${hourly?[index].temp.round()}°C",
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
                 ],
+              ),
+              // temp
+              Text(
+                "${hourly?[index].temp.round()}°C",
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ],
           ),

@@ -23,8 +23,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           weekdayWidget(),
-          iconsWithRainWidget(),
-          _degreeWidget(),
+          iconsWithRainWidgetAndDegrees(),
         ],
       ),
     );
@@ -34,41 +33,44 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
         flex: 2,
         child: Text(
           widget.day?.weekday ?? "Unkown",
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.labelLarge,
           overflow: TextOverflow.ellipsis,
         ),
       );
 
-  Widget iconsWithRainWidget() => Flexible(
+  Widget iconsWithRainWidgetAndDegrees() => Flexible(
         flex: 4,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              flex: 3,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Rain
-                  Icon(
-                    Icons.water_drop_rounded,
-                    fill: widget.day?.pop ?? 0,
-                    size: 8,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    "${((widget.day?.pop ?? 0) * 100).round().toString()}%",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
+            _rainWidget(),
             const Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 WeatherIcon(),
                 WeatherIcon(),
               ],
+            ),
+            _degreeWidget(),
+          ],
+        ),
+      );
+
+  Widget _rainWidget() => Flexible(
+        flex: 3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Rain
+            Icon(
+              Icons.water_drop_rounded,
+              fill: widget.day?.pop ?? 0,
+              size: 8,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              "${((widget.day?.pop ?? 0) * 100).round().toString()}%",
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
         ),
