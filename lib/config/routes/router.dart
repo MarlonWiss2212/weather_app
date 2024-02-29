@@ -17,10 +17,7 @@ final router = GoRouter(
     GoRoute(
       path: "/daily",
       builder: (_, state) {
-        final WeatherForecastDailyEntity? day =
-            state.extra.runtimeType == WeatherForecastDailyEntity
-                ? state.extra as WeatherForecastDailyEntity
-                : null;
+        final day = state.extra as WeatherForecastDailyEntity?;
         return WeatherDailyPage(day: day);
       },
     ),
