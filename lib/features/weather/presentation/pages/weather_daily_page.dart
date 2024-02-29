@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/failure_listener.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_daily_page/weather_cloud_daily_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily_page/weather_humidity_daily_page.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_daily_page/weather_rain_daily_page.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_daily_page/weather_snow_daily_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily_page/weather_sunrise_sunset_daily_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily_page/weather_uv_index_daily_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_daily_page/weather_wind_daily_page.dart';
@@ -47,6 +50,11 @@ class WeatherDailyPage extends StatelessWidget {
       crossAxisCount: 2,
       childAspectRatio: 2.5,
       children: [
+        WeatherRainDailyPage(rain: day?.rain),
+        WeatherCloudDailyPage(clouds: day?.clouds.toDouble()),
+        if (day?.snow != null && day!.snow! > 0) ...{
+          WeatherSnowDailyPage(snow: day!.snow!),
+        },
         WeatherUVIndexDailyPage(day: day),
         WeatherHumidityDailyPage(day: day),
         WeatherWindDailyPage(day: day),
