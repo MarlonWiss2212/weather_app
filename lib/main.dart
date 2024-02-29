@@ -25,6 +25,9 @@ class MyApp extends StatelessWidget {
     final failureProvider = FailureProvider();
     return MaterialApp.router(
       themeMode: ThemeMode.light,
+      scrollBehavior: const ScrollBehavior().copyWith(
+        physics: const BouncingScrollPhysics(),
+      ),
       title: 'GoWeather',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

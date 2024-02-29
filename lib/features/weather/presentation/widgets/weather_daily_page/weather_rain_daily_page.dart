@@ -31,7 +31,7 @@ class WeatherRainDailyPage extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  Icons.cloud,
+                  Icons.water_drop,
                   size: 20,
                 ).animate().fadeIn(),
                 const SizedBox(width: 5),
