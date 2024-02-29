@@ -2,29 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 
 class WeatherSunriseSunset extends StatelessWidget {
-  const WeatherSunriseSunset({super.key});
+  final bool loading;
+  final int? sunrise;
+  final int? sunset;
+  const WeatherSunriseSunset({
+    super.key,
+    required this.loading,
+    this.sunrise,
+    this.sunset,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final sunrise = context.select<WeatherProvider, int?>(
-      (provider) => provider.weather != null
-          ? provider.weather!.current.sunrise * 1000
-          : null, // * 1000 to make it unix
-    );
-    final sunset = context.select<WeatherProvider, int?>(
-      (provider) => provider.weather != null
-          ? provider.weather!.current.sunset * 1000
-          : null, // * 1000 to make it unix
-    );
-    final loading = context.select<WeatherProvider, bool>(
-      (provider) => provider.loading,
-    );
-
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -50,7 +42,7 @@ class WeatherSunriseSunset extends StatelessWidget {
                 if (sunrise != null) ...{
                   Text(
                     DateFormat.Hm("de").format(
-                      DateTime.fromMillisecondsSinceEpoch(sunrise),
+                      DateTime.fromMillisecondsSinceEpoch(sunrise!),
                     ),
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
@@ -71,7 +63,7 @@ class WeatherSunriseSunset extends StatelessWidget {
                 if (sunset != null) ...{
                   Text(
                     DateFormat.Hm("de").format(
-                      DateTime.fromMillisecondsSinceEpoch(sunset),
+                      DateTime.fromMillisecondsSinceEpoch(sunset!),
                     ),
                     style: Theme.of(context).textTheme.labelLarge,
                   ),

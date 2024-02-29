@@ -10,7 +10,7 @@ import 'package:weather_app/features/weather/presentation/widgets/weather_page/w
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly/weather_hourly.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/weather_hourly_chart.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_humidity_weather_page.dart';
-import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_sunrise_sunset.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_sunrise_sunset_weather_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_uv_index_weather_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_visibility_weather_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_wind_weather_page.dart';
@@ -76,7 +76,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 const SliverPadding(
                   padding: EdgeInsets.only(top: 8),
                   sliver: SliverToBoxAdapter(
-                    child: WeatherSunriseSunset(),
+                    child: WeatherSunriseSunsetWeatherPage(),
                   ),
                 ),
                 const SliverPadding(

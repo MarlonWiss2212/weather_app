@@ -12,9 +12,36 @@ class WeatherDailyPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-        title: const Text(""),
+        title: Text("Wetter${day != null ? "für ${day!.weekday}" : ""}"),
       ),
-      body: const FailureListener(child: Placeholder()),
+      body: FailureListener(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.only(top: 8),
+                sliver: _gridOfBasicData(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _gridOfBasicData() {
+    return SliverGrid.count(
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      crossAxisCount: 2,
+      childAspectRatio: 2.5,
+      children: const [
+        /* WeatherUVIndexWeatherPage(),
+        WeatherHumidityWeatherPage(),
+        WeatherVisibilityWeatherPage(),
+        WeatherWindWeatherPage(),*/
+      ],
     );
   }
 }
