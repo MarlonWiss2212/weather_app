@@ -33,7 +33,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
         flex: 2,
         child: Text(
           widget.day?.weekday ?? "Unkown",
-          style: Theme.of(context).textTheme.labelLarge,
+          style: Theme.of(context).textTheme.bodyLarge,
           overflow: TextOverflow.ellipsis,
         ),
       );
@@ -70,7 +70,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
             const SizedBox(width: 5),
             Text(
               "${((widget.day?.pop ?? 0) * 100).round().toString()}%",
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           ],
         ),
@@ -85,7 +85,10 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
               "${widget.day?.temp.day.round()}°C",
               style: Theme.of(context).textTheme.labelLarge,
             ),
-            const Text(" / "),
+            Text(
+              " / ",
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
             Text(
               "${widget.day?.temp.eve.round()}°C",
               style: Theme.of(context).textTheme.labelLarge,

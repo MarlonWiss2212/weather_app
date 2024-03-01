@@ -33,7 +33,7 @@ class WeatherSunriseSunset extends StatelessWidget {
                 Text(
                   "Sonnenaufgang",
                   textAlign: TextAlign.end,
-                  style: Theme.of(context).textTheme.labelSmall,
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const Icon(
                   CupertinoIcons.sunrise_fill,
@@ -54,7 +54,7 @@ class WeatherSunriseSunset extends StatelessWidget {
                 Text(
                   "Sonnenuntergang",
                   textAlign: TextAlign.end,
-                  style: Theme.of(context).textTheme.labelSmall,
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const Icon(
                   CupertinoIcons.sunset_fill,
