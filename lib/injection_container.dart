@@ -1,4 +1,5 @@
 import "package:dio/dio.dart";
+import "package:dio_cache_interceptor/dio_cache_interceptor.dart";
 import "package:get_it/get_it.dart";
 import "package:weather_app/core/constants/constants.dart";
 import "package:weather_app/features/weather/data/data_sources/local/location_service.dart";
@@ -21,7 +22,21 @@ final sl = GetIt.instance;
 
 /// initializes dependecy injection
 Future<void> initializeDependencies() async {
-  final Dio dio = Dio(BaseOptions(baseUrl: apiBaseUrl));
+  // Dio
+  final CacheOptions cacheOptions = CacheOptions(
+    policy: CachePolicy.forceCache,
+    store: MemCacheStore(),
+    priority: CachePriority.high,
+    maxStale: const Duration(minutes: 10),
+    allowPostMethod: true,
+    hitCacheOnErrorExcept: [],
+  );
+  final DioCacheInterceptor dioInterceptor = DioCacheInterceptor(
+    options: cacheOptions,
+  );
+  final BaseOptions dioOptions = BaseOptions(baseUrl: apiBaseUrl);
+  final Dio dio = Dio(dioOptions)..interceptors.add(dioInterceptor);
+
   //data sources
   sl.registerSingleton<LocationService>(LocationServiceImpl());
   sl.registerSingleton<SettingsService>(SettingsServiceImpl());
