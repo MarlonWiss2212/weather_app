@@ -31,11 +31,18 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
 
   Widget weekdayWidget() => Flexible(
         flex: 2,
-        child: Text(
-          widget.day?.weekday ?? "Unkown",
-          style: Theme.of(context).textTheme.bodyLarge,
-          overflow: TextOverflow.ellipsis,
-        ),
+        child: widget.day != null
+            ? Hero(
+                tag: widget.day!.weekday + widget.day!.dt.toString(),
+                child: weekdayTextWidget(),
+              )
+            : weekdayTextWidget(),
+      );
+
+  Widget weekdayTextWidget() => Text(
+        widget.day?.weekday ?? "Unknown",
+        style: Theme.of(context).textTheme.bodyLarge,
+        overflow: TextOverflow.ellipsis,
       );
 
   Widget iconsWithRainWidgetAndDegrees() => Flexible(
@@ -78,22 +85,12 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
 
   Widget _degreeWidget() => Flexible(
         flex: 4,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              "${widget.day?.temp.day.round()}°C",
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              " / ",
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              "${widget.day?.temp.eve.round()}°C",
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-          ],
+        child: Hero(
+          tag: "DailyTemp${widget.day?.dt}",
+          child: Text(
+            "${widget.day?.temp.day.round()}°C / ${widget.day?.temp.night.round()}°C",
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
         ),
       );
 }
