@@ -34,7 +34,7 @@ class WeatherSnowDailyPage extends StatelessWidget {
             ],
           ),
           Text(
-            "${snow.round().toString()} mm",
+            "${snow.toString()} mm",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],

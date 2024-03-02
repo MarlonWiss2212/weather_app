@@ -42,7 +42,7 @@ class WeatherRainDailyPage extends StatelessWidget {
               ],
             ),
             Text(
-              "${rain != null ? rain!.round().toString() : '0'} mm",
+              "${rain != null ? rain!.toString() : '0'} mm",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],

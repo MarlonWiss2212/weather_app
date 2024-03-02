@@ -51,7 +51,7 @@ class WeatherWind extends StatelessWidget {
               ],
             ),
             Text(
-              "${windSpeed?.round().toString() ?? 0} m/s",
+              "${windSpeed?.toString() ?? 0} m/s",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
