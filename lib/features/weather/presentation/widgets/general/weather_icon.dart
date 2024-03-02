@@ -8,7 +8,7 @@ class WeatherIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: implement component with custom icons
     return Icon(
-      Icons.abc,
+      Icons.cloud,
       size: size,
     );
   }

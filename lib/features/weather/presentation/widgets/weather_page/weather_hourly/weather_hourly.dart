@@ -58,6 +58,7 @@ class WeatherHourly extends StatelessWidget {
                   ),
                   if ((hourly?[index] != null && hourly![index].pop > 0) ||
                       showSkeleton) ...[
+                    const SizedBox(height: 4),
                     _rainRow(context, hourly?[index].pop ?? 0),
                   ],
                 ],

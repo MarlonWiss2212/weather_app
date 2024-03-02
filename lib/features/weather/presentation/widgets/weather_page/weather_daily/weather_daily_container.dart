@@ -51,19 +51,23 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _rainWidget(),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                WeatherIcon(),
-                WeatherIcon(),
-              ],
+            const Expanded(
+              flex: 4,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  WeatherIcon(),
+                  SizedBox(width: 5),
+                  WeatherIcon(),
+                ],
+              ),
             ),
             _degreeWidget(),
           ],
         ),
       );
 
-  Widget _rainWidget() => Flexible(
+  Widget _rainWidget() => Expanded(
         flex: 3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,13 +87,14 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
         ),
       );
 
-  Widget _degreeWidget() => Flexible(
+  Widget _degreeWidget() => Expanded(
         flex: 4,
         child: Hero(
           tag: "DailyTemp${widget.day?.dt}",
           child: Text(
             "${widget.day?.temp.day.round()}°C / ${widget.day?.temp.night.round()}°C",
             style: Theme.of(context).textTheme.labelLarge,
+            textAlign: TextAlign.end,
           ),
         ),
       );
