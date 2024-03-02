@@ -41,13 +41,15 @@ class WeatherForecastDailyModel extends WeatherForecastDailyEntity {
         weather.add(WeatherForecastWeatherModel.fromJson(e));
       }
 
+      final DateTime dt = DateTime.fromMillisecondsSinceEpoch(
+        json["dt"] * 1000,
+      );
+
       return WeatherForecastDailyModel(
         dt: json["dt"],
-        weekday: DateFormat.EEEE("de").format(
-          DateTime.fromMillisecondsSinceEpoch(
-            json["dt"] * 1000,
-          ),
-        ),
+        weekday: dt.day == DateTime.now().day
+            ? "Heute"
+            : DateFormat.EEEE("de").format(dt),
         sunrise: json["sunrise"],
         sunset: json["sunset"],
         moonrise: json["moonrise"],
