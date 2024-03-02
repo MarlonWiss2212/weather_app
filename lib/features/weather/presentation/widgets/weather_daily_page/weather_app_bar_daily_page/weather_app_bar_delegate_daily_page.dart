@@ -20,7 +20,7 @@ class WeatherAppBarDelegateDailyPage extends SliverPersistentHeaderDelegate {
     final progress = minExtent / shrinkOffset;
     return SizedBox.expand(
       child: Container(
-        color: const Color.fromARGB(255, 12, 158, 226),
+        color: Theme.of(context).colorScheme.background,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.white,
-          background: const Color.fromARGB(255, 12, 158, 226),
+          background: const Color.fromARGB(255, 9, 121, 173),
           primary: Colors.white,
           brightness: Brightness.dark,
           secondary: const Color.fromARGB(255, 209, 209, 209),
@@ -42,9 +42,9 @@ class MyApp extends StatelessWidget {
       ),
       routerConfig: router,
       builder: (context, child) => AnnotatedRegion(
-        value: const SystemUiOverlayStyle(
-          statusBarColor: Color.fromARGB(255, 12, 158, 226),
-          systemNavigationBarColor: Color.fromARGB(255, 12, 158, 226),
+        value: SystemUiOverlayStyle(
+          statusBarColor: Theme.of(context).colorScheme.background,
+          systemNavigationBarColor: Theme.of(context).colorScheme.background,
         ),
         child: SafeArea(
           child: ChangeNotifierProvider<FailureProvider>(

@@ -9,7 +9,7 @@ class WeatherMapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+        backgroundColor: Colors.transparent,
         title: const Text("Wetter Karte"),
       ),
       body: const FailureListener(child: WeatherMapFullscreenBox()),
