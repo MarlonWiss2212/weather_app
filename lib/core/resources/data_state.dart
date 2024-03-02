@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:equatable/equatable.dart';
 import 'package:weather_app/core/errors/failures.dart';
 
@@ -30,12 +28,12 @@ class DataState<T> extends Equatable {
     required D Function(T data) onSuccess,
     required D Function(Failure failure) onError,
   }) {
-    if (failure != null && (data != null || data.runtimeType == Void)) {
+    if (failure != null && (data != null || data.runtimeType == Unit)) {
       onError(failure!);
       return onSuccess(data as T);
     } else if (failure != null) {
       return onError(failure!);
-    } else if (data != null || data.runtimeType == Void) {
+    } else if (data != null || data.runtimeType == Unit) {
       return onSuccess(data as T);
     }
     throw const GeneralFailure(
@@ -46,4 +44,12 @@ class DataState<T> extends Equatable {
 
   @override
   List<Object?> get props => [failure, data];
+}
+
+/// Used for [DataState] class to define an empty return type
+class Unit extends Equatable {
+  const Unit();
+
+  @override
+  List<Object?> get props => [];
 }

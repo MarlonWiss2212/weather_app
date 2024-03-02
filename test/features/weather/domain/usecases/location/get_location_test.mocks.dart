@@ -102,21 +102,21 @@ class MockLocationRepositoryImpl extends _i1.Mock
       ) as _i5.Future<_i3.DataState<_i7.LocationPermission>>);
 
   @override
-  _i5.Future<_i3.DataState<void>> isLocationServiceEnabled() =>
+  _i5.Future<_i3.DataState<_i3.Unit>> isLocationServiceEnabled() =>
       (super.noSuchMethod(
         Invocation.method(
           #isLocationServiceEnabled,
           [],
         ),
-        returnValue:
-            _i5.Future<_i3.DataState<void>>.value(_FakeDataState_1<void>(
+        returnValue: _i5.Future<_i3.DataState<_i3.Unit>>.value(
+            _FakeDataState_1<_i3.Unit>(
           this,
           Invocation.method(
             #isLocationServiceEnabled,
             [],
           ),
         )),
-      ) as _i5.Future<_i3.DataState<void>>);
+      ) as _i5.Future<_i3.DataState<_i3.Unit>>);
 
   @override
   _i5.Future<_i3.DataState<_i7.LocationPermission>> requestPermission() =>

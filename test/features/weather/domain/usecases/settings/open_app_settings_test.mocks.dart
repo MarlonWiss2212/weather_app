@@ -65,34 +65,35 @@ class MockSettingsRepositoryImpl extends _i1.Mock
       ) as _i2.SettingsService);
 
   @override
-  _i5.Future<_i3.DataState<void>> openLocationSettings() => (super.noSuchMethod(
+  _i5.Future<_i3.DataState<_i3.Unit>> openLocationSettings() =>
+      (super.noSuchMethod(
         Invocation.method(
           #openLocationSettings,
           [],
         ),
-        returnValue:
-            _i5.Future<_i3.DataState<void>>.value(_FakeDataState_1<void>(
+        returnValue: _i5.Future<_i3.DataState<_i3.Unit>>.value(
+            _FakeDataState_1<_i3.Unit>(
           this,
           Invocation.method(
             #openLocationSettings,
             [],
           ),
         )),
-      ) as _i5.Future<_i3.DataState<void>>);
+      ) as _i5.Future<_i3.DataState<_i3.Unit>>);
 
   @override
-  _i5.Future<_i3.DataState<void>> openAppSettings() => (super.noSuchMethod(
+  _i5.Future<_i3.DataState<_i3.Unit>> openAppSettings() => (super.noSuchMethod(
         Invocation.method(
           #openAppSettings,
           [],
         ),
-        returnValue:
-            _i5.Future<_i3.DataState<void>>.value(_FakeDataState_1<void>(
+        returnValue: _i5.Future<_i3.DataState<_i3.Unit>>.value(
+            _FakeDataState_1<_i3.Unit>(
           this,
           Invocation.method(
             #openAppSettings,
             [],
           ),
         )),
-      ) as _i5.Future<_i3.DataState<void>>);
+      ) as _i5.Future<_i3.DataState<_i3.Unit>>);
 }

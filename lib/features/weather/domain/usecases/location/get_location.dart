@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/resources/data_state.dart';
@@ -30,7 +29,7 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
     );
   }
 
-  Future<DataState<void>> _checkPermissionWithRequestWhenDenied() async {
+  Future<DataState<Unit>> _checkPermissionWithRequestWhenDenied() async {
     final permissionOrFailure = await locationRepository.checkPermission();
     return await permissionOrFailure.either(
       onSuccess: (permissionStatus) => _requestPermissionIfNeccessary(
@@ -40,7 +39,7 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
     );
   }
 
-  Future<DataState<void>> _requestPermissionIfNeccessary(
+  Future<DataState<Unit>> _requestPermissionIfNeccessary(
     LocationPermission permissionStatus,
   ) async {
     if (permissionStatus == LocationPermission.denied) {
@@ -50,7 +49,7 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
     }
   }
 
-  Future<DataState<void>> _requestPermissionAndCheckItsStatus() async {
+  Future<DataState<Unit>> _requestPermissionAndCheckItsStatus() async {
     final permissionOrFailure = await locationRepository.requestPermission();
     return permissionOrFailure.either(
       onSuccess: (permissionStatus) {
@@ -63,13 +62,13 @@ class GetLocationUseCase implements UseCase<DataState<LocationEntity>, void> {
     );
   }
 
-  DataState<void> _checkIfPermissionIsDeniedForever(
+  DataState<Unit> _checkIfPermissionIsDeniedForever(
     LocationPermission permissionStatus,
   ) {
     if (permissionStatus == LocationPermission.unableToDetermine ||
         permissionStatus == LocationPermission.deniedForever) {
       return DataState.failure(const LocationPermissionDeniedForever());
     }
-    return DataState<void>.success(Void);
+    return DataState<Unit>.success(const Unit());
   }
 }

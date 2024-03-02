@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/resources/data_state.dart';
 import 'package:weather_app/features/weather/data/data_sources/local/settings_service.dart';
@@ -13,28 +11,28 @@ class SettingsRepositoryImpl implements SettingsRepository {
   });
 
   @override
-  Future<DataState<void>> openLocationSettings() async {
+  Future<DataState<Unit>> openLocationSettings() async {
     try {
       final openAppSettings = await settingsService.openLocationSettings();
       if (openAppSettings == false) {
         return DataState.failure(const OpeningLocationSettingsFailure());
       }
-      return DataState<void>.success(Void);
+      return DataState<Unit>.success(const Unit());
     } catch (e) {
-      return DataState<void>.failure(const UnkownFailure());
+      return DataState<Unit>.failure(const UnkownFailure());
     }
   }
 
   @override
-  Future<DataState<void>> openAppSettings() async {
+  Future<DataState<Unit>> openAppSettings() async {
     try {
       final openAppSettings = await settingsService.openAppSettings();
       if (openAppSettings == false) {
         return DataState.failure(const OpeningAppSettingsFailure());
       }
-      return DataState<void>.success(Void);
+      return DataState<Unit>.success(const Unit());
     } catch (e) {
-      return DataState<void>.failure(const UnkownFailure());
+      return DataState<Unit>.failure(const UnkownFailure());
     }
   }
 }

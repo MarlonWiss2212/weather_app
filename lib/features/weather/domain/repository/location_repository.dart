@@ -11,7 +11,7 @@ abstract class LocationRepository {
   Future<DataState<LocationPermission>> checkPermission();
 
   /// Returns a [Future] either with [void] or a failure when the locationService is not enabled.
-  Future<DataState<void>> isLocationServiceEnabled();
+  Future<DataState<Unit>> isLocationServiceEnabled();
 
   /// Request permission to access the location of the device or a failure.
   Future<DataState<LocationPermission>> requestPermission();

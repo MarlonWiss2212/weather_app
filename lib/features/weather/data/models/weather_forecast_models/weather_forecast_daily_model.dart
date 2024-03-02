@@ -78,6 +78,7 @@ class WeatherForecastDailyModel extends WeatherForecastDailyEntity {
     } on ConvertingException {
       rethrow;
     } catch (e) {
+      print(e);
       throw ConvertingException(message: e.toString());
     }
   }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -24,7 +22,7 @@ void main() {
       // call function to test
       final response = await repository.openLocationSettings();
 
-      expect(response, DataState<void>.success(Void));
+      expect(response, DataState<Unit>.success(const Unit()));
     });
 
     test(
@@ -37,7 +35,7 @@ void main() {
 
         expect(
           response,
-          DataState<void>.failure(const OpeningLocationSettingsFailure()),
+          DataState<Unit>.failure(const OpeningLocationSettingsFailure()),
         );
       },
     );
@@ -48,7 +46,7 @@ void main() {
       // call function to test
       final response = await repository.openLocationSettings();
 
-      expect(response, DataState<void>.failure(const UnkownFailure()));
+      expect(response, DataState<Unit>.failure(const UnkownFailure()));
     });
   });
 
@@ -59,7 +57,7 @@ void main() {
       // call function to test
       final response = await repository.openAppSettings();
 
-      expect(response, DataState<void>.success(Void));
+      expect(response, DataState<Unit>.success(const Unit()));
     });
 
     test(
@@ -72,7 +70,7 @@ void main() {
 
         expect(
           response,
-          DataState<void>.failure(const OpeningAppSettingsFailure()),
+          DataState<Unit>.failure(const OpeningAppSettingsFailure()),
         );
       },
     );
@@ -83,7 +81,7 @@ void main() {
       // call function to test
       final response = await repository.openAppSettings();
 
-      expect(response, DataState<void>.failure(const UnkownFailure()));
+      expect(response, DataState<Unit>.failure(const UnkownFailure()));
     });
   });
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'package:geolocator/geolocator.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -132,7 +131,7 @@ void main() {
         locationService: mockService,
       ).isLocationServiceEnabled();
 
-      expect(response, DataState<void>.success(Void));
+      expect(response, DataState<Unit>.success(const Unit()));
     });
 
     test(
@@ -151,7 +150,7 @@ void main() {
 
       expect(
         response,
-        DataState<void>.failure(const LocationServiceNotEnabledFailure()),
+        DataState<Unit>.failure(const LocationServiceNotEnabledFailure()),
       );
     });
 
@@ -167,7 +166,7 @@ void main() {
 
       expect(
         response,
-        DataState<void>.failure(const UnkownFailure()),
+        DataState<Unit>.failure(const UnkownFailure()),
       );
     });
   });
@@ -239,7 +238,7 @@ void main() {
 
       expect(
         response,
-        DataState<void>.failure(const UnkownFailure()),
+        DataState<Unit>.failure(const UnkownFailure()),
       );
     });
   });

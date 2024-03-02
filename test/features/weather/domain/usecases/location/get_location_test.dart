@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -25,7 +23,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.failure(
+        (_) async => DataState<Unit>.failure(
           const LocationServiceNotEnabledFailure(),
         ),
       );
@@ -44,7 +42,7 @@ void main() {
     test("should return the failure that 'checkPermission' returns", () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.failure(
@@ -68,7 +66,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(
@@ -92,7 +90,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(
@@ -116,7 +114,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(
@@ -145,7 +143,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(
@@ -174,7 +172,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(
@@ -203,7 +201,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(
@@ -232,7 +230,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(
@@ -260,7 +258,7 @@ void main() {
         () async {
       // mocking
       when(mockLocationRepositoryImpl.isLocationServiceEnabled()).thenAnswer(
-        (_) async => DataState<void>.success(Void),
+        (_) async => DataState<Unit>.success(const Unit()),
       );
       when(mockLocationRepositoryImpl.checkPermission()).thenAnswer(
         (_) async => DataState<LocationPermission>.success(

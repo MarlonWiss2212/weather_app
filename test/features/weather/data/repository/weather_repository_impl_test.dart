@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -16,18 +17,21 @@ import 'weather_repository_impl_test.mocks.dart';
 
 @GenerateMocks([WeatherServiceImpl, GeocodingServiceImpl])
 void main() {
-  final MockWeatherServiceImpl mockWeatherService = MockWeatherServiceImpl();
-  final MockGeocodingServiceImpl mockGeocodingService =
-      MockGeocodingServiceImpl();
+  late MockWeatherServiceImpl mockWeatherService;
+  late MockGeocodingServiceImpl mockGeocodingService;
+  late WeatherForecastModel model;
+  late ReverseGeocodingModel modelGeo;
+  late WeatherRepositoryImpl repository;
 
-  final WeatherRepositoryImpl repository = WeatherRepositoryImpl(
-    weatherService: mockWeatherService,
-    geocodingService: mockGeocodingService,
-  );
-
-  group("getWeatherData function tests", () {
-    // models
-    final WeatherForecastModel model = WeatherForecastModel.fromJSON({
+  setUp(() {
+    initializeDateFormatting();
+    mockWeatherService = MockWeatherServiceImpl();
+    mockGeocodingService = MockGeocodingServiceImpl();
+    repository = WeatherRepositoryImpl(
+      weatherService: mockWeatherService,
+      geocodingService: mockGeocodingService,
+    );
+    model = WeatherForecastModel.fromJSON({
       "lat": 33.44,
       "lon": -94.04,
       "timezone": "America/Chicago",
@@ -140,7 +144,7 @@ void main() {
         },
       ]
     });
-    final ReverseGeocodingModel modelGeo = ReverseGeocodingModel.fromJson(
+    modelGeo = ReverseGeocodingModel.fromJson(
       const {
         "name": "London",
         "local_names": {
@@ -189,7 +193,9 @@ void main() {
         "country": "GB"
       },
     );
+  });
 
+  group("getWeatherData function tests", () {
     test("should return both models if both services return their models",
         () async {
       // params
