@@ -29,6 +29,8 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
     );
     final showSkeleton = loading && hourly == null;
 
+    final hourlyOrMockData =
+        _generateMockDataWhenRequiredOrReturnHourly(hourly);
     return Container(
       height: 180,
       decoration: BoxDecoration(
@@ -45,13 +47,14 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                    children: _generateHourlyChartTypeButtons(hourly ?? [])),
+                  children: _generateHourlyChartTypeButtons(hourlyOrMockData),
+                ),
               ),
             ),
             const SizedBox(height: 6),
             Expanded(
               child: WeatherHourlyChartDiagram(
-                hourly: _generateMockDataWhenRequiredOrReturnHourly(hourly),
+                hourly: hourlyOrMockData,
                 type: type,
               ),
             ),
