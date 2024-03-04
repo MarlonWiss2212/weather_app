@@ -29,8 +29,10 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
     );
     final showSkeleton = loading && hourly == null;
 
-    final hourlyOrMockData =
-        _generateMockDataWhenRequiredOrReturnHourly(hourly);
+    final hourlyOrMockData = _generateMockDataWhenRequiredOrReturnHourly(
+      hourly,
+    );
+
     return Container(
       height: 180,
       decoration: BoxDecoration(
