@@ -23,7 +23,7 @@ class WeatherSnowDailyPage extends StatelessWidget {
           Row(
             children: [
               const Icon(
-                Icons.cloud,
+                Icons.snowing,
                 size: 20,
               ).animate().fadeIn(),
               const SizedBox(width: 5),

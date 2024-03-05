@@ -30,4 +30,20 @@ class TempUtils {
       _ => Colors.grey,
     };
   }
+
+  static Color colorForPrecipitationByTemp(double? temperature) {
+    if (temperature == null) {
+      return Colors.grey;
+    }
+
+    return switch (temperature) {
+      > 10 => const Color.fromARGB(255, 26, 87, 255),
+      > 5 => const Color.fromARGB(255, 26, 125, 255),
+      > 3 => const Color.fromARGB(255, 26, 133, 255),
+      > 1 => const Color.fromARGB(255, 26, 171, 255),
+      > -1 => const Color.fromARGB(255, 26, 182, 255),
+      > -3 => const Color.fromARGB(255, 26, 221, 255),
+      _ => const Color.fromARGB(255, 26, 221, 255),
+    };
+  }
 }

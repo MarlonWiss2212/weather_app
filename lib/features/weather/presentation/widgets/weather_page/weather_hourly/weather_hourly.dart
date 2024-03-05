@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:weather_app/core/util/temp_utils.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_hourly_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/weather_icon.dart';
@@ -58,8 +59,12 @@ class WeatherHourly extends StatelessWidget {
                   ),
                   if ((hourly?[index] != null && hourly![index].pop > 0) ||
                       showSkeleton) ...[
-                    const SizedBox(height: 4),
-                    _rainRow(context, hourly?[index].pop ?? 0),
+                    const SizedBox(height: 1),
+                    _precipitationRow(
+                      context,
+                      pop: hourly?[index].pop ?? 0,
+                      temp: hourly?[index].temp ?? 10,
+                    ),
                   ],
                 ],
               ),
@@ -81,18 +86,26 @@ class WeatherHourly extends StatelessWidget {
     );
   }
 
-  Widget _rainRow(BuildContext context, double pop) {
+  Widget _precipitationRow(
+    BuildContext context, {
+    required double pop,
+    required double temp,
+  }) {
+    final color = TempUtils.colorForPrecipitationByTemp(temp);
     return Row(
       children: [
         Icon(
-          Icons.water_drop_rounded,
+          temp > 0 ? Icons.water_drop_rounded : Icons.snowing,
           fill: pop,
           size: 8,
+          color: color,
         ),
         const SizedBox(width: 5),
         Text(
           "${(pop * 100).round().toString()}%",
-          style: Theme.of(context).textTheme.labelSmall,
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: color,
+              ),
         ),
       ],
     );
