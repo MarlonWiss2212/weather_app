@@ -74,7 +74,9 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
           children: [
             // Rain
             Icon(
-              Icons.water_drop_rounded,
+              (widget.day?.temp.day ?? 10) > 0
+                  ? Icons.water_drop_rounded
+                  : Icons.snowing,
               fill: widget.day?.pop ?? 0,
               size: 8,
             ),
