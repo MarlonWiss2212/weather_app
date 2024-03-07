@@ -51,16 +51,14 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _rainWidget(),
-            const Expanded(
+            Expanded(
               flex: 5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  WeatherIcon(),
-                  SizedBox(width: 5),
-                  WeatherIcon(),
-                ],
-              ),
+              child: widget.day?.weather[0] != null
+                  ? WeatherIcon(
+                      iconCode: widget.day!.weather[0].icon,
+                      snow: widget.day!.temp.day < 0,
+                    )
+                  : const SizedBox(),
             ),
             _degreeWidget(),
           ],

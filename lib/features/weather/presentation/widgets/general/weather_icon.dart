@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/util/icon_utils.dart';
 
 class WeatherIcon extends StatelessWidget {
+  final String iconCode;
   final double? size;
-  const WeatherIcon({super.key, this.size});
+  final bool snow;
+  const WeatherIcon({
+    super.key,
+    required this.iconCode,
+    this.size,
+    this.snow = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    //TODO: implement component with custom icons
     return Icon(
-      Icons.cloud,
+      IconUtils.getIconByWeatherMapIconCode(
+        iconCode,
+        snow: snow,
+      ),
       size: size,
     );
   }

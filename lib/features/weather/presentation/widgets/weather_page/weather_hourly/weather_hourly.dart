@@ -54,9 +54,13 @@ class WeatherHourly extends StatelessWidget {
               ),
               Column(
                 children: [
-                  const WeatherIcon(
-                    size: 35,
-                  ),
+                  if (hourly?[index].weather[0] != null) ...{
+                    WeatherIcon(
+                      size: 35,
+                      snow: hourly![index].temp < 0,
+                      iconCode: hourly[index].weather[0].icon,
+                    ),
+                  },
                   if ((hourly?[index] != null && hourly![index].pop > 0) ||
                       showSkeleton) ...[
                     const SizedBox(height: 1),
