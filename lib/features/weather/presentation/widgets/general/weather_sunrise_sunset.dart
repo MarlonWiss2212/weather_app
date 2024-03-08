@@ -1,6 +1,6 @@
+import 'package:arc_progress_bar_new/arc_progress_bar_new.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -8,12 +8,27 @@ class WeatherSunriseSunset extends StatelessWidget {
   final bool loading;
   final int? sunrise;
   final int? sunset;
+  final double? percentage;
   const WeatherSunriseSunset({
     super.key,
     required this.loading,
+    this.percentage,
     this.sunrise,
     this.sunset,
   });
+
+  double _getProgressPercentage() {
+    if (sunrise == null || sunset == null) {
+      return 0;
+    }
+    final int minimum = sunrise!;
+    final int maximum = sunset!;
+    final int current = DateTime.now().millisecondsSinceEpoch;
+
+    final int passedTime = current - minimum;
+
+    return (passedTime / (maximum - minimum)) * 100;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +40,28 @@ class WeatherSunriseSunset extends StatelessWidget {
       ),
       child: Skeletonizer(
         enabled: (sunrise == null || sunset == null) && loading,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
+        child: ArcProgressBar(
+          innerPadding: 10,
+          percentage: percentage ?? _getProgressPercentage(),
+          strokeCap: StrokeCap.round,
+          arcThickness: 5,
+          handleSize: 30,
+          handleWidget: const Icon(
+            CupertinoIcons.sun_max_fill,
+            color: Colors.yellow,
+            size: 30,
+          ),
+          foregroundColor: Colors.yellow,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          bottomLeftWidget: Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Column(
               children: [
                 Text(
                   "Sonnenaufgang",
                   textAlign: TextAlign.end,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
-                const Icon(
-                  CupertinoIcons.sunrise_fill,
-                  size: 40,
-                ).animate().fade().scale(),
                 if (sunrise != null) ...{
                   Text(
                     DateFormat.Hm("de").format(
@@ -49,18 +72,17 @@ class WeatherSunriseSunset extends StatelessWidget {
                 },
               ],
             ),
-            Column(
+          ),
+          bottomRightWidget: Padding(
+            padding: const EdgeInsets.only(right: 30),
+            child: Column(
               children: [
                 Text(
                   "Sonnenuntergang",
                   textAlign: TextAlign.end,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
-                const Icon(
-                  CupertinoIcons.sunset_fill,
-                  size: 40,
-                ).animate().fade().scale(),
-                if (sunset != null) ...{
+                if (sunrise != null) ...{
                   Text(
                     DateFormat.Hm("de").format(
                       DateTime.fromMillisecondsSinceEpoch(sunset!),
@@ -70,7 +92,7 @@ class WeatherSunriseSunset extends StatelessWidget {
                 },
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

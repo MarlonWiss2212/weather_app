@@ -16,10 +16,15 @@ class WeatherSunriseSunsetDailyPage extends StatelessWidget {
     final loading = context.select<WeatherProvider, bool>(
       (provider) => provider.loading,
     );
+    final sunrise = (day?.sunrise ?? 0) * 1000; // * 1000 to make it unix
+    final sunset = (day?.sunset ?? 0) * 1000; // * 1000 to make it unix
+    final current = DateTime.now().millisecondsSinceEpoch;
+
     return WeatherSunriseSunset(
-      sunrise: (day?.sunrise ?? 0) * 1000, // * 1000 to make it unix
-      sunset: (day?.sunset ?? 0) * 1000, // * 1000 to make it unix
+      sunrise: sunrise,
+      sunset: sunset,
       loading: loading,
+      percentage: current < sunrise ? 0 : null,
     );
   }
 }
