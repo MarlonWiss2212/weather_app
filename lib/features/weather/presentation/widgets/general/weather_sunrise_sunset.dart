@@ -24,10 +24,7 @@ class WeatherSunriseSunset extends StatelessWidget {
     final int minimum = sunrise!;
     final int maximum = sunset!;
     final int current = DateTime.now().millisecondsSinceEpoch;
-
-    final int passedTime = current - minimum;
-
-    return (passedTime / (maximum - minimum)) * 100;
+    return ((current - minimum) / (maximum - minimum)) * 100;
   }
 
   @override
