@@ -30,7 +30,7 @@ class WeatherForecastHourlyEntity extends Equatable {
   final int clouds;
 
   /// Average visibility, metres. The maximum value of the visibility is 10 km
-  final int visibility;
+  final int? visibility;
 
   /// Wind speed. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.How to change units used [https://openweathermap.org/api/one-call-3#data]
   final double windSpeed;
@@ -62,7 +62,7 @@ class WeatherForecastHourlyEntity extends Equatable {
     required this.dewPoint,
     required this.uvi,
     required this.clouds,
-    required this.visibility,
+    this.visibility,
     this.snow,
     this.rain,
     required this.windSpeed,

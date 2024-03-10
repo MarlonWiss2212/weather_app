@@ -14,7 +14,7 @@ class WeatherForecastHourlyModel extends WeatherForecastHourlyEntity {
     required super.dewPoint,
     required super.uvi,
     required super.clouds,
-    required super.visibility,
+    super.visibility,
     required super.snow,
     required super.rain,
     required super.windSpeed,
