@@ -7,15 +7,18 @@ import 'package:weather_app/features/weather/domain/entities/weather_forecast_en
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/core/util/enums/hourly_chart_type_enum.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/weather_hourly_chart_diagram.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/weather_hourly_chart_type_button.dart';
 
-class WeatherHourlyChart extends StatefulWidget {
-  const WeatherHourlyChart({super.key});
+class WeatherHourlyChartContainer extends StatefulWidget {
+  const WeatherHourlyChartContainer({super.key});
 
   @override
-  State<WeatherHourlyChart> createState() => _WeatherHourlyChartState();
+  State<WeatherHourlyChartContainer> createState() =>
+      _WeatherHourlyChartContainerState();
 }
 
-class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
+class _WeatherHourlyChartContainerState
+    extends State<WeatherHourlyChartContainer> {
   HourlyChartType type = HourlyChartType.temp;
 
   @override
@@ -56,8 +59,7 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
             const SizedBox(height: 6),
             Expanded(
               child: WeatherHourlyChartDiagram(
-                hourly: hourlyOrMockData,
-                type: type,
+                diagram: type.getDiagram(hourlyOrMockData),
               ),
             ),
           ],
@@ -133,35 +135,13 @@ class _WeatherHourlyChartState extends State<WeatherHourlyChart> {
       }
 
       childrenHourlyChartTypeButtons.add(
-        _hourlyChartTypeButton(hourlyChartType),
+        WeatherHourlyChartTypeButton(
+          type: hourlyChartType,
+          currentType: type,
+          changeType: () => setState(() => type = hourlyChartType),
+        ),
       );
     }
     return childrenHourlyChartTypeButtons;
-  }
-
-  Widget _hourlyChartTypeButton(HourlyChartType type) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(6),
-        onTap: () => setState(() => this.type = type),
-        child: Container(
-          constraints: const BoxConstraints(minWidth: 70),
-          decoration: BoxDecoration(
-            color: this.type == type
-                ? const Color.fromARGB(100, 0, 0, 0)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          padding: const EdgeInsets.all(6),
-          child: Center(
-            child: Text(
-              type.title,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
