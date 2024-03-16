@@ -39,7 +39,7 @@ class WeatherWind extends StatelessWidget {
                 Transform.rotate(
                   angle: (windDeg ?? 0 - 90) * (pi / 180),
                   child: const Icon(
-                    Icons.keyboard_arrow_up_rounded,
+                    Icons.arrow_downward,
                     size: 20,
                   ).animate().fadeIn(),
                 ),
