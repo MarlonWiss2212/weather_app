@@ -37,7 +37,7 @@ class _WeatherHourlyChartContainerState
     );
 
     return Container(
-      height: 180,
+      height: 250,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.15),
         borderRadius: BorderRadius.circular(12),
@@ -59,6 +59,7 @@ class _WeatherHourlyChartContainerState
             const SizedBox(height: 6),
             Expanded(
               child: WeatherHourlyChartDiagram(
+                showSkeleton: showSkeleton,
                 diagram: type.getDiagram(hourlyOrMockData),
               ),
             ),

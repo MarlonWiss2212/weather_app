@@ -4,9 +4,9 @@ import 'package:weather_app/features/weather/domain/entities/weather_forecast_en
 
 abstract class WeatherHourlyDiagram {
   final List<WeatherForecastHourlyEntity> hourly;
-  late double maxUnixDate;
+  late double maxIndex;
   double maxY;
-  late double minUnixDate;
+  late double minIndex;
   double minY;
 
   WeatherHourlyDiagram({
@@ -14,11 +14,9 @@ abstract class WeatherHourlyDiagram {
     required this.maxY,
     required this.minY,
   }) {
-    final double firstDateOfHourly = hourly[0].dt * 1000;
-    maxUnixDate = firstDateOfHourly;
-    minUnixDate = firstDateOfHourly;
+    maxIndex = 0;
+    minIndex = 0;
   }
-
   List<FlSpot> generateSpotsList();
   List<Color> getGradientColors();
   List<Color> getBelowGradientColors();

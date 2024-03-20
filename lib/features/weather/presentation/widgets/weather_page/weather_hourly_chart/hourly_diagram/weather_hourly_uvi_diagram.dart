@@ -10,13 +10,14 @@ class WeatherHourlyUviDiagram extends WeatherHourlyDiagram {
   List<FlSpot> generateSpotsList() {
     List<FlSpot> spots = [];
 
-    for (final hour in hourly) {
-      final double unixDate = hour.dt * 1000;
-      if (maxUnixDate < unixDate) {
-        maxUnixDate = unixDate;
+    for (int index = 0; index < hourly.length - 1; index++) {
+      final hour = hourly[index];
+
+      if (maxIndex < index) {
+        maxIndex = index.toDouble();
       }
-      if (minUnixDate > unixDate) {
-        minUnixDate = unixDate;
+      if (minIndex > index) {
+        maxIndex = index.toDouble();
       }
 
       if (maxY < hour.uvi) {
@@ -25,7 +26,7 @@ class WeatherHourlyUviDiagram extends WeatherHourlyDiagram {
       if (minY > hour.uvi) {
         minY = hour.uvi;
       }
-      spots.add(FlSpot(unixDate, hour.uvi));
+      spots.add(FlSpot(index.toDouble(), hour.uvi));
     }
 
     return spots;

@@ -9,13 +9,14 @@ class WeatherHourlyWindDiagram extends WeatherHourlyDiagram {
   List<FlSpot> generateSpotsList() {
     List<FlSpot> spots = [];
 
-    for (final hour in hourly) {
-      final double unixDate = hour.dt * 1000;
-      if (maxUnixDate < unixDate) {
-        maxUnixDate = unixDate;
+    for (int index = 0; index < hourly.length - 1; index++) {
+      final hour = hourly[index];
+
+      if (maxIndex < index) {
+        maxIndex = index.toDouble();
       }
-      if (minUnixDate > unixDate) {
-        minUnixDate = unixDate;
+      if (minIndex > index) {
+        maxIndex = index.toDouble();
       }
 
       if (maxY < hour.windSpeed) {
@@ -24,7 +25,7 @@ class WeatherHourlyWindDiagram extends WeatherHourlyDiagram {
       if (minY > hour.windSpeed) {
         minY = hour.windSpeed;
       }
-      spots.add(FlSpot(unixDate, hour.windSpeed));
+      spots.add(FlSpot(index.toDouble(), hour.windSpeed));
     }
 
     return spots;

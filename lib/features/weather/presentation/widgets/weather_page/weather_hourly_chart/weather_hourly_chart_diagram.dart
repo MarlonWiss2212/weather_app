@@ -1,15 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_app/core/util/temp_utils.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_icon.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/hourly_diagram/weather_hourly_diagram.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/hourly_diagram/weather_hourly_uvi_diagram.dart';
 
 class WeatherHourlyChartDiagram extends StatelessWidget {
   final WeatherHourlyDiagram diagram;
+  final bool showSkeleton;
 
   const WeatherHourlyChartDiagram({
     super.key,
     required this.diagram,
+    required this.showSkeleton,
   });
 
   LineChartBarData _generateLineChartBarData({required List<FlSpot> spots}) {
@@ -80,13 +84,13 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 enabled: true,
                 handleBuiltInTouches: false,
               ),
-              maxX: diagram.maxUnixDate,
+              maxX: diagram.maxIndex,
+              minX: diagram.minIndex,
               maxY: diagram is WeatherHourlyUviDiagram?
                   ? diagram.maxY > 4
                       ? diagram.maxY
                       : 4
                   : diagram.maxY,
-              minX: diagram.minUnixDate,
               minY: diagram.minY,
               gridData: const FlGridData(show: false),
               borderData: FlBorderData(show: false),
@@ -95,15 +99,36 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 topTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: 70,
-                    interval: 3600000, // 1 hour == 3600000 milliseconds
+                    reservedSize: 100,
+                    interval: 1,
                     getTitlesWidget: (value, meta) {
+                      final hourly = diagram.hourly[value.toInt()];
                       final formattedDate = DateFormat.Hm("de").format(
-                        DateTime.fromMillisecondsSinceEpoch(value.toInt()),
+                        DateTime.fromMillisecondsSinceEpoch(hourly.dt * 1000),
                       );
-                      return Text(
-                        formattedDate,
-                        style: Theme.of(context).textTheme.labelLarge,
+
+                      return Column(
+                        children: [
+                          Text(
+                            formattedDate,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          if (hourly.weather[0] != null) ...{
+                            WeatherIcon(
+                              size: 35,
+                              snow: hourly.temp < 0,
+                              iconCode: hourly.weather[0].icon,
+                            ),
+                          },
+                          if (hourly.pop > 0 || showSkeleton) ...[
+                            const SizedBox(height: 1),
+                            _precipitationRow(
+                              context,
+                              pop: hourly.pop,
+                              temp: hourly.temp,
+                            ),
+                          ],
+                        ],
                       );
                     },
                   ),
@@ -123,6 +148,31 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _precipitationRow(
+    BuildContext context, {
+    required double pop,
+    required double temp,
+  }) {
+    final color = TempUtils.colorForPrecipitationByTemp(temp);
+    return Row(
+      children: [
+        Icon(
+          temp > 0 ? Icons.water_drop_rounded : Icons.snowing,
+          fill: pop,
+          size: 8,
+          color: color,
+        ),
+        const SizedBox(width: 5),
+        Text(
+          "${(pop * 100).round().toString()}%",
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: color,
+              ),
+        ),
+      ],
     );
   }
 
