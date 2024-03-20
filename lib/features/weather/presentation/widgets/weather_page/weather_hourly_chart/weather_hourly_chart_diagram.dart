@@ -113,7 +113,7 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                             formattedDate,
                             style: Theme.of(context).textTheme.labelLarge,
                           ),
-                          if (hourly.weather[0] != null) ...{
+                          if (hourly.weather.isNotEmpty) ...{
                             WeatherIcon(
                               size: 35,
                               snow: hourly.temp < 0,
