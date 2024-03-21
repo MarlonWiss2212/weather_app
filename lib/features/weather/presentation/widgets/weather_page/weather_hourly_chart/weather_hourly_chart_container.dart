@@ -73,8 +73,8 @@ class _WeatherHourlyChartContainerState
     List<WeatherForecastHourlyEntity>? hourly,
   ) {
     final List<WeatherForecastHourlyEntity> data = hourly != null
-        ? hourly.length > 24
-            ? hourly.getRange(0, 24).toList()
+        ? hourly.length > 25
+            ? hourly.getRange(0, 25).toList()
             : hourly
         : [];
 
