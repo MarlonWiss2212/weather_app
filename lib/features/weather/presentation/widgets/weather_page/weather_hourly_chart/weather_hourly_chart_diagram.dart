@@ -153,8 +153,8 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
 
   Widget _precipitationRow(
     BuildContext context, {
-    required double pop,
     required double temp,
+    required double pop,
   }) {
     final color = TempUtils.colorForPrecipitationByTemp(temp);
     return Row(

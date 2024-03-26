@@ -93,7 +93,7 @@ class _WeatherHourlyChartContainerState
           windSpeed: 4.5,
           windDeg: 180,
           weather: const [],
-          pop: 10.0 + i,
+          pop: 0.5 + i / 100,
         ));
       }
     }

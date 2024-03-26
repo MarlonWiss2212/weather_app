@@ -19,30 +19,26 @@ class WeatherMapTypeButton extends StatelessWidget {
     );
     return Hero(
       tag: type.title,
-      child: Container(
-        // TODO: better way for margin in future
-        margin: const EdgeInsets.only(right: 8),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(6),
-            onTap: onTap,
-            child: Container(
-              constraints: const BoxConstraints(minWidth: 70),
-              decoration: BoxDecoration(
-                color: activeType == type
-                    ? const Color.fromARGB(100, 0, 0, 0)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              padding: const EdgeInsets.all(6),
-              child: Center(
-                child: Text(
-                  type.title,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(6),
+          onTap: onTap,
+          child: Container(
+            constraints: const BoxConstraints(minWidth: 70),
+            decoration: BoxDecoration(
+              color: activeType == type
+                  ? const Color.fromARGB(100, 0, 0, 0)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            padding: const EdgeInsets.all(6),
+            child: Center(
+              child: Text(
+                type.title,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ),
           ),
