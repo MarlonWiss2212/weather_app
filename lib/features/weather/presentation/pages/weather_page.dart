@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/failure_listener.dart';
-import 'package:weather_app/features/weather/presentation/widgets/general/weather_background_animation.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/weather_map/weather_map_box.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_alerts/weather_alerts.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_app_bar/weather_app_bar.dart';
+import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_background_animation_weather_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_daily/weather_daily.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/weather_hourly_chart_container.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_humidity_weather_page.dart';
@@ -20,19 +20,19 @@ class WeatherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FailureListener(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: RefreshIndicator(
-            color: Theme.of(context).colorScheme.primary,
-            backgroundColor: Colors.black,
-            onRefresh: () async {
-              return await Provider.of<WeatherProvider>(
-                context,
-                listen: false,
-              ).getWeather();
-            },
-            child: RainDropBackground(
+      body: WeatherBackgroundAnimationWeatherPage(
+        child: FailureListener(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: RefreshIndicator(
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Colors.black,
+              onRefresh: () async {
+                return await Provider.of<WeatherProvider>(
+                  context,
+                  listen: false,
+                ).getWeather();
+              },
               child: CustomScrollView(
                 slivers: [
                   const WeatherAppBar(),
