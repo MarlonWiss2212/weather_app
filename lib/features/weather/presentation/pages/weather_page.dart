@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/features/weather/presentation/provider/failure_provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/failure_listener.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_background_animation.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/weather_map/weather_map_box.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_alerts/weather_alerts.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_app_bar/weather_app_bar.dart';
@@ -14,17 +14,8 @@ import 'package:weather_app/features/weather/presentation/widgets/weather_page/w
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_visibility_weather_page.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_wind_weather_page.dart';
 
-class WeatherPage extends StatefulWidget {
+class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key});
-
-  @override
-  State<WeatherPage> createState() => _WeatherPageState();
-}
-
-class _WeatherPageState extends State<WeatherPage> {
-  void listenToFailuresAndAddScaffold(BuildContext context) {
-    Provider.of<FailureProvider>(context, listen: true).addListener(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,44 +32,46 @@ class _WeatherPageState extends State<WeatherPage> {
                 listen: false,
               ).getWeather();
             },
-            child: CustomScrollView(
-              slivers: [
-                const WeatherAppBar(),
-                const SliverPadding(
-                  padding: EdgeInsets.only(top: 8),
-                  sliver: SliverToBoxAdapter(
-                    child: WeatherAlerts(),
+            child: RainDropBackground(
+              child: CustomScrollView(
+                slivers: [
+                  const WeatherAppBar(),
+                  const SliverPadding(
+                    padding: EdgeInsets.only(top: 8),
+                    sliver: SliverToBoxAdapter(
+                      child: WeatherAlerts(),
+                    ),
                   ),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.only(top: 8),
-                  sliver: SliverToBoxAdapter(
-                    child: WeatherHourlyChartContainer(),
+                  const SliverPadding(
+                    padding: EdgeInsets.only(top: 8),
+                    sliver: SliverToBoxAdapter(
+                      child: WeatherHourlyChartContainer(),
+                    ),
                   ),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.only(top: 8),
-                  sliver: SliverToBoxAdapter(
-                    child: WeatherDaily(),
+                  const SliverPadding(
+                    padding: EdgeInsets.only(top: 8),
+                    sliver: SliverToBoxAdapter(
+                      child: WeatherDaily(),
+                    ),
                   ),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.only(top: 8),
-                  sliver: _gridOfBasicData(),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.only(top: 8),
-                  sliver: SliverToBoxAdapter(
-                    child: WeatherSunriseSunsetWeatherPage(),
+                  SliverPadding(
+                    padding: const EdgeInsets.only(top: 8),
+                    sliver: _gridOfBasicData(),
                   ),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  sliver: SliverToBoxAdapter(
-                    child: WeatherMapBox(),
+                  const SliverPadding(
+                    padding: EdgeInsets.only(top: 8),
+                    sliver: SliverToBoxAdapter(
+                      child: WeatherSunriseSunsetWeatherPage(),
+                    ),
                   ),
-                ),
-              ],
+                  const SliverPadding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    sliver: SliverToBoxAdapter(
+                      child: WeatherMapBox(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
