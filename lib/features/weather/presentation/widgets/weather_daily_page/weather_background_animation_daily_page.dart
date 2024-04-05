@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/domain/entities/weather_forecast_entity/weather_forecast_daily_entity.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/general/weather_background_animation.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_background_animation/weather_background_animation.dart';
 
 class WeatherBackgroundAnimationDailyPage extends StatelessWidget {
   final WeatherForecastDailyEntity? day;

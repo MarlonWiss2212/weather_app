@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_provider.dart';
-import 'package:weather_app/features/weather/presentation/widgets/general/weather_background_animation.dart';
+import 'package:weather_app/features/weather/presentation/widgets/general/weather_background_animation/weather_background_animation.dart';
 
 class WeatherBackgroundAnimationWeatherPage extends StatelessWidget {
   final Widget child;

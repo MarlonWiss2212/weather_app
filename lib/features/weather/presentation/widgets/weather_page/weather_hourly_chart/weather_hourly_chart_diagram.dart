@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_app/core/util/temp_utils.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/weather_icon.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/hourly_diagram/weather_hourly_diagram.dart';
 import 'package:weather_app/features/weather/presentation/widgets/weather_page/weather_hourly_chart/hourly_diagram/weather_hourly_uvi_diagram.dart';
@@ -156,21 +155,17 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
     required double temp,
     required double pop,
   }) {
-    final color = TempUtils.colorForPrecipitationByTemp(temp);
     return Row(
       children: [
         Icon(
           temp > 0 ? Icons.water_drop_rounded : Icons.snowing,
           fill: pop,
           size: 8,
-          color: color,
         ),
         const SizedBox(width: 5),
         Text(
           "${(pop * 100).round().toString()}%",
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: color,
-              ),
+          style: Theme.of(context).textTheme.labelSmall,
         ),
       ],
     );
