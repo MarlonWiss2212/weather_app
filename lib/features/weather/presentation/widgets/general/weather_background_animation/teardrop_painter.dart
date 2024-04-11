@@ -21,7 +21,7 @@ class _TeardropPainterState extends State<TeardropPainter> {
   late int _numDrops;
   final double _dropSize = 14;
   final List<double> _fallSpeeds = [0.3, 0.4, 0.5, 0.6, 0.7];
-  final Duration _updateInterval = const Duration(milliseconds: 50);
+  final Duration _updateInterval = const Duration(milliseconds: 20);
   final Random random = Random();
 
   @override
