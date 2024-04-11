@@ -37,11 +37,11 @@ class TempUtils {
     }
 
     return switch (temperature) {
-      > 10 => const Color.fromARGB(50, 100, 133, 223),
-      > 5 => const Color.fromARGB(50, 150, 195, 255),
-      > 3 => const Color.fromARGB(50, 177, 214, 255),
-      > 1 => const Color.fromARGB(50, 242, 250, 255),
-      _ => const Color.fromARGB(50, 255, 255, 255),
+      > 10 => const Color.fromARGB(40, 100, 133, 223),
+      > 5 => const Color.fromARGB(40, 150, 195, 255),
+      > 3 => const Color.fromARGB(40, 177, 214, 255),
+      > 1 => const Color.fromARGB(40, 242, 250, 255),
+      _ => const Color.fromARGB(40, 255, 255, 255),
     };
   }
 }

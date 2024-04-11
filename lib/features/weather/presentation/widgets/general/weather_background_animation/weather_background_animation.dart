@@ -3,13 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:weather_app/features/weather/presentation/widgets/general/weather_background_animation/teardrop_painter.dart';
 
 class WeatherBackgroundAnimation extends StatelessWidget {
-  final double mmh;
+  final double mmhSnow;
+  final double mmhRain;
   final double temp;
   final Widget child;
 
   const WeatherBackgroundAnimation({
     Key? key,
-    required this.mmh,
+    required this.mmhRain,
+    required this.mmhSnow,
     required this.temp,
     required this.child,
   }) : super(key: key);
@@ -20,7 +22,8 @@ class WeatherBackgroundAnimation extends StatelessWidget {
       children: [
         Positioned.fill(
           child: TeardropPainter(
-            mmh: mmh,
+            mmhRain: mmhRain,
+            mmhSnow: mmhSnow,
             temp: temp,
           ),
         ),

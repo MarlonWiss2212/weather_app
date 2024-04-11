@@ -15,19 +15,23 @@ class WeatherBackgroundAnimationWeatherPage extends StatelessWidget {
     final temp = context.select<WeatherProvider, double?>(
       (provider) => provider.weather?.current.temp,
     );
-    final mm = context.select<WeatherProvider, double?>(
+    final mmRain = context.select<WeatherProvider, double?>(
       (provider) => provider.weather?.current.rain?.oneHour,
+    );
+    final mmSnow = context.select<WeatherProvider, double?>(
+      (provider) => provider.weather?.current.snow?.oneHour,
     );
     final loading = context.select<WeatherProvider, bool>(
       (provider) => provider.loading,
     );
 
-    if (mm == null || temp == null || loading) {
+    if (loading || temp == null || (mmRain == null && mmSnow == null)) {
       return child;
     }
 
     return WeatherBackgroundAnimation(
-      mmh: mm,
+      mmhRain: mmRain ?? 0,
+      mmhSnow: mmSnow ?? 0,
       temp: temp,
       child: child,
     );

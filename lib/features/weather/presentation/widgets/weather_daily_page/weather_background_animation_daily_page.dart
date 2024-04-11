@@ -19,12 +19,12 @@ class WeatherBackgroundAnimationDailyPage extends StatelessWidget {
       (provider) => provider.loading,
     );
 
-    if (day?.rain == null || loading) {
+    if (loading || day == null || (day!.rain == null && day!.snow == null)) {
       return child;
     }
-
     return WeatherBackgroundAnimation(
-      mmh: day!.rain!,
+      mmhRain: day!.rain ?? 0,
+      mmhSnow: day!.snow ?? 0,
       temp: day!.temp.day,
       child: child,
     );
