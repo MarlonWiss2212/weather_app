@@ -98,7 +98,7 @@ class WeatherHourlyChartDiagram extends StatelessWidget {
                 topTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: 100,
+                    reservedSize: 130,
                     interval: 1,
                     getTitlesWidget: (value, meta) {
                       final hourly = diagram.hourly[value.toInt()];

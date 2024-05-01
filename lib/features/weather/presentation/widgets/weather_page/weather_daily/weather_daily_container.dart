@@ -92,7 +92,7 @@ class _WeatherDailyContainerState extends State<WeatherDailyContainer> {
         child: Hero(
           tag: "DailyTemp${widget.day?.dt}",
           child: Text(
-            "${widget.day?.temp.day.round()}°C / ${widget.day?.temp.night.round()}°C",
+            "${widget.day?.temp.max.round()}°C / ${widget.day?.temp.min.round()}°C",
             style: Theme.of(context).textTheme.labelLarge,
             textAlign: TextAlign.end,
           ),
